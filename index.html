@@ -20,7 +20,7 @@
                         radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 70%);
             background-color: #050505;
             color: #fff; font-family: sans-serif; 
-            height: 100vh; overflow: hidden; /* Фиксируем экран */
+            height: 100vh; overflow: hidden;
             display: flex; flex-direction: column;
         }
         
@@ -28,14 +28,21 @@
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
         
+        /* Кнопка с отскоком и без синего квадрата */
         .video-btn {
             display: block; margin: 10px auto 0; padding: 10px 20px;
             border: 2px solid #800000; border-radius: 12px;
             background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
             font-weight: 900; text-decoration: none; text-transform: uppercase;
-            text-align: center; transition: 0.2s;
+            text-align: center; 
+            transition: transform 0.1s ease, background 0.2s;
+            outline: none; /* Убирает синий квадрат */
+            -webkit-tap-highlight-color: transparent; /* Убирает подсветку на мобильных */
         }
-        .video-btn:active { background: #800000; color: #fff; transform: scale(0.97); }
+        .video-btn:active { 
+            background: #800000; color: #fff; 
+            transform: scale(0.95); /* Эффект отскока */
+        }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
@@ -43,7 +50,11 @@
             padding: 8px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
+            transition: transform 0.1s;
+            outline: none;
         }
+        .btn:active { transform: scale(0.95); background: var(--red-btn); }
+        
         .btn img { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #000; }
 
         .title { font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
@@ -86,13 +97,5 @@
 
         <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
-    
-    <script>
-        function loadScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(id);
-            if(target) target.classList.add('active');
-        }
-    </script>
 </body>
 </html>
