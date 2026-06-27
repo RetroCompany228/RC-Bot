@@ -42,8 +42,8 @@
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        /* Верхние фото: фиксированная ширина, рамка и скругление */
-        .photo-container { display: flex; gap: 12px; margin: 15px; justify-content: center; }
+        /* Идеально ровные верхние фото */
+        .photo-container { display: flex; gap: 12px; margin: 15px; justify-content: space-between; }
         .photo { 
             width: calc(50% - 6px); height: 140px; 
             object-fit: cover; border-radius: 16px; 
@@ -58,10 +58,9 @@
 <body>
 
     <div id="home" class="screen active">
-        <!-- Обновленные верхние фото -->
         <div class="photo-container">
             <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-            <img class="photo" src="https://i.postimg.cc/SK1jzG3V/file-00000000a96871f4964bed968d33903d.png">
+            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
         </div>
 
         <div class="glass-card" style="text-align: center;">
