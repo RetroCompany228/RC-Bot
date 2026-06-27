@@ -28,13 +28,17 @@
             padding: 12px 10px; border-radius: 16px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
             cursor: pointer; transition: transform 0.1s ease-out;
-            display: flex; align-items: center; justify-content: flex-start; gap: 8px;
+            display: flex; align-items: center; justify-content: flex-start; gap: 10px;
             user-select: none; -webkit-tap-highlight-color: transparent;
         }
         .btn:active { transform: scale(0.90); background: var(--red-btn); }
         
-        /* Размер иконок */
-        .btn img { width: 24px; height: 24px; object-fit: contain; }
+        /* Иконки: убираем белый фон через blend-mode и добавляем свечение */
+        .btn img { 
+            width: 28px; height: 28px; object-fit: contain; 
+            mix-blend-mode: lighten; /* Убирает белый фон */
+            filter: drop-shadow(0 0 5px rgba(179, 0, 0, 0.7)); /* Красное свечение */
+        }
 
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
@@ -89,3 +93,4 @@
     </script>
 </body>
 </html>
+
