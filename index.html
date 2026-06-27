@@ -6,13 +6,14 @@
     <title>Retro Terminal</title>
     <style>
         :root {
-            --red: #800000;
-            --glass: rgba(255, 255, 255, 0.05);
+            --red-btn: #800000;
+            --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
+            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8);
         }
 
         body { 
-            margin: 0; background: #050505; color: #fff; font-family: sans-serif;
+            margin: 0; background: #050505; color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden; display: flex; flex-direction: column;
             user-select: none;
         }
@@ -25,38 +26,39 @@
         }
         .animate-pop { animation: pop 0.2s ease-in-out; }
 
-        .container { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        .glass-card { background: var(--glass); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 20px; text-align: center; }
-
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 20px; }
+        
         .title { 
-            font-weight: 900; font-size: 22px; text-transform: uppercase; margin: 0 0 15px 0;
+            font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-align: center;
             text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
         }
 
         .video-btn {
-            display: block; padding: 12px; border: 2px solid var(--red); border-radius: 12px;
-            background: rgba(128, 0, 0, 0.3); color: #ff4d4d; font-weight: 900; text-decoration: none; text-transform: uppercase;
+            display: block; margin: 15px auto 0; padding: 12px 20px;
+            border: 2px solid #800000; border-radius: 12px;
+            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
+            font-weight: 900; text-decoration: none; text-transform: uppercase;
+            text-align: center;
         }
 
         .nav-title { 
-            text-align: center; font-size: 16px; margin: 0 0 15px 0; text-transform: uppercase;
-            text-shadow: 0 0 10px #ff0000;
-        }
-
-        /* Исправленная сетка */
-        .grid { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; 
+            text-align: center; font-size: 16px; margin: 0 0 15px 0; 
+            letter-spacing: 3px; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255,0,0,0.5);
         }
         
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
         .btn { 
-            padding: 12px; border-radius: 14px; border: var(--border); 
+            padding: 10px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
         
         .btn img { 
-            width: 24px; height: 24px; border-radius: 6px; 
+            width: 26px; height: 26px; border-radius: 6px; 
             filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
         }
 
