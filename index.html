@@ -1,110 +1,266 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retro Company Terminal</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        /* Глубокий, «дорогой» фон */
-        body {
-            background: radial-gradient(circle at center, #1a0000 0%, #050505 100%);
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Company Terminal</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-        .container { width: 100%; max-width: 420px; padding: 20px; box-sizing: border-box; }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
 
-        /* Баннер с «элитной» обводкой */
-        .banner { 
-            width: 100%; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); margin-bottom: 25px; 
-        }
+body{
+background:#050505;
+color:#fff;
+overflow-x:hidden;
+min-height:100vh;
+}
 
-        /* Карточки «Стекло» */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+/* ФОН */
+.bg-glow{
+position:fixed;
+width:400px;
+height:400px;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+}
 
-        /* Премиум кнопки */
-        .btn {
-            display: block; width: 100%; padding: 16px; margin: 12px 0;
-            background: linear-gradient(90deg, #d40000, #8b0000);
-            border: none; border-radius: 14px; color: white;
-            font-weight: 700; font-size: 15px; cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center; text-decoration: none;
-        }
-        .btn:active { transform: scale(0.96); box-shadow: 0 0 20px rgba(212, 0, 0, 0.5); }
-        .btn-secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); }
+.bg1{background:#8b0000;top:-100px;left:-100px}
+.bg2{background:#2b0000;bottom:-120px;right:-120px}
 
-        .screen { display: none; }
-        .active { display: block; animation: fadeIn 0.5s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+/* КОНТЕЙНЕР */
+.container{
+max-width:430px;
+margin:auto;
+padding:18px;
+}
+
+/* СТЕКЛО */
+.card{
+background:rgba(255,255,255,0.04);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border-radius:20px;
+padding:18px;
+margin-bottom:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.5);
+animation:fade 0.4s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* БАННЕР */
+.banner{
+width:100%;
+border-radius:18px;
+margin-bottom:15px;
+}
+
+/* КНОПКИ */
+.btn{
+display:block;
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:14px;
+color:white;
+font-weight:700;
+cursor:pointer;
+text-decoration:none;
+text-align:center;
+background:linear-gradient(90deg,#b30000,#5a0000);
+transition:0.2s;
+}
+
+.btn:active{
+transform:scale(0.96);
+}
+
+.btn-outline{
+background:transparent;
+border:1px solid rgba(255,255,255,0.2);
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.stat{
+background:rgba(255,255,255,0.03);
+padding:14px;
+border-radius:16px;
+text-align:center;
+}
+
+/* МЕНЮ */
+.menu{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.menu button{
+padding:14px;
+border-radius:14px;
+border:none;
+cursor:pointer;
+font-weight:700;
+color:white;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+transition:0.2s;
+}
+
+.menu button:active{
+transform:scale(0.95);
+background:rgba(255,0,0,0.2);
+}
+
+/* ЭКРАНЫ */
+.screen{display:none}
+.active{display:block}
+</style>
 </head>
+
 <body>
 
-    <div class="container">
-        <div id="home" class="screen active">
-            <img src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png" class="banner">
-            <div class="glass-card">
-                <p style="font-size: 14px; line-height: 1.6; color: #ccc;">
-                    RetroBot — авторизованный терминал. 
-                    Войдите в профиль, чтобы начать работу с наставником и перейти к финансовым операциям.
-                </p>
-            </div>
-            <button class="btn" onclick="showScreen('profile')">МОЙ ПРОФИЛЬ</button>
-        </div>
+<div class="bg-glow bg1"></div>
+<div class="bg-glow bg2"></div>
 
-        <div id="profile" class="screen">
-            <h3 style="text-align:center; margin-bottom: 25px; letter-spacing: 2px;">РАБОЧИЙ КАБИНЕТ</h3>
-            <button class="btn" onclick="showScreen('mentors')">ВЫБРАТЬ НАСТАВНИКА</button>
-            <button class="btn btn-secondary">СТАТИСТИКА</button>
-            <button class="btn btn-secondary">МАНУАЛЫ</button>
-            <button class="btn" style="background: transparent; border: 1px solid #444;" onclick="showScreen('home')">НАЗАД</button>
-        </div>
+<div class="container">
 
-        <div id="mentors" class="screen">
-            <div class="glass-card">
-                <div style="display:flex; align-items:center; gap: 15px;">
-                    <img src="https://i.postimg.cc/4d7VpZjx/file-00000000e62471f4abcd57f082e86de9.png" style="width:60px; height:60px; border-radius:12px;">
-                    <div>
-                        <h4 style="margin:0;">KODI</h4>
-                        <a href="https://t.me/bicuze" class="btn" style="margin: 10px 0 0 0; padding: 10px;">НАПИСАТЬ</a>
-                    </div>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div style="display:flex; align-items:center; gap: 15px;">
-                    <img src="https://i.postimg.cc/NGXRMs1S/file-00000000b860720aa3ee358794aca807.png" style="width:60px; height:60px; border-radius:12px;">
-                    <div>
-                        <h4 style="margin:0;">RELAX</h4>
-                        <a href="https://t.me/coxiko" class="btn" style="margin: 10px 0 0 0; padding: 10px;">НАПИСАТЬ</a>
-                    </div>
-                </div>
-            </div>
-            <button class="btn" style="background: transparent; border: 1px solid #444;" onclick="showScreen('profile')">НАЗАД</button>
-        </div>
-    </div>
+<!-- HOME -->
+<div id="home" class="screen active">
 
-    <script>
-        window.Telegram.WebApp.expand();
-        function showScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-    </script>
+<img class="banner" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+
+<div class="card">
+<h2 id="name">Retro Company</h2>
+<p id="user" style="opacity:.7">@guest</p>
+<p style="opacity:.6;margin-top:10px">
+Добро пожаловать в терминал управления.
+</p>
+</div>
+
+<div class="grid">
+<div class="stat">
+<h3>0₽</h3>
+<p style="opacity:.6">Баланс</p>
+</div>
+<div class="stat">
+<h3>VIP</h3>
+<p style="opacity:.6">Статус</p>
+</div>
+</div>
+
+<div class="card">
+
+<h3>Навигация</h3>
+
+<div class="menu">
+
+<button onclick="show('profile')">Профиль</button>
+<button onclick="show('mentors')">Наставник</button>
+<button onclick="show('manuals')">Мануал</button>
+<button onclick="show('packs')">Паки</button>
+<button onclick="show('voice')">Голосовые</button>
+<button onclick="show('pastes')">Пасты</button>
+
+</div>
+
+</div>
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="screen">
+
+<div class="card">
+<h2>Профиль</h2>
+<p style="opacity:.6">Информация пользователя</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- MENTORS -->
+<div id="mentors" class="screen">
+
+<div class="card">
+<h2>Наставники</h2>
+
+<a class="btn" href="https://t.me/bicuze">KODI</a>
+<a class="btn" href="https://t.me/coxiko">RELAX</a>
+
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- MANUALS -->
+<div id="manuals" class="screen">
+<div class="card">
+<h2>Мануалы</h2>
+<p style="opacity:.6">Раздел в разработке</p>
+</div>
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- PACKS -->
+<div id="packs" class="screen">
+<div class="card">
+<h2>Паки</h2>
+<p style="opacity:.6">Контент появится позже</p>
+</div>
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- VOICE -->
+<div id="voice" class="screen">
+<div class="card">
+<h2>Голосовые</h2>
+<p style="opacity:.6">Раздел голосовых сообщений</p>
+</div>
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- PASTES -->
+<div id="pastes" class="screen">
+<div class="card">
+<h2>Пасты</h2>
+<p style="opacity:.6">Штнж / аноним / прочее</p>
+</div>
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+</div>
+
+<script>
+function show(id){
+document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+if(window.Telegram?.WebApp){
+Telegram.WebApp.expand();
+
+const u = Telegram.WebApp.initDataUnsafe?.user;
+if(u){
+document.getElementById("name").innerText =
+(u.first_name || "") + " " + (u.last_name || "");
+
+document.getElementById("user").innerText =
+"@" + (u.username || "user");
+}
+}
+</script>
+
 </body>
 </html>
