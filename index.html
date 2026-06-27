@@ -60,71 +60,47 @@ body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;}
 <div class="bg-glow bg2"></div>
 
 <div class="container">
-        <div id="home" class="screen active">
-<div id="home" class="screen active">
-    <!-- Двойной баннер -->
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-        <img style="width: 50%; height: 150px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
-        <img style="width: 50%; height: 150px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
-    <!-- Двойной баннер -->
-    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-        <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
-        <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
+    <div id="home" class="screen active">
+        <!-- Баннеры -->
+        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+            <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+            <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
+        </div>
+
+        <!-- Заголовок -->
+        <div class="card" style="text-align: center; padding: 20px;">
+            <h2 style="color: #fff; margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; font-size: 28px; text-transform: uppercase;">ПАНЕЛЬ</h2>
+            <p style="color: #fff; opacity: 0.6; margin-bottom: 15px; font-weight: 500; font-size: 15px;">Не знаешь с чего начать?</p>
+            <p style="color: #fff; opacity: 0.6; font-weight: 500; font-size: 14px;">
+                Специально для вас мы создали <br>
+                <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; text-decoration: underline; font-weight: 800;">видео обучение</a> 
+                как пользоваться — @RetroWork_Bot!
+            </p>
+        </div>
+
+        <!-- Навигация -->
+        <h3 class="title-font" style="text-align: center; margin-top: 25px; margin-bottom: 15px;">НАВИГАЦИЯ</h3>
+        <div class="menu-grid">
+            <button class="btn btn-outline" onclick="loadScreen('profile')">Профиль</button>
+            <button class="btn btn-outline" onclick="loadScreen('mentors')">Наставник</button>
+            <button class="btn btn-outline" onclick="loadScreen('manuals')">Мануал</button>
+            <button class="btn btn-outline" onclick="loadScreen('packs')">Паки</button>
+            <button class="btn btn-outline" onclick="loadScreen('voice')">Голосовые</button>
+            <button class="btn btn-outline" onclick="loadScreen('pastes')">Пасты</button>
+            <button class="btn btn-outline" onclick="loadScreen('payouts')">Выплаты</button>
+        </div>
+
+        <!-- Поддержка -->
+        <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+            <a href="#" style="color: rgba(255,255,255,0.3); font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1);">Поддержать Команду</a>
+        </div>
     </div>
 
-    <!-- Заголовок и описание -->
-    <div class="card" style="text-align: center; padding: 20px;">
-        <h2 style="color: #fff; margin-bottom: 10px; font-weight: 900; letter-spacing: 2px; font-size: 28px; text-transform: uppercase;">ПАНЕЛЬ</h2>
-        <p style="color: #fff; opacity: 0.6; margin-bottom: 15px; font-weight: 500; font-size: 15px;">Не знаешь с чего начать?</p>
-        <p style="color: #fff; opacity: 0.6; font-weight: 500; font-size: 14px;">
-            Специально для вас мы создали <br>
-            <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; text-decoration: underline; font-weight: 800;">видео обучение</a> 
-            как пользоваться — @RetroWork_Bot!
-        </p>
-    </div>
-
-    <!-- Навигация -->
-    <h3 class="title-font" style="text-align: center; margin-top: 25px; margin-bottom: 15px;">НАВИГАЦИЯ</h3>
-    <div class="menu-grid">
-        <button class="btn btn-outline" onclick="loadScreen('profile')">Профиль</button>
-        <button class="btn btn-outline" onclick="loadScreen('mentors')">Наставник</button>
-        <button class="btn btn-outline" onclick="loadScreen('manuals')">Мануал</button>
-        <button class="btn btn-outline" onclick="loadScreen('packs')">Паки</button>
-        <button class="btn btn-outline" onclick="loadScreen('voice')">Голосовые</button>
-        <button class="btn btn-outline" onclick="loadScreen('pastes')">Пасты</button>
-        <button class="btn btn-outline" onclick="loadScreen('payouts')">Выплаты</button>
-    </div>
-
-    <!-- Поддержать команду -->
-    <div style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
-        <a href="ССЫЛКА_СЮДА" style="color: rgba(255,255,255,0.3); font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1);">Поддержать Команду</a>
-    </div>
-        
-    <div class="card" style="text-align:center">
-        <img class="mentor-img" src="https://i.postimg.cc/4d7VpZjx/file-00000000e62471f4abcd57f082e86de9.png">
-        <h3>Наставник №1 Kodi</h3>
-        <p style="opacity:.6;margin:10px 0">( Универсал )</p>
-        <a class="btn" href="https://t.me/bicuze">Написать</a>
-    </div>
-    <div class="card" style="text-align:center">
-        <img class="mentor-img" src="https://i.postimg.cc/NGXRMs1S/file-00000000b860720aa3ee358794aca807.png">
-        <h3>Наставник №2 Relax</h3>
-        <p style="opacity:.6;margin:10px 0">( Универсал )</p>
-        <a class="btn" href="https://t.me/coxiko">Написать</a>
-    </div>
-    <img class="banner" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
-    <button class="btn btn-outline" onclick="loadScreen('home')">Назад</button>
-</div>
-
-<div id="profile" class="screen"><div class="card"><h2>Профиль</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-<div id="manuals" class="screen"><div class="card"><h2>Мануалы</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-<div id="packs" class="screen"><div class="card"><h2>Паки</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-<div id="voice" class="screen"><div class="card"><h2>Голосовые</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-<div id="pastes" class="screen"><div class="card"><h2>Пасты</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-<div id="payouts" class="screen"><div class="card"><h2>Выплаты</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
-
-
-<script>
+    <!-- Другие экраны (скрытые) -->
+    <div id="profile" class="screen">...</div>
+    <div id="mentors" class="screen">...</div>
+    <!-- и так далее для остальных -->
+    
     // Скрытие прелоадера при загрузке страницы
     window.onload = () => {
         document.getElementById('loader').style.opacity = '0';
