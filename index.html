@@ -6,104 +6,89 @@
     <title>Retro Terminal</title>
     <style>
         :root {
-            --bg-dark: #050505;
-            --red-btn: #800000;
-            --glass: rgba(255, 255, 255, 0.04);
+            --red: #800000;
+            --glass: rgba(255, 255, 255, 0.05);
             --border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         body { 
-            margin: 0; padding: 0;
-            background: radial-gradient(circle at 50% 0%, #3a0000 0%, transparent 60%),
-                        radial-gradient(circle at 50% 100%, #3a0000 0%, transparent 60%),
-                        radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 70%);
-            background-color: #050505;
-            color: #fff; font-family: sans-serif; 
-            height: 100vh; overflow: hidden;
-            display: flex; flex-direction: column;
+            margin: 0; background: #050505; color: #fff; font-family: sans-serif;
+            height: 100vh; overflow: hidden; display: flex; flex-direction: column;
             user-select: none;
         }
 
         /* Анимация отскока */
         @keyframes pop {
             0% { transform: scale(1); }
-            50% { transform: scale(0.90); }
+            50% { transform: scale(0.92); }
             100% { transform: scale(1); }
         }
         .animate-pop { animation: pop 0.2s ease-in-out; }
 
-        button, a, .btn, .video-btn {
-            outline: none !important;
-            box-shadow: none !important;
-            -webkit-tap-highlight-color: transparent !important;
-        }
+        .container { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
-        
-        .video-btn {
-            display: block; margin: 10px auto 0; padding: 10px 20px;
-            border: 2px solid #800000; border-radius: 12px;
-            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
-            font-weight: 900; text-decoration: none; text-transform: uppercase;
-            text-align: center; 
+        .glass-card { background: var(--glass); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 20px; text-align: center; }
+
+        .title { 
+            font-weight: 900; font-size: 22px; text-transform: uppercase; margin: 0 0 15px 0;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
         }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
+        .video-btn {
+            display: block; padding: 12px; border: 2px solid var(--red); border-radius: 12px;
+            background: rgba(128, 0, 0, 0.3); color: #ff4d4d; font-weight: 900; text-decoration: none; text-transform: uppercase;
+        }
+
+        .nav-title { 
+            text-align: center; font-size: 16px; margin: 0 0 15px 0; text-transform: uppercase;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        /* Исправленная сетка */
+        .grid { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 12px; 
+        }
         
         .btn { 
-            padding: 8px; border-radius: 14px; border: var(--border); 
+            padding: 12px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
-            cursor: pointer; display: flex; align-items: center; gap: 8px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         
         .btn img { 
-            width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
+            width: 24px; height: 24px; border-radius: 6px; 
             filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
         }
 
-        .title, .nav-title { 
-            text-align: center; text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-        }
-        .title { font-weight: 900; font-size: 22px; margin: 0; }
-        .nav-title { font-size: 16px; margin: 10px 0; }
-        
-        .screen { display: none; height: 100%; }
+        .screen { display: none; }
         .screen.active { display: flex; flex-direction: column; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
     </style>
 </head>
 <body>
 
     <div id="home" class="screen active container">
-        <div class="glass-card" style="text-align: center;">
+        <div class="glass-card">
             <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-            <a href="#" class="video-btn" onclick="handleButtonClick(event, 'home')">ВИДЕО ОБУЧЕНИЕ</a>
+            <a href="#" class="video-btn" onclick="handle(event, 'home')">ВИДЕО ОБУЧЕНИЕ</a>
         </div>
 
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="handleButtonClick(event, 'profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
-            <button class="btn" onclick="handleButtonClick(event, 'mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
-            <!-- Остальные кнопки -->
+            <button class="btn" onclick="handle(event, 'profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="handle(event, 'mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="handle(event, 'manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn" onclick="handle(event, 'packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
         </div>
     </div>
 
     <script>
-        function handleButtonClick(event, screenId) {
+        function handle(event, id) {
             const el = event.currentTarget;
-            // Добавляем класс анимации
             el.classList.add('animate-pop');
-            
-            // Ждем 200мс (время анимации), затем переключаем экран
             setTimeout(() => {
                 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-                const target = document.getElementById(screenId);
-                if(target) target.classList.add('active');
-                
-                // Убираем класс, чтобы можно было нажать снова
+                document.getElementById(id).classList.add('active');
                 el.classList.remove('animate-pop');
             }, 200);
         }
