@@ -15,10 +15,10 @@
 
         body { 
             margin: 0; 
-            /* Неон сверху, снизу и по центру */
-            background: radial-gradient(circle at center, #2a0000 0%, #050505 50%),
-                        radial-gradient(circle at 50% 0%, #2a0000 0%, transparent 60%),
-                        radial-gradient(circle at 50% 100%, #2a0000 0%, transparent 60%);
+            /* Неон сверху, снизу и по центру с мягким переходом */
+            background: radial-gradient(circle at 50% 0%, #3a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 100%, #3a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 70%);
             background-color: #050505;
             background-attachment: fixed;
             color: #fff; font-family: sans-serif; height: 100vh; 
@@ -46,13 +46,14 @@
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        /* Сдвинули контейнер влево на 5px */
-        .photo-container { display: flex; flex-direction: row; gap: 10px; margin: 15px 10px 15px 5px; }
+        /* Сдвинули весь блок с фото влево */
+        .photo-container { display: flex; flex-direction: row; gap: 10px; margin: 15px 0px 15px 0px; padding-left: 5px; }
         .photo { 
             width: 50%; height: 140px; 
             object-fit: cover; border-radius: 16px; 
             border: 2px solid #000; 
         }
+        /* Дополнительно сдвигаем правую (Company) для выравнивания */
         .photo-right { object-position: 50% 40%; } 
         
         .screen { display: none; }
