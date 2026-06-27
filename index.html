@@ -3,69 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berserk Eclipse</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        * {
-            -webkit-tap-highlight-color: transparent;
-        }
         body {
-            margin: 0;
-            background: linear-gradient(180deg, #000 0%, #4a0000 100%);
+            background: #050505;
             color: #fff;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
+            padding-top: 20px;
         }
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid #8b0000;
-            padding: 30px;
-            border-radius: 25px;
-            text-align: center;
+        .profile-card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid #ff0000;
+            padding: 20px;
+            border-radius: 20px;
             width: 85%;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
         }
-        h1 { color: #ff3333; text-shadow: 0 0 10px #8b0000; margin-bottom: 20px; }
-        
+        #user-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #ff0000;
+            margin-bottom: 10px;
+        }
         .btn {
-            background: rgba(139, 0, 0, 0.3);
-            border: 1px solid #ff4444;
-            color: white;
-            padding: 15px 30px;
+            background: #111;
+            border: 1px solid #ff0000;
+            color: #ff0000;
+            padding: 15px;
+            width: 90%;
             margin: 10px 0;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.1s, background 0.3s;
-            font-size: 16px;
-            width: 100%;
-            outline: none !important;
-            display: block;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
         }
-        .btn:active {
-            transform: scale(0.95);
-            background: #8b0000;
-        }
+        .btn:active { background: #ff0000; color: #fff; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>RETRO COMPANY</h1>
-        <button class="btn" onclick="Telegram.WebApp.showAlert('Гатс идет вперед...')">ГАТС</button>
-        <button class="btn" onclick="Telegram.WebApp.showAlert('Гриффит выбирает путь...')">ГРИФФИТ</button>
-        <button class="btn" onclick="Telegram.WebApp.close()" style="border-color: #555;">ЗАКРЫТЬ</button>
-    </div>
+<div class="profile-card">
+    <img id="user-photo" src="https://via.placeholder.com/150" alt="Avatar">
+    <h2 id="user-name">Загрузка...</h2>
+    <p style="font-size: 12px; color: #777;" id="user-id">ID: ---</p>
+</div>
 
-    <script>
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-    </script>
+<button class="btn">🩸 ЛИЧНОЕ ДЕЛО</button>
+<button class="btn">🔥 ВЫПЛАТЫ</button>
+
+<script>
+    let tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // Получаем данные пользователя
+    if (tg.initDataUnsafe.user) {
+        let user = tg.initDataUnsafe.user;
+        document.getElementById('user-name').innerText = user.first_name;
+        document.getElementById('user-id').innerText = "ID: " + user.id;
+        
+        // В Telegram Mini App нельзя напрямую получить URL фото, 
+        // поэтому обычно используют фото из профиля через бота, 
+        // но для начала мы выведем имя.
+    }
+</script>
 </body>
 </html>
-
