@@ -43,12 +43,16 @@
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
         /* Идеально ровные верхние фото */
-        .photo-container { display: flex; gap: 12px; margin: 15px; justify-content: space-between; }
         .photo { 
-            width: calc(50% - 6px); height: 140px; 
-            object-fit: cover; border-radius: 16px; 
-            border: 2px solid #000; display: block; 
+            width: calc(50% - 6px); 
+            height: 140px; 
+            object-fit: cover; 
+            object-position: center; /* Центрируем изображение внутри рамки */
+            border-radius: 16px; 
+            border: 2px solid #000; 
+            display: block; 
         }
+        
         
         .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
