@@ -5,72 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --red: #ff0000; --bg: #0a0a0a; --card-bg: rgba(25, 25, 25, 0.6); }
+        :root { --red: #ff0000; --bg: #050505; --card: rgba(20, 20, 20, 0.8); }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
-        body { 
-            background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; 
-            margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center;
-        }
-
-        .profile-header { 
-            width: 100%; max-width: 400px; background: var(--card-bg); 
-            border: 1px solid var(--red); border-radius: 20px; padding: 20px;
-            text-align: center; margin-bottom: 30px; box-shadow: 0 0 20px rgba(255,0,0,0.15);
-        }
-
-        .mentor-card {
-            width: 100%; max-width: 400px; background: var(--card-bg);
-            border: 1px solid #333; border-radius: 20px; padding: 15px;
-            margin-bottom: 20px; display: flex; align-items: center;
-            transition: 0.4s; border-left: 4px solid var(--red);
-        }
-
-        .mentor-card img {
-            width: 80px; height: 80px; border-radius: 50%;
-            border: 2px solid var(--red); object-fit: cover; margin-right: 15px;
-        }
-
-        .btn {
-            display: inline-block; padding: 10px 20px; margin-top: 10px;
-            background: transparent; border: 1px solid var(--red); color: var(--red);
-            border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s;
-        }
-
-        .btn:active { background: var(--red); color: #fff; transform: scale(0.95); }
+        .main-banner { width: 100%; max-width: 400px; border-radius: 20px; margin-bottom: 20px; border: 1px solid var(--red); box-shadow: 0 0 15px rgba(255,0,0,0.2); }
+        .text-block { width: 100%; max-width: 400px; text-align: center; margin-bottom: 30px; line-height: 1.5; color: #ccc; }
+        
+        .nav-btn { width: 100%; max-width: 400px; padding: 18px; margin: 10px 0; background: var(--card); border: 1px solid var(--red); color: white; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .nav-btn:active { transform: scale(0.97); background: var(--red); }
+        
+        .screen { display: none; width: 100%; max-width: 400px; }
+        .active { display: block; }
+        
+        .mentor-card { background: var(--card); border: 1px solid #333; border-radius: 20px; padding: 15px; margin-bottom: 15px; display: flex; align-items: center; border-left: 4px solid var(--red); }
+        .mentor-card img { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--red); margin-right: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="profile-header">
-        <h2 id="user-name">Загрузка...</h2>
-        <p style="color: #888;">Статус: Воркер Retro Company</p>
+    <!-- Главный экран -->
+    <div id="home" class="screen active">
+        <img src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png" class="main-banner">
+        <div class="text-block">
+            RetroBot - Ты новичок? Если да, тебе сюда. В этом Боте ты сможешь - Взять наставника, Посмотреть Мануалы и Зделать свой первый заветный Профит !
+        </div>
+        <button class="nav-btn" onclick="showScreen('profile')">МОЙ ПРОФИЛЬ</button>
     </div>
 
-    <div class="mentor-card">
-        <img src="https://i.postimg.cc/4d7VpZjx/file-00000000e62471f4abcd57f082e86de9.png">
-        <div>
-            <h3 style="margin:0;">Kodi</h3>
-            <p style="font-size: 12px; color: #aaa; margin: 5px 0;">Наставник №1</p>
-            <a href="https://t.me/bicuze" class="btn">НАПИСАТЬ</a>
-        </div>
+    <!-- Экран профиля -->
+    <div id="profile" class="screen">
+        <h2 style="text-align: center;">КАБИНЕТ</h2>
+        <button class="nav-btn" onclick="showScreen('mentors')">НАСТАВНИКИ</button>
+        <button class="nav-btn" style="opacity: 0.6;">СКОРО...</button>
+        <button class="nav-btn" style="opacity: 0.6;">СКОРО...</button>
+        <button class="nav-btn" style="opacity: 0.6;">СКОРО...</button>
+        <button class="nav-btn" style="background: transparent; border: 1px solid #555;" onclick="showScreen('home')">НАЗАД</button>
     </div>
 
-    <div class="mentor-card">
-        <img src="https://i.postimg.cc/NGXRMs1S/file-00000000b860720aa3ee358794aca807.png">
-        <div>
-            <h3 style="margin:0;">Relax</h3>
-            <p style="font-size: 12px; color: #aaa; margin: 5px 0;">Наставник №2</p>
-            <a href="https://t.me/coxiko" class="btn">НАПИСАТЬ</a>
+    <!-- Экран наставников -->
+    <div id="mentors" class="screen">
+        <h3 style="text-align: center; color: var(--red);">Здесь вы можете взять наставника, который поможет сделать вам первый профит!</h3>
+        
+        <div class="mentor-card">
+            <img src="https://i.postimg.cc/4d7VpZjx/file-00000000e62471f4abcd57f082e86de9.png">
+            <div>
+                <h4 style="margin:0;">Kodi</h4>
+                <a href="https://t.me/bicuze" class="nav-btn" style="padding: 5px 15px; display: inline-block;">НАПИСАТЬ</a>
+            </div>
         </div>
+        <div class="mentor-card">
+            <img src="https://i.postimg.cc/NGXRMs1S/file-00000000b860720aa3ee358794aca807.png">
+            <div>
+                <h4 style="margin:0;">Relax</h4>
+                <a href="https://t.me/coxiko" class="nav-btn" style="padding: 5px 15px; display: inline-block;">НАПИСАТЬ</a>
+            </div>
+        </div>
+        <button class="nav-btn" style="background: transparent; border: 1px solid #555;" onclick="showScreen('profile')">НАЗАД</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        if (tg.initDataUnsafe.user) {
-            document.getElementById('user-name').innerText = "Привет, " + tg.initDataUnsafe.user.first_name;
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
     </script>
 </body>
 </html>
-
