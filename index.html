@@ -5,46 +5,143 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retro Company Terminal</title>
     <style>
-        body { margin: 0; background-color: #050505; color: #fff; font-family: sans-serif; }
-        .screen { display: none; padding: 20px; }
-        .screen.active { display: block; }
-        #loader { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #050505; z-index: 9999; }
-        .btn { display: block; width: 100%; padding: 15px; border: none; border-radius: 14px; background: linear-gradient(90deg, #b30000, #5a0000); color: #fff; font-weight: 700; margin-bottom: 10px; cursor: pointer; text-decoration: none; text-align: center; }
-        .card { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 20px; margin-bottom: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        /* ГЛОБАЛЬНЫЕ НАСТРОЙКИ СТИЛЯ */
+        :root {
+            --bg-color: #050505;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --accent-red: #b30000;
+            --text-main: #ffffff;
+            --border-style: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* АНИМАЦИЯ ЭКРАНОВ */
+        .screen {
+            display: none;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* КАРТОЧКИ И СТЕКЛО */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: var(--border-style);
+            border-radius: 24px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* СЕТКА НАВИГАЦИИ */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        /* КНОПКИ */
+        .btn {
+            padding: 20px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: var(--border-style);
+            color: var(--text-main);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn:hover { background: rgba(255, 255, 255, 0.1); }
+        .btn:active { transform: scale(0.95); background: var(--accent-red); }
+
+        /* ЗАГОЛОВКИ */
+        h1, h2, h3 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
     </style>
 </head>
 <body>
 
-    <div id="loader">Загрузка...</div>
-
-    <div id="home" class="screen active">
-        <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px;" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
-            <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 18px;" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
-        </div>
-
-        <div class="card">
-            <h2 style="font-weight: 900; letter-spacing: 2px; font-size: 28px; text-transform: uppercase; margin: 0 0 10px;">ПАНЕЛЬ</h2>
-            <p style="opacity: 0.6; margin-bottom: 15px;">Не знаешь с чего начать?</p>
-            <p style="opacity: 0.6;">Специально для вас мы создали <br>
-            <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; font-weight: 800;">видео обучение</a> @RetroWork_Bot!</p>
-        </div>
-
-        <h3 style="text-align: center; margin-top: 25px;">НАВИГАЦИЯ</h3>
-        <button class="btn" onclick="loadScreen('profile')">Профиль</button>
-        <button class="btn" onclick="loadScreen('mentors')">Наставник</button>
-        <button class="btn" onclick="loadScreen('manuals')">Мануал</button>
-        
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="#" style="color: rgba(255,255,255,0.3); font-size: 12px; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1);">Поддержать Команду</a>
-        </div>
+    <!-- ЗАГРУЗЧИК -->
+    <div id="loader" style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #050505; z-index: 9999;">
+        Инициализация...
     </div>
 
+    <main>
+        <!-- ГЛАВНЫЙ ЭКРАН -->
+        <section id="home" class="screen active">
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 20px;" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+                <img style="width: 50%; height: 140px; object-fit: cover; border-radius: 20px;" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
+            </div>
+
+            <div class="card">
+                <h1>ПАНЕЛЬ</h1>
+                <p style="opacity: 0.6;">Не знаешь с чего начать?</p>
+                <a href="https://t.me/RetroWork_Bot" style="color: var(--accent-red); font-weight: bold; text-decoration: none;">ВИДЕО ОБУЧЕНИЕ</a>
+            </div>
+
+            <h3 style="text-align: center; margin-top: 40px;">НАВИГАЦИЯ</h3>
+            <div class="menu-grid">
+                <button class="btn" onclick="loadScreen('profile')">ПРОФИЛЬ</button>
+                <button class="btn" onclick="loadScreen('mentors')">НАСТАВНИК</button>
+                <button class="btn" onclick="loadScreen('manuals')">МАНУАЛ</button>
+                <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
+                <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
+                <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
+            </div>
+        </section>
+
+        <!-- РАЗДЕЛЫ -->
+        <section id="profile" class="screen">
+            <div class="card">
+                <h2>ПРОФИЛЬ</h2>
+                <button class="btn" onclick="loadScreen('home')">НАЗАД</button>
+            </div>
+        </section>
+        <section id="mentors" class="screen">
+            <div class="card">
+                <h2>НАСТАВНИК</h2>
+                <button class="btn" onclick="loadScreen('home')">НАЗАД</button>
+            </div>
+        </section>
+        <section id="manuals" class="screen">
+            <div class="card">
+                <h2>МАНУАЛ</h2>
+                <button class="btn" onclick="loadScreen('home')">НАЗАД</button>
+            </div>
+        </section>
+    </main>
+
     <script>
-        window.onload = () => { document.getElementById('loader').style.display = 'none'; };
-        function loadScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+        // ЛОГИКА ЗАГРУЗКИ
+        window.addEventListener('load', () => {
+            document.getElementById('loader').style.display = 'none';
+        });
+
+        // ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+        function loadScreen(targetId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(targetId).classList.add('active');
         }
     </script>
 </body>
