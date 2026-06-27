@@ -15,7 +15,11 @@
 
         body { 
             margin: 0; 
-            background: radial-gradient(circle at center, #2a0000 0%, #050505 70%); 
+            /* Неон сверху, снизу и по центру */
+            background: radial-gradient(circle at center, #2a0000 0%, #050505 50%),
+                        radial-gradient(circle at 50% 0%, #2a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 100%, #2a0000 0%, transparent 60%);
+            background-color: #050505;
             background-attachment: fixed;
             color: #fff; font-family: sans-serif; height: 100vh; 
             overflow-y: auto; touch-action: manipulation;
@@ -42,14 +46,13 @@
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        /* Исправленный контейнер: всегда горизонтально */
-        .photo-container { display: flex; flex-direction: row; gap: 10px; margin: 15px; }
+        /* Сдвинули контейнер влево на 5px */
+        .photo-container { display: flex; flex-direction: row; gap: 10px; margin: 15px 10px 15px 5px; }
         .photo { 
             width: 50%; height: 140px; 
             object-fit: cover; border-radius: 16px; 
             border: 2px solid #000; 
         }
-        /* Поднимаем текст на правой картинке чуть выше */
         .photo-right { object-position: 50% 40%; } 
         
         .screen { display: none; }
