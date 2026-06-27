@@ -7,44 +7,28 @@
     <style>
         :root {
             --bg-dark: #050505;
-            /* Тот самый переливающийся градиент на фон */
             --bg-gradient: radial-gradient(circle at center, #2a0000 0%, #050505 70%);
             --red-btn: linear-gradient(135deg, #b30000 0%, #5a0000 100%);
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
+            /* Свечение */
+            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8), 0 0 30px rgba(179, 0, 0, 0.4);
         }
 
-        body { 
-            margin: 0; 
-            background: var(--bg-gradient); 
-            background-attachment: fixed; /* Чтобы градиент не двигался при прокрутке */
-            color: #fff; 
-            font-family: sans-serif; 
-            min-height: 100vh;
-        }
+        body { margin: 0; background: var(--bg-gradient); background-attachment: fixed; color: #fff; font-family: sans-serif; min-height: 100vh; }
         
-        .glass-card { 
-            background: var(--glass); 
-            backdrop-filter: blur(15px); 
-            border: var(--border); 
-            border-radius: 24px; 
-            padding: 20px; 
-            margin: 15px; 
-        }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
-        .btn { 
-            padding: 15px; border-radius: 16px; border: var(--border); 
-            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
-            text-align: center; cursor: pointer; transition: 0.3s; 
-        }
-        /* При нажатии кнопка загорается красным градиентом */
+        .btn { padding: 15px; border-radius: 16px; border: var(--border); background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; text-align: center; cursor: pointer; transition: 0.3s; }
         .btn:active { background: var(--red-btn); transform: scale(0.95); }
 
-        .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        .photo { width: 50%; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); }
+        /* Стиль заголовков с красным свечением */
+        .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
+        .nav-title { text-align: center; color: #fff; margin-top: 30px; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
+        .photo { width: 50%; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); }
         .screen { display: none; }
         .screen.active { display: block; }
     </style>
@@ -63,7 +47,7 @@
             <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; font-weight: 800; text-decoration: none;">ВИДЕО ОБУЧЕНИЕ</a>
         </div>
 
-        <h3 style="text-align: center; color: #fff; margin-top: 30px;">НАВИГАЦИЯ</h3>
+        <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
             <button class="btn" onclick="loadScreen('profile')">ПРОФИЛЬ</button>
@@ -72,6 +56,10 @@
             <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
             <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
             <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px; padding-bottom: 30px;">
+            <a href="#" style="color: rgba(255,255,255,0.4); font-size: 13px; text-decoration: underline; text-underline-offset: 4px;">Поддержать Команду</a>
         </div>
     </div>
 
