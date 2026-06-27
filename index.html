@@ -8,43 +8,44 @@
         :root {
             --bg-dark: #050505;
             --bg-gradient: radial-gradient(circle at center, #2a0000 0%, #050505 70%);
-            --red-btn: linear-gradient(135deg, #b30000 0%, #5a0000 100%);
+            --red-btn: #800000;
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
-            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8), 0 0 30px rgba(179, 0, 0, 0.4);
+            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8);
         }
 
         body { 
             margin: 0; background: var(--bg-gradient); background-attachment: fixed; 
-            color: #fff; font-family: sans-serif; height: 100vh; overflow: hidden; 
-            -webkit-tap-highlight-color: transparent; touch-action: none;
+            color: #fff; font-family: sans-serif; height: 100vh; 
+            overflow: hidden; touch-action: none; -webkit-tap-highlight-color: transparent;
         }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
-        /* Кнопки: резкий отскок */
         .btn { 
-            padding: 16px; border-radius: 16px; border: var(--border); 
+            padding: 12px 10px; border-radius: 16px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
-            text-align: center; cursor: pointer; 
-            transition: transform 0.08s ease-out;
-            outline: none; -webkit-tap-highlight-color: transparent;
+            cursor: pointer; transition: transform 0.1s ease-out;
+            display: flex; align-items: center; justify-content: flex-start; gap: 8px;
+            user-select: none; -webkit-tap-highlight-color: transparent;
         }
-        .btn:active { transform: scale(0.85); background: var(--red-btn); }
+        .btn:active { transform: scale(0.90); background: var(--red-btn); }
+        
+        /* Размер иконок */
+        .btn img { width: 24px; height: 24px; object-fit: contain; }
 
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
-        .nav-title { text-align: center; color: #fff; margin-top: 20px; letter-spacing: 2px; text-shadow: var(--red-glow); }
+        .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        /* Исправленные фото */
-        .photo-container { display: flex; gap: 10px; margin: 15px; }
-        .photo { width: 50%; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); }
+        .photo-container { display: flex; gap: 10px; margin: 15px; width: calc(100% - 30px); }
+        .photo { flex: 1; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); display: block; }
         
         .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
 
-        .support-link { color: rgba(255,255,255,0.15); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
+        .support-link { color: rgba(255,255,255,0.1); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; display: block; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -64,19 +65,17 @@
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')">ПРОФИЛЬ</button>
-            <button class="btn" onclick="loadScreen('mentors')">НАСТАВНИК</button>
-            <button class="btn" onclick="loadScreen('manuals')">МАНУАЛ</button>
-            <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
-            <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
-            <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
-            <button class="btn" onclick="loadScreen('bots')">БОТЫ</button>
-            <button class="btn" onclick="loadScreen('dox')">ПРОБИВ</button>
+            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/k4my6qSK/file-00000000d388720aa63b4011116f397d.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/TPrVXFsx/file-00000000d02c720aa096c2c068ff09be.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/T2krGrtf/file-0000000087b471f4bf2b293f5f7b503a.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/vmLVK911/file-00000000d9747243ad13951549e2714f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/WbBqbSgv/1782581893292.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/rmwKYHX5/1782581886852.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/Fzf1hJKs/1782581764060.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/DfD8B5CX/1782581855149.png"> ПРОБИВ</button>
         </div>
 
-        <div style="text-align: center; margin-top: 15px;">
-            <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
-        </div>
+        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
 
     <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
@@ -84,7 +83,8 @@
     <script>
         function loadScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
         }
     </script>
 </body>
