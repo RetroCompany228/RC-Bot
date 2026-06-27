@@ -33,7 +33,6 @@
         }
         .btn:active { transform: scale(0.90); background: var(--red-btn); }
         
-        /* Иконка: черная рамка + скругление */
         .btn img { 
             width: 28px; height: 28px; object-fit: cover; 
             border-radius: 8px; border: 2px solid #000; 
@@ -43,8 +42,13 @@
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        .photo-container { display: flex; gap: 10px; margin: 15px; width: calc(100% - 30px); }
-        .photo { flex: 1; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); display: block; }
+        /* Верхние фото: фиксированная ширина, рамка и скругление */
+        .photo-container { display: flex; gap: 12px; margin: 15px; justify-content: center; }
+        .photo { 
+            width: calc(50% - 6px); height: 140px; 
+            object-fit: cover; border-radius: 16px; 
+            border: 2px solid #000; display: block; 
+        }
         
         .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
@@ -54,9 +58,10 @@
 <body>
 
     <div id="home" class="screen active">
+        <!-- Обновленные верхние фото -->
         <div class="photo-container">
-            <img class="photo" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
-            <img class="photo" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
+            <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
+            <img class="photo" src="https://i.postimg.cc/SK1jzG3V/file-00000000a96871f4964bed968d33903d.png">
         </div>
 
         <div class="glass-card" style="text-align: center;">
@@ -92,4 +97,3 @@
     </script>
 </body>
 </html>
-
