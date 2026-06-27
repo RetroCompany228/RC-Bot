@@ -20,14 +20,15 @@
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
-        /* Кнопки с эффектом отскока */
+        /* Кнопки с эффектом "отпрыгивания" */
         .btn { 
-            padding: 15px; border-radius: 16px; border: var(--border); 
+            padding: 16px; border-radius: 16px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
-            text-align: center; cursor: pointer; transition: transform 0.1s ease, background 0.3s; 
+            text-align: center; cursor: pointer; 
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s; 
             outline: none; -webkit-tap-highlight-color: transparent;
         }
-        .btn:active { background: var(--red-btn); transform: scale(0.92); }
+        .btn:active { background: var(--red-btn); transform: scale(0.90); }
 
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin-top: 30px; letter-spacing: 2px; text-shadow: var(--red-glow); }
@@ -36,15 +37,7 @@
         .screen { display: none; }
         .screen.active { display: block; }
 
-        /* Ссылка поддержки */
-        .support-link { 
-            color: rgba(255,255,255,0.3); 
-            font-size: 13px; 
-            text-decoration: underline; 
-            text-underline-offset: 4px;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .support-link { color: rgba(255,255,255,0.3); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; outline: none; -webkit-tap-highlight-color: transparent; }
         .support-link:active { color: #fff; }
     </style>
 </head>
@@ -71,6 +64,8 @@
             <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
             <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
             <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')">БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')">ПРОБИВ</button>
         </div>
 
         <div style="text-align: center; margin-top: 40px; padding-bottom: 30px;">
@@ -81,6 +76,8 @@
     <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
     <section id="mentors" class="screen"><div class="glass-card"><h2>НАСТАВНИК</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
     <section id="manuals" class="screen"><div class="glass-card"><h2>МАНУАЛ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
+    <section id="bots" class="screen"><div class="glass-card"><h2>БОТЫ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
+    <section id="dox" class="screen"><div class="glass-card"><h2>ПРОБИВ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
 
     <script>
         function loadScreen(id) {
