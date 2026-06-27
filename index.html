@@ -10,7 +10,6 @@
             --red-btn: #800000;
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
-            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8);
         }
 
         body { 
@@ -25,10 +24,17 @@
             user-select: none;
         }
 
+        /* Убираем все стандартные выделения */
         button, a, .btn, .video-btn {
             outline: none !important;
             box-shadow: none !important;
             -webkit-tap-highlight-color: transparent !important;
+            transition: transform 0.1s ease;
+        }
+
+        /* Возвращаем анимацию нажатия для всех кнопок */
+        button:active, .btn:active, .video-btn:active {
+            transform: scale(0.95);
         }
         
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
@@ -40,9 +46,8 @@
             background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
             font-weight: 900; text-decoration: none; text-transform: uppercase;
             text-align: center; 
-            transition: transform 0.1s ease, background 0.2s;
         }
-        .video-btn:active { background: #800000; color: #fff; transform: scale(0.95); }
+        .video-btn:active { background: #800000; color: #fff; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
@@ -50,25 +55,23 @@
             padding: 8px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
-            transition: transform 0.1s ease, background 0.2s;
         }
-        .btn:active { transform: scale(0.95); background: var(--red-btn); }
+        .btn:active { background: var(--red-btn); }
         
         .btn img { 
             width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6)); 
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
         }
 
-        /* Неоновые заголовки */
-        .title { 
-            font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; 
-            text-shadow: 0 0 10px rgba(255,0,0,0.5); 
+        /* Яркий неон для заголовков */
+        .title, .nav-title { 
+            text-align: center; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
         }
-        .nav-title { 
-            text-align: center; font-size: 16px; color: #fff; margin: 10px 0; 
-            letter-spacing: 3px; text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255,0,0,0.5);
-        }
+        .title { font-weight: 900; font-size: 22px; margin: 0; }
+        .nav-title { font-size: 16px; margin: 10px 0; }
         
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
         .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #000; }
