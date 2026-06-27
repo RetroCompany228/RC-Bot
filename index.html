@@ -25,7 +25,6 @@
             user-select: none;
         }
 
-        /* Удаление системных рамок и выделений */
         button, a, .btn, .video-btn {
             outline: none !important;
             box-shadow: none !important;
@@ -33,10 +32,8 @@
         }
         
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
         
-        /* Кнопка ВИДЕО ОБУЧЕНИЕ */
         .video-btn {
             display: block; margin: 10px auto 0; padding: 10px 20px;
             border: 2px solid #800000; border-radius: 12px;
@@ -45,31 +42,32 @@
             text-align: center; 
             transition: transform 0.1s ease, background 0.2s;
         }
-        .video-btn:active { 
-            background: #800000; color: #fff; 
-            transform: scale(0.95);
-        }
+        .video-btn:active { background: #800000; color: #fff; transform: scale(0.95); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
-        /* Кнопки навигации */
         .btn { 
             padding: 8px; border-radius: 14px; border: var(--border); 
-            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; font-size: 13px;
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
             transition: transform 0.1s ease, background 0.2s;
         }
         .btn:active { transform: scale(0.95); background: var(--red-btn); }
         
-        .btn img { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #000; }
+        .btn img { 
+            width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6)); 
+        }
 
-        .title { font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
-        
-        /* Неоновая НАВИГАЦИЯ */
+        /* Неоновые заголовки */
+        .title { 
+            font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; 
+            text-shadow: 0 0 10px rgba(255,0,0,0.5); 
+        }
         .nav-title { 
             text-align: center; font-size: 16px; color: #fff; margin: 10px 0; 
             letter-spacing: 3px; text-transform: uppercase;
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+            text-shadow: 0 0 10px rgba(255,0,0,0.5);
         }
         
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
