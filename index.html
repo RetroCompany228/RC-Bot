@@ -36,10 +36,16 @@
         /* Иконки: убираем белый фон через blend-mode и добавляем свечение */
         .btn img { 
             width: 28px; height: 28px; object-fit: contain; 
-            mix-blend-mode: lighten; /* Убирает белый фон */
-            filter: drop-shadow(0 0 5px rgba(179, 0, 0, 0.7)); /* Красное свечение */
-        }
-
+.btn img { 
+    width: 28px; 
+    height: 28px; 
+    object-fit: cover; 
+    border-radius: 8px; 
+    background: #000; 
+    padding: 2px; 
+    filter: drop-shadow(0 0 5px rgba(179, 0, 0, 0.7)); 
+}
+            
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
