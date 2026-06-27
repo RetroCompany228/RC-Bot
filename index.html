@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Retro Company Terminal</title>
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
@@ -16,51 +17,48 @@ overflow-x:hidden;
 min-height:100vh;
 }
 
-/* ФОН */
+/* glow */
 .bg-glow{
 position:fixed;
-width:400px;
-height:400px;
+width:420px;
+height:420px;
 border-radius:50%;
-filter:blur(120px);
+filter:blur(130px);
 z-index:-1;
 }
-
-.bg1{background:#8b0000;top:-100px;left:-100px}
+.bg1{background:#8b0000;top:-120px;left:-120px}
 .bg2{background:#2b0000;bottom:-120px;right:-120px}
 
-/* КОНТЕЙНЕР */
+/* layout */
 .container{
 max-width:430px;
 margin:auto;
 padding:18px;
 }
 
-/* СТЕКЛО */
+/* cards */
 .card{
 background:rgba(255,255,255,0.04);
 border:1px solid rgba(255,255,255,0.08);
 backdrop-filter:blur(18px);
 border-radius:20px;
 padding:18px;
-margin-bottom:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
-animation:fade 0.4s ease;
+margin-bottom:14px;
+animation:fade .4s ease;
 }
-
 @keyframes fade{
 from{opacity:0;transform:translateY(10px)}
 to{opacity:1;transform:translateY(0)}
 }
 
-/* БАННЕР */
+/* banner */
 .banner{
 width:100%;
 border-radius:18px;
-margin-bottom:15px;
+margin-bottom:14px;
 }
 
-/* КНОПКИ */
+/* buttons */
 .btn{
 display:block;
 width:100%;
@@ -68,31 +66,27 @@ padding:14px;
 margin-top:10px;
 border:none;
 border-radius:14px;
-color:white;
+color:#fff;
 font-weight:700;
 cursor:pointer;
 text-decoration:none;
 text-align:center;
-background:linear-gradient(90deg,#b30000,#5a0000);
-transition:0.2s;
+background:linear-gradient(90deg,#b30000,#4a0000);
+transition:.2s;
 }
-
-.btn:active{
-transform:scale(0.96);
-}
+.btn:active{transform:scale(0.96)}
 
 .btn-outline{
 background:transparent;
 border:1px solid rgba(255,255,255,0.2);
 }
 
-/* GRID */
+/* grid stats */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:12px;
 }
-
 .stat{
 background:rgba(255,255,255,0.03);
 padding:14px;
@@ -100,7 +94,7 @@ border-radius:16px;
 text-align:center;
 }
 
-/* МЕНЮ */
+/* menu */
 .menu{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -110,21 +104,19 @@ gap:10px;
 .menu button{
 padding:14px;
 border-radius:14px;
-border:none;
-cursor:pointer;
-font-weight:700;
-color:white;
-background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
-transition:0.2s;
+background:rgba(255,255,255,0.05);
+color:#fff;
+font-weight:700;
+cursor:pointer;
+transition:.2s;
 }
-
 .menu button:active{
 transform:scale(0.95);
-background:rgba(255,0,0,0.2);
+background:rgba(255,0,0,0.15);
 }
 
-/* ЭКРАНЫ */
+/* screens */
 .screen{display:none}
 .active{display:block}
 </style>
@@ -152,7 +144,7 @@ background:rgba(255,0,0,0.2);
 
 <div class="grid">
 <div class="stat">
-<h3>0₽</h3>
+<h3 id="balance">0₽</h3>
 <p style="opacity:.6">Баланс</p>
 </div>
 <div class="stat">
@@ -162,84 +154,18 @@ background:rgba(255,0,0,0.2);
 </div>
 
 <div class="card">
-
 <h3>Навигация</h3>
 
 <div class="menu">
-
 <button onclick="show('profile')">Профиль</button>
 <button onclick="show('mentors')">Наставник</button>
 <button onclick="show('manuals')">Мануал</button>
 <button onclick="show('packs')">Паки</button>
 <button onclick="show('voice')">Голосовые</button>
 <button onclick="show('pastes')">Пасты</button>
-
 </div>
 
 </div>
-</div>
-
-<!-- PROFILE -->
-<div id="profile" class="screen">
-
-<div class="card">
-<h2>Профиль</h2>
-<p style="opacity:.6">Информация пользователя</p>
-</div>
-
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
-<!-- MENTORS -->
-<div id="mentors" class="screen">
-
-<div class="card">
-<h2>Наставники</h2>
-
-<a class="btn" href="https://t.me/bicuze">KODI</a>
-<a class="btn" href="https://t.me/coxiko">RELAX</a>
-
-</div>
-
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
-<!-- MANUALS -->
-<div id="manuals" class="screen">
-<div class="card">
-<h2>Мануалы</h2>
-<p style="opacity:.6">Раздел в разработке</p>
-</div>
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
-<!-- PACKS -->
-<div id="packs" class="screen">
-<div class="card">
-<h2>Паки</h2>
-<p style="opacity:.6">Контент появится позже</p>
-</div>
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
-<!-- VOICE -->
-<div id="voice" class="screen">
-<div class="card">
-<h2>Голосовые</h2>
-<p style="opacity:.6">Раздел голосовых сообщений</p>
-</div>
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
-<!-- PASTES -->
-<div id="pastes" class="screen">
-<div class="card">
-<h2>Пасты</h2>
-<p style="opacity:.6">Штнж / аноним / прочее</p>
-</div>
-<button class="btn btn-outline" onclick="show('home')">Назад</button>
-</div>
-
 </div>
 
 <script>
@@ -248,10 +174,12 @@ document.querySelectorAll('.screen').forEach(e=>e.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 }
 
+/* Telegram init */
 if(window.Telegram?.WebApp){
 Telegram.WebApp.expand();
 
 const u = Telegram.WebApp.initDataUnsafe?.user;
+
 if(u){
 document.getElementById("name").innerText =
 (u.first_name || "") + " " + (u.last_name || "");
@@ -262,5 +190,124 @@ document.getElementById("user").innerText =
 }
 </script>
 
+<!-- PROFILE -->
+<div id="profile" class="screen">
+<div class="card">
+<h2>Профиль</h2>
+<p style="opacity:.6">Информация пользователя</p>
+</div>
+
+<div class="card">
+<p>🔐 ID: 001</p>
+<p>💰 Баланс: <span id="balance2">0₽</span></p>
+<p>⚡ Статус: VIP</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- MENTORS -->
+<div id="mentors" class="screen">
+<div class="card">
+<h2>Наставники</h2>
+<p style="opacity:.6">Связь с кураторами</p>
+
+<a class="btn" href="https://t.me/bicuze">KODI</a>
+<a class="btn" href="https://t.me/coxiko">RELAX</a>
+</div>
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- MANUALS -->
+<div id="manuals" class="screen">
+<div class="card">
+<h2>Мануалы</h2>
+<p style="opacity:.6">Гайды появятся скоро</p>
+</div>
+
+<div class="card">
+<p>📘 Раздел: работа системы</p>
+<p>📘 Раздел: инструменты</p>
+<p>📘 Раздел: обучение</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- PACKS -->
+<div id="packs" class="screen">
+<div class="card">
+<h2>Паки</h2>
+<p style="opacity:.6">Контент-бандлы</p>
+</div>
+
+<div class="card">
+<p>📦 Pack #1 — Basic</p>
+<p>📦 Pack #2 — Pro</p>
+<p>📦 Pack #3 — Elite</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- VOICE -->
+<div id="voice" class="screen">
+<div class="card">
+<h2>Голосовые</h2>
+<p style="opacity:.6">Аудио-контент</p>
+</div>
+
+<div class="card">
+<p>🎧 Voice #1 — Intro</p>
+<p>🎧 Voice #2 — Guide</p>
+<p>🎧 Voice #3 — VIP</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<!-- PASTES -->
+<div id="pastes" class="screen">
+<div class="card">
+<h2>Пасты</h2>
+<p style="opacity:.6">Штнж / аноним / прочее</p>
+</div>
+
+<div class="card">
+<p>📄 Paste #1</p>
+<p>📄 Paste #2</p>
+<p>📄 Paste #3</p>
+</div>
+
+<button class="btn btn-outline" onclick="show('home')">Назад</button>
+</div>
+
+<script>
+
+/* синхрон баланса */
+let balance = 0;
+
+function updateBalance(){
+document.getElementById("balance").innerText = balance + "₽";
+document.getElementById("balance2").innerText = balance + "₽";
+}
+
+/* пример анимации начисления */
+setTimeout(()=>{
+balance = 1250;
+updateBalance();
+},1200);
+
+/* плавный переход эффект */
+document.addEventListener("click", (e)=>{
+if(e.target.tagName === "BUTTON"){
+e.target.style.boxShadow = "0 0 20px rgba(179,0,0,0.4)";
+setTimeout(()=>e.target.style.boxShadow="",200);
+}
+});
+
+</script>
+
+</div>
 </body>
 </html>
