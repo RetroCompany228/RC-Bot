@@ -8,69 +8,92 @@
         :root {
             --bg-dark: #050505;
             --red-btn: #800000;
-            --glass: rgba(0, 0, 0, 0.6); /* Сделал фон карточек чуть темнее для читаемости */
+            --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
+            --red-glow: 0 0 15px rgba(179, 0, 0, 0.8);
         }
 
         body { 
             margin: 0; 
-            background-color: #000;
+            background: radial-gradient(circle at center, #2a0000 0%, #050505 70%); 
+            background-attachment: fixed;
+            color: #fff; 
             font-family: sans-serif; 
             height: 100vh; 
             overflow: hidden; 
             touch-action: none;
         }
-
-        /* Фоновый слой */
-        .bg-img {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png') no-repeat center center;
-            background-size: cover;
-            filter: brightness(0.3); /* Затемняем картинку, чтобы текст был виден */
-            z-index: -1;
-        }
         
-        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
         .btn { 
             padding: 12px 10px; border-radius: 16px; border: var(--border); 
-            background: rgba(255,255,255,0.05); color: #fff; font-weight: 700; 
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
             cursor: pointer; transition: transform 0.1s ease-out;
             display: flex; align-items: center; gap: 10px;
+            user-select: none;
         }
         .btn:active { transform: scale(0.90); background: var(--red-btn); }
         
+        /* Иконки: просто скругленный квадрат, без фоновых искажений */
         .btn img { 
-            width: 28px; height: 28px; object-fit: cover; 
-            border-radius: 8px; background: #000; padding: 2px;
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.5));
+            width: 28px; height: 28px; 
+            object-fit: cover; 
+            border-radius: 6px; /* Легкое закругление */
+            filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.6)); 
         }
 
-        .screen { display: none; height: 100vh; overflow-y: auto; }
+        .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
+        .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
+        
+        .photo-container { display: flex; gap: 10px; margin: 15px; width: calc(100% - 30px); }
+        .photo { flex: 1; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); display: block; }
+        
+        .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
 
-        .support-link { color: rgba(255,255,255,0.3); text-decoration: underline; display: block; text-align: center; margin-top: 20px; font-size: 12px; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 13px; text-decoration: underline; display: block; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="bg-img"></div> <div id="home" class="screen active">
-        <div style="height: 20px;"></div> <div class="glass-card" style="text-align: center;">
-            <h1 style="color: #fff; margin: 0;">ПАНЕЛЬ</h1>
-            <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; text-decoration: none;">ВИДЕО ОБУЧЕНИЕ</a>
+
+    <div id="home" class="screen active">
+        <div class="photo-container">
+            <img class="photo" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+            <img class="photo" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
         </div>
 
+        <div class="glass-card" style="text-align: center;">
+            <h1 class="title">ПАНЕЛЬ</h1>
+            <p style="opacity: 0.6; font-size: 14px; margin: 10px 0;">Не знаешь с чего начать?</p>
+            <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; font-weight: 800; text-decoration: none;">ВИДЕО ОБУЧЕНИЕ</a>
+        </div>
+
+        <h3 class="nav-title">НАВИГАЦИЯ</h3>
+        
         <div class="grid">
             <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/k4my6qSK/file-00000000d388720aa63b4011116f397d.png"> ПРОФИЛЬ</button>
             <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/TPrVXFsx/file-00000000d02c720aa096c2c068ff09be.png"> НАСТАВНИК</button>
-            </div>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/T2krGrtf/file-0000000087b471f4bf2b293f5f7b503a.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/vmLVK911/file-00000000d9747243ad13951549e2714f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/WbBqbSgv/1782581893292.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/rmwKYHX5/1782581886852.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/Fzf1hJKs/1782581764060.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/DfD8B5CX/1782581855149.png"> ПРОБИВ</button>
+        </div>
+
         <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
+
+    <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
     
     <script>
         function loadScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
         }
     </script>
 </body>
