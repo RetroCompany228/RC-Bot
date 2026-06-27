@@ -14,67 +14,52 @@
         }
 
         body { 
-            margin: 0; 
+            margin: 0; padding: 0;
             background: radial-gradient(circle at 50% 0%, #3a0000 0%, transparent 60%),
                         radial-gradient(circle at 50% 100%, #3a0000 0%, transparent 60%),
                         radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 70%);
             background-color: #050505;
-            background-attachment: fixed;
-            color: #fff; font-family: sans-serif; height: 100vh; 
-            overflow-y: auto; touch-action: manipulation;
+            color: #fff; font-family: sans-serif; 
+            height: 100vh; overflow: hidden; /* Фиксируем экран */
+            display: flex; flex-direction: column;
         }
         
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
+        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
         
-        /* Стили для кнопки "Видео обучение" */
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
+        
         .video-btn {
-            display: block;
-            margin: 15px auto 0;
-            padding: 12px 20px;
-            border: 1px solid #800000;
-            border-radius: 12px;
-            background: rgba(128, 0, 0, 0.2);
-            color: #ff4d4d;
-            font-weight: 900;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.2s;
-            text-align: center;
+            display: block; margin: 10px auto 0; padding: 10px 20px;
+            border: 2px solid #800000; border-radius: 12px;
+            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
+            font-weight: 900; text-decoration: none; text-transform: uppercase;
+            text-align: center; transition: 0.2s;
         }
-        .video-btn:active { background: #800000; color: #fff; transform: scale(0.95); }
+        .video-btn:active { background: #800000; color: #fff; transform: scale(0.97); }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
         .btn { 
-            padding: 12px 10px; border-radius: 16px; border: var(--border); 
-            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
-            cursor: pointer; transition: transform 0.1s ease-out;
-            display: flex; align-items: center; gap: 10px;
-            user-select: none;
+            padding: 8px; border-radius: 14px; border: var(--border); 
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; font-size: 13px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
-        .btn:active { transform: scale(0.90); background: var(--red-btn); }
-        
-        .btn img { 
-            width: 28px; height: 28px; object-fit: cover; 
-            border-radius: 8px; border: 2px solid #000; 
-            filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5)); 
-        }
+        .btn img { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #000; }
 
-        .title { font-weight: 900; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
-        .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
+        .title { font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
+        .nav-title { text-align: center; font-size: 14px; color: #fff; margin: 10px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        .photo-container { display: flex; justify-content: space-between; gap: 10px; margin: 15px; }
-        .photo { width: 48%; height: 120px; object-fit: cover; border-radius: 16px; border: 2px solid #000; display: block; }
+        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #000; }
         
-        .screen { display: none; }
-        .screen.active { display: block; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 13px; text-decoration: underline; display: block; text-align: center; margin: 20px 0; }
+        .screen { display: none; height: 100%; }
+        .screen.active { display: flex; flex-direction: column; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="home" class="screen active">
+    <div id="home" class="screen active container">
         <div class="photo-container">
             <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
             <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
@@ -82,29 +67,25 @@
 
         <div class="glass-card" style="text-align: center;">
             <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-            <p style="opacity: 0.7; font-size: 15px; margin: 15px 0; font-weight: 600;">
-                Новичок ?<br>Не знаешь с чего Начать ?
-            </p>
+            <p style="opacity: 0.7; font-size: 14px; margin: 10px 0; font-weight: 600;">Новичок ?<br>Не знаешь с чего Начать ?</p>
             <a href="https://t.me/RetroWork_Bot" class="video-btn">ВИДЕО ОБУЧЕНИЕ</a>
         </div>
 
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
-            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
-            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
-            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
-            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
-            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
-            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
-            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
+            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
         </div>
 
         <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
-
-    <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
     
     <script>
         function loadScreen(id) {
