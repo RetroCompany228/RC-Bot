@@ -7,7 +7,6 @@
     <style>
         :root {
             --bg-dark: #050505;
-            --bg-gradient: radial-gradient(circle at center, #2a0000 0%, #050505 70%);
             --red-btn: #800000;
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
@@ -15,9 +14,18 @@
         }
 
         body { 
-            margin: 0; background: var(--bg-gradient); background-attachment: fixed; 
-            color: #fff; font-family: sans-serif; height: 100vh; 
-            overflow: hidden; touch-action: none; -webkit-tap-highlight-color: transparent;
+            margin: 0; 
+            background-color: var(--bg-dark);
+            background-image: url('https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff; 
+            font-family: sans-serif; 
+            height: 100vh; 
+            overflow: hidden; 
+            touch-action: none; 
+            -webkit-tap-highlight-color: transparent;
         }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
@@ -33,19 +41,15 @@
         }
         .btn:active { transform: scale(0.90); background: var(--red-btn); }
         
-        /* Иконки: убираем белый фон через blend-mode и добавляем свечение */
         .btn img { 
-            width: 28px; height: 28px; object-fit: contain; 
-.btn img { 
-    width: 28px; 
-    height: 28px; 
-    object-fit: cover; 
-    border-radius: 8px; 
-    background: #000; 
-    padding: 2px; 
-    filter: drop-shadow(0 0 5px rgba(179, 0, 0, 0.7)); 
-}
-            
+            width: 28px; height: 28px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            background: #000; 
+            padding: 2px; 
+            filter: drop-shadow(0 0 5px rgba(179, 0, 0, 0.7)); 
+        }
+
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
@@ -99,4 +103,3 @@
     </script>
 </body>
 </html>
-
