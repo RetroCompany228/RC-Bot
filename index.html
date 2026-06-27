@@ -2,109 +2,121 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Retro Terminal</title>
     <style>
-        body {
-            margin: 0;
+        :root {
+            --bg-dark: #050505;
+            --red-btn: #800000;
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body { 
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at 50% 0%, #3a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 100%, #3a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 50%, #1a0000 0%, #050505 70%);
             background-color: #050505;
-            color: white;
-            font-family: sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            color: #fff; font-family: sans-serif; 
+            height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column;
+            user-select: none;
         }
 
-        /* Контейнер для изображений (как на скриншотах) */
-        .header-images {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .header-images img {
-            width: 45%;
-            border-radius: 10px;
+        /* Убираем все стандартные выделения */
+        button, a, .btn, .video-btn {
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            transition: transform 0.1s ease;
         }
 
-        /* Главная панель */
-        .main-panel {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
+        /* Возвращаем анимацию нажатия для всех кнопок */
+        button:active, .btn:active, .video-btn:active {
+            transform: scale(0.95);
         }
-
-        /* Заголовки */
-        h1, h2 {
-            text-transform: uppercase;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
-        }
-
-        /* Сетка для навигации */
-        .nav-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 20px;
-        }
-
-        /* Кнопки навигации */
-        .nav-btn {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        /* Кнопка "Видео обучение" */
+        
+        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
+        
         .video-btn {
-            display: block;
-            margin-top: 15px;
-            padding: 10px;
-            border: 1px solid #ff0000;
-            color: #ff0000;
-            text-decoration: none;
-            border-radius: 5px;
+            display: block; margin: 10px auto 0; padding: 10px 20px;
+            border: 2px solid #800000; border-radius: 12px;
+            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
+            font-weight: 900; text-decoration: none; text-transform: uppercase;
+            text-align: center; 
         }
+        .video-btn:active { background: #800000; color: #fff; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
+        
+        .btn { 
+            padding: 8px; border-radius: 14px; border: var(--border); 
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        }
+        .btn:active { background: var(--red-btn); }
+        
+        .btn img { 
+            width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
+        }
+
+        /* Яркий неон для заголовков */
+        .title, .nav-title { 
+            text-align: center; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        }
+        .title { font-weight: 900; font-size: 22px; margin: 0; }
+        .nav-title { font-size: 16px; margin: 10px 0; }
+        
+        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #000; }
+        
+        .screen { display: none; height: 100%; }
+        .screen.active { display: flex; flex-direction: column; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="header-images">
-        <img src="URL_ТВОЕЙ_КАРТИНКИ_1" alt="Retro">
-        <img src="URL_ТВОЕЙ_КАРТИНКИ_2" alt="Company">
+    <div id="home" class="screen active container">
+        <div class="photo-container">
+            <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
+            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
+        </div>
+
+        <div class="glass-card" style="text-align: center;">
+            <h1 class="title">ВОРК ПАНЕЛЬ</h1>
+            <p style="opacity: 0.7; font-size: 14px; margin: 10px 0; font-weight: 600;">Новичок ?<br>Не знаешь с чего Начать ?</p>
+            <a href="https://t.me/RetroWork_Bot" class="video-btn">ВИДЕО ОБУЧЕНИЕ</a>
+        </div>
+
+        <h3 class="nav-title">НАВИГАЦИЯ</h3>
+        
+        <div class="grid">
+            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+        </div>
+
+        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
 
-    <div class="main-panel">
-        <h1>ПАНЕЛЬ</h1>
-        <p>Не знаешь с чего начать?</p>
-        <a href="#" class="video-btn">ВИДЕО ОБУЧЕНИЕ</a>
-    </div>
-
-    <h2>НАВИГАЦИЯ</h2>
-
-    <div class="nav-grid">
-        <button class="nav-btn">ПРОФИЛЬ</button>
-        <button class="nav-btn">НАСТАВНИК</button>
-        <button class="nav-btn">МАНУАЛ</button>
-        <button class="nav-btn">ПАКИ</button>
-        <button class="nav-btn">ГОЛОСОВЫЕ</button>
-        <button class="nav-btn">ПАСТЫ</button>
-        <button class="nav-btn">БОТЫ</button>
-        <button class="nav-btn">ПРОБИВ</button>
-    </div>
-
+    <script>
+        function loadScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
