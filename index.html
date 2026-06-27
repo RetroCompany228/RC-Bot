@@ -68,5 +68,28 @@
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')"><img src="
-                                                                    
+            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+        </div>
+
+        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
+    </div>
+
+    <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
+    
+    <script>
+        function loadScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+
