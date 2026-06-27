@@ -18,7 +18,7 @@
             background: radial-gradient(circle at center, #2a0000 0%, #050505 70%); 
             background-attachment: fixed;
             color: #fff; font-family: sans-serif; height: 100vh; 
-            overflow: hidden; touch-action: none;
+            overflow-y: auto; touch-action: manipulation;
         }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
@@ -42,21 +42,19 @@
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
         .nav-title { text-align: center; color: #fff; margin: 20px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
-        /* Идеально ровные верхние фото */
+        /* Исправленный контейнер: всегда горизонтально */
+        .photo-container { display: flex; flex-direction: row; gap: 10px; margin: 15px; }
         .photo { 
-            width: calc(50% - 6px); 
-            height: 140px; 
-            object-fit: cover; 
-            object-position: center; /* Центрируем изображение внутри рамки */
-            border-radius: 16px; 
+            width: 50%; height: 140px; 
+            object-fit: cover; border-radius: 16px; 
             border: 2px solid #000; 
-            display: block; 
         }
+        /* Поднимаем текст на правой картинке чуть выше */
+        .photo-right { object-position: 50% 40%; } 
         
-        
-        .screen { display: none; height: 100vh; }
+        .screen { display: none; }
         .screen.active { display: block; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 13px; text-decoration: underline; display: block; text-align: center; margin-top: 20px; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 13px; text-decoration: underline; display: block; text-align: center; margin: 20px 0; }
     </style>
 </head>
 <body>
@@ -64,7 +62,7 @@
     <div id="home" class="screen active">
         <div class="photo-container">
             <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
+            <img class="photo photo-right" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
         </div>
 
         <div class="glass-card" style="text-align: center;">
