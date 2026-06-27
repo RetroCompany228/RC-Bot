@@ -14,37 +14,43 @@
             --red-glow: 0 0 15px rgba(179, 0, 0, 0.8), 0 0 30px rgba(179, 0, 0, 0.4);
         }
 
-        body { margin: 0; background: var(--bg-gradient); background-attachment: fixed; color: #fff; font-family: sans-serif; min-height: 100vh; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; background: var(--bg-gradient); background-attachment: fixed; 
+            color: #fff; font-family: sans-serif; height: 100vh; overflow: hidden; 
+            -webkit-tap-highlight-color: transparent; touch-action: none;
+        }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
-        /* Кнопки с эффектом "отпрыгивания" */
+        /* Кнопки: резкий отскок */
         .btn { 
             padding: 16px; border-radius: 16px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
             text-align: center; cursor: pointer; 
-            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.3s; 
+            transition: transform 0.08s ease-out;
             outline: none; -webkit-tap-highlight-color: transparent;
         }
-        .btn:active { background: var(--red-btn); transform: scale(0.90); }
+        .btn:active { transform: scale(0.85); background: var(--red-btn); }
 
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
-        .nav-title { text-align: center; color: #fff; margin-top: 30px; letter-spacing: 2px; text-shadow: var(--red-glow); }
+        .nav-title { text-align: center; color: #fff; margin-top: 20px; letter-spacing: 2px; text-shadow: var(--red-glow); }
         
+        /* Исправленные фото */
+        .photo-container { display: flex; gap: 10px; margin: 15px; }
         .photo { width: 50%; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); }
-        .screen { display: none; }
+        
+        .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
 
-        .support-link { color: rgba(255,255,255,0.3); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; outline: none; -webkit-tap-highlight-color: transparent; }
-        .support-link:active { color: #fff; }
+        .support-link { color: rgba(255,255,255,0.15); font-size: 13px; text-decoration: underline; text-underline-offset: 4px; }
     </style>
 </head>
 <body>
 
     <div id="home" class="screen active">
-        <div style="display: flex; gap: 10px; margin: 15px;">
+        <div class="photo-container">
             <img class="photo" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
             <img class="photo" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
         </div>
@@ -68,17 +74,13 @@
             <button class="btn" onclick="loadScreen('dox')">ПРОБИВ</button>
         </div>
 
-        <div style="text-align: center; margin-top: 40px; padding-bottom: 30px;">
+        <div style="text-align: center; margin-top: 15px;">
             <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
         </div>
     </div>
 
     <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-    <section id="mentors" class="screen"><div class="glass-card"><h2>НАСТАВНИК</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-    <section id="manuals" class="screen"><div class="glass-card"><h2>МАНУАЛ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-    <section id="bots" class="screen"><div class="glass-card"><h2>БОТЫ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-    <section id="dox" class="screen"><div class="glass-card"><h2>ПРОБИВ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-
+    
     <script>
         function loadScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
