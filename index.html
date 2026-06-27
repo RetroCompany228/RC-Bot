@@ -17,15 +17,11 @@
             margin: 0; 
             background: radial-gradient(circle at center, #2a0000 0%, #050505 70%); 
             background-attachment: fixed;
-            color: #fff; 
-            font-family: sans-serif; 
-            height: 100vh; 
-            overflow: hidden; 
-            touch-action: none;
+            color: #fff; font-family: sans-serif; height: 100vh; 
+            overflow: hidden; touch-action: none;
         }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 24px; padding: 20px; margin: 15px; }
-
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
         
         .btn { 
@@ -37,12 +33,11 @@
         }
         .btn:active { transform: scale(0.90); background: var(--red-btn); }
         
-        /* Иконки: просто скругленный квадрат, без фоновых искажений */
+        /* Иконка: черная рамка + скругление */
         .btn img { 
-            width: 28px; height: 28px; 
-            object-fit: cover; 
-            border-radius: 6px; /* Легкое закругление */
-            filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.6)); 
+            width: 28px; height: 28px; object-fit: cover; 
+            border-radius: 8px; border: 2px solid #000; 
+            filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5)); 
         }
 
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
@@ -53,7 +48,6 @@
         
         .screen { display: none; height: 100vh; }
         .screen.active { display: block; }
-
         .support-link { color: rgba(255,255,255,0.2); font-size: 13px; text-decoration: underline; display: block; text-align: center; margin-top: 20px; }
     </style>
 </head>
@@ -74,27 +68,5 @@
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/k4my6qSK/file-00000000d388720aa63b4011116f397d.png"> ПРОФИЛЬ</button>
-            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/TPrVXFsx/file-00000000d02c720aa096c2c068ff09be.png"> НАСТАВНИК</button>
-            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/T2krGrtf/file-0000000087b471f4bf2b293f5f7b503a.png"> МАНУАЛ</button>
-            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/vmLVK911/file-00000000d9747243ad13951549e2714f.png"> ПАКИ</button>
-            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/WbBqbSgv/1782581893292.png"> ГОЛОСОВЫЕ</button>
-            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/rmwKYHX5/1782581886852.png"> ПАСТЫ</button>
-            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/Fzf1hJKs/1782581764060.png"> БОТЫ</button>
-            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/DfD8B5CX/1782581855149.png"> ПРОБИВ</button>
-        </div>
-
-        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
-    </div>
-
-    <section id="profile" class="screen"><div class="glass-card"><h2>ПРОФИЛЬ</h2><button class="btn" onclick="loadScreen('home')">НАЗАД</button></div></section>
-    
-    <script>
-        function loadScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(id);
-            if(target) target.classList.add('active');
-        }
-    </script>
-</body>
-</html>
+            <button class="btn" onclick="loadScreen('profile')"><img src="
+                                                                    
