@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Retro Terminal</title>
     <style>
         :root {
@@ -22,13 +22,21 @@
             color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden;
             display: flex; flex-direction: column;
+            user-select: none;
+        }
+
+        /* Удаление системных рамок и выделений */
+        button, a, .btn, .video-btn {
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-tap-highlight-color: transparent !important;
         }
         
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
         
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
         
-        /* Кнопка с отскоком и без синего квадрата */
+        /* Кнопка ВИДЕО ОБУЧЕНИЕ */
         .video-btn {
             display: block; margin: 10px auto 0; padding: 10px 20px;
             border: 2px solid #800000; border-radius: 12px;
@@ -36,29 +44,33 @@
             font-weight: 900; text-decoration: none; text-transform: uppercase;
             text-align: center; 
             transition: transform 0.1s ease, background 0.2s;
-            outline: none; /* Убирает синий квадрат */
-            -webkit-tap-highlight-color: transparent; /* Убирает подсветку на мобильных */
         }
         .video-btn:active { 
             background: #800000; color: #fff; 
-            transform: scale(0.95); /* Эффект отскока */
+            transform: scale(0.95);
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
+        /* Кнопки навигации */
         .btn { 
             padding: 8px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
-            transition: transform 0.1s;
-            outline: none;
+            transition: transform 0.1s ease, background 0.2s;
         }
         .btn:active { transform: scale(0.95); background: var(--red-btn); }
         
         .btn img { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #000; }
 
         .title { font-weight: 900; font-size: 22px; letter-spacing: 2px; text-transform: uppercase; margin: 0; text-shadow: var(--red-glow); }
-        .nav-title { text-align: center; font-size: 14px; color: #fff; margin: 10px 0; letter-spacing: 2px; text-shadow: var(--red-glow); }
+        
+        /* Неоновая НАВИГАЦИЯ */
+        .nav-title { 
+            text-align: center; font-size: 16px; color: #fff; margin: 10px 0; 
+            letter-spacing: 3px; text-transform: uppercase;
+            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000;
+        }
         
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
         .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #000; }
@@ -85,17 +97,25 @@
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
-            <button class="btn"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
         </div>
 
         <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
+
+    <script>
+        function loadScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
