@@ -1,165 +1,147 @@
-        <div id="packs" class="section">
-            <h2 class="header-title">Паки</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div class="card">
-                    <div style="height: 100px; background: #1a1a1a; border-radius: 12px; margin-bottom: 10px;"></div>
-                    <h3 style="font-size: 14px;">Пак №Ⅰ — Анюта 🔥</h3>
-                    <button class="btn-main" style="padding: 10px; font-size: 12px;">Открыть</button>
-                </div>
-                <div class="card">
-                    <div style="height: 100px; background: #1a1a1a; border-radius: 12px; margin-bottom: 10px;"></div>
-                    <h3 style="font-size: 14px;">Пак №Ⅱ</h3>
-                    <button class="btn-main" style="padding: 10px; font-size: 12px;">Открыть</button>
-                </div>
-                <div class="card">
-                    <div style="height: 100px; background: #1a1a1a; border-radius: 12px; margin-bottom: 10px;"></div>
-                    <h3 style="font-size: 14px;">Пак №Ⅲ</h3>
-                    <button class="btn-main" style="padding: 10px; font-size: 12px;">Открыть</button>
-                </div>
-                <div class="card">
-                    <div style="height: 100px; background: #1a1a1a; border-radius: 12px; margin-bottom: 10px;"></div>
-                    <h3 style="font-size: 14px;">Пак №Ⅳ</h3>
-                    <button class="btn-main" style="padding: 10px; font-size: 12px;">Открыть</button>
-                </div>
-            </div>
-            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent); margin-top: 20px;" onclick="nav.to('home')">Назад</button>
-        </div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Company Terminal</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;700&display=swap');
 
-        <div id="voice" class="section">
-            <h2 class="header-title">Голосовые</h2>
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h3 style="font-size: 16px;">Голосовое №Ⅰ</h3>
-                    <p style="font-size: 12px; color: var(--text-dim);">Уникальный контент</p>
-                </div>
-                <div class="btn-main" style="width: auto; padding: 10px 20px;">Слушать</div>
-            </div>
-            <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                    <h3 style="font-size: 16px;">Голосовое №Ⅱ</h3>
-                    <p style="font-size: 12px; color: var(--text-dim);">Уникальный контент</p>
-                </div>
-                <div class="btn-main" style="width: auto; padding: 10px 20px;">Слушать</div>
-            </div>
-            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent);" onclick="nav.to('home')">Назад</button>
-        </div>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;-webkit-tap-highlight-color:transparent;outline:none;}
 
-        <div id="pastes" class="section">
-            <h2 class="header-title">Пасты</h2>
-            <div class="card">
-                <h3>Архив №1</h3>
-                <p style="color: var(--text-dim); margin-top: 5px;">Базовые механики</p>
-            </div>
-            <div class="card">
-                <h3>Архив №2</h3>
-                <p style="color: var(--text-dim); margin-top: 5px;">Продвинутые техники</p>
-            </div>
-            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent);" onclick="nav.to('home')">Назад</button>
-        </div>
+body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;}
 
-        <div id="manuals" class="section">
-            <h2 class="header-title">Мануалы</h2>
-            <div class="card" style="text-align: center; padding: 40px;">
-                <h3 style="font-size: 20px; color: var(--text-dim);">Скоро...</h3>
-            </div>
-            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent);" onclick="nav.to('home')">Назад</button>
-        </div>
+/* Прелоадер */
+#loader{
+    position:fixed;top:0;left:0;width:100%;height:100%;background:#050505;
+    z-index:9999;display:flex;justify-content:center;align-items:center;
+    transition:opacity 0.3s;
+}
+.spinner{
+    width:40px;height:40px;border:4px solid rgba(255,0,0,0.2);
+    border-top:4px solid #b30000;border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
 
-        <div id="payouts" class="section">
-            <h2 class="header-title">Выплаты</h2>
-            <div class="card" style="text-align: center; padding: 40px;">
-                <h3 style="font-size: 20px; color: var(--text-dim);">Скоро...</h3>
-            </div>
-            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent);" onclick="nav.to('home')">Назад</button>
-        </div>
+.bg-glow{position:fixed;width:400px;height:400px;border-radius:50%;filter:blur(120px);z-index:-1;opacity:0.4}
+.bg1{background:#8b0000;top:-100px;left:-100px}
+.bg2{background:#2b0000;bottom:-120px;right:-120px}
+
+.container{max-width:430px;margin:auto;padding:20px;}
+.screen{display:none;animation:fadeIn 0.5s ease}
+.active{display:block}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.banner{width:100%;border-radius:20px;margin-bottom:20px;border:1px solid rgba(255,255,255,0.1)}
+.title-font{font-family:'Orbitron',sans-serif;letter-spacing:2px;margin-bottom:15px;color:#fff;text-transform:uppercase}
+
+.card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:20px;margin-bottom:20px;}
+
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.btn{
+    display:block;width:100%;padding:15px;border:none;border-radius:14px;
+    color:white;font-weight:700;cursor:pointer;text-align:center;
+    background:linear-gradient(90deg,#b30000,#5a0000);
+    transition:transform 0.2s, background 0.2s;
+}
+.btn:active{transform:scale(0.95)}
+.btn-outline{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
+
+/* Профиль Наставника */
+.mentor-img{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:10px;border:2px solid #b30000}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="spinner"></div></div>
+<div class="bg-glow bg1"></div>
+<div class="bg-glow bg2"></div>
+
+<div class="container">
+        <div id="home" class="screen active">
+    <img class="banner" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+    <div class="card">
+        <h2 id="name">Retro Company</h2>
+        <p id="user" style="opacity:.6">@guest</p>
+    </div>
+    <h3 class="title-font">Навигация</h3>
+    <div class="menu-grid">
+        <button class="btn btn-outline" onclick="loadScreen('profile')">Профиль</button>
+        <button class="btn btn-outline" onclick="loadScreen('mentors')">Наставник</button>
+        <button class="btn btn-outline" onclick="loadScreen('manuals')">Мануал</button>
+        <button class="btn btn-outline" onclick="loadScreen('packs')">Паки</button>
+        <button class="btn btn-outline" onclick="loadScreen('voice')">Голосовые</button>
+        <button class="btn btn-outline" onclick="loadScreen('pastes')">Пасты</button>
+        <button class="btn btn-outline" onclick="loadScreen('payouts')">Выплаты</button>
+    </div>
 </div>
 
-    <nav class="nav-bottom">
-        <div class="nav-item" onclick="nav.to('home')">
-            <div style="font-size: 20px; margin-bottom: 4px;">🏠</div>
-            Главная
-        </div>
-        <div class="nav-item" onclick="nav.to('mentors')">
-            <div style="font-size: 20px; margin-bottom: 4px;">⚔️</div>
-            Наставники
-        </div>
-        <div class="nav-item" onclick="nav.to('packs')">
-            <div style="font-size: 20px; margin-bottom: 4px;">📦</div>
-            Паки
-        </div>
-        <div class="nav-item" onclick="nav.to('pastes')">
-            <div style="font-size: 20px; margin-bottom: 4px;">📂</div>
-            Пасты
-        </div>
-    </nav>
+<div id="mentors" class="screen">
+    <h2 class="title-font" style="text-align:center">Наставники</h2>
+    <div class="card" style="text-align:center">
+        <img class="mentor-img" src="https://i.postimg.cc/4d7VpZjx/file-00000000e62471f4abcd57f082e86de9.png">
+        <h3>Наставник №1 Kodi</h3>
+        <p style="opacity:.6;margin:10px 0">( Универсал )</p>
+        <a class="btn" href="https://t.me/bicuze">Написать</a>
+    </div>
+    <div class="card" style="text-align:center">
+        <img class="mentor-img" src="https://i.postimg.cc/NGXRMs1S/file-00000000b860720aa3ee358794aca807.png">
+        <h3>Наставник №2 Relax</h3>
+        <p style="opacity:.6;margin:10px 0">( Универсал )</p>
+        <a class="btn" href="https://t.me/coxiko">Написать</a>
+    </div>
+    <img class="banner" src="https://i.postimg.cc/2ysgDXk7/file-00000000ffb472469d85c9cb6e6ee6f3.png">
+    <button class="btn btn-outline" onclick="loadScreen('home')">Назад</button>
+</div>
 
-    <script>
-        /* Инициализация навигации и логики */
-        const tg = window.Telegram.WebApp;
-        
-        // Расширение приложения на весь экран
-        tg.expand();
+<div id="profile" class="screen"><div class="card"><h2>Профиль</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
+<div id="manuals" class="screen"><div class="card"><h2>Мануалы</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
+<div id="packs" class="screen"><div class="card"><h2>Паки</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
+<div id="voice" class="screen"><div class="card"><h2>Голосовые</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
+<div id="pastes" class="screen"><div class="card"><h2>Пасты</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
+<div id="payouts" class="screen"><div class="card"><h2>Выплаты</h2></div><button class="btn btn-outline" onclick="loadScreen('home')">Назад</button></div>
 
-        // Управление разделами
-        const nav = {
-            loaded: new Set(['home']),
-            to(id) {
-                // Плавное переключение
-                document.querySelectorAll('.section').forEach(s => {
-                    s.classList.remove('active');
-                    s.style.display = 'none';
-                });
-                
-                const target = document.getElementById(id);
-                
-                // Эффект загрузки при первом посещении
-                if (!this.loaded.has(id)) {
-                    document.getElementById('loader').style.display = 'flex';
-                    document.getElementById('loader').style.opacity = '1';
-                    
-                    setTimeout(() => {
-                        document.getElementById('loader').style.opacity = '0';
-                        setTimeout(() => {
-                            document.getElementById('loader').style.display = 'none';
-                            target.style.display = 'block';
-                            setTimeout(() => target.classList.add('active'), 50);
-                            this.loaded.add(id);
-                        }, 300);
-                    }, 1000);
-                } else {
-                    target.style.display = 'block';
-                    setTimeout(() => target.classList.add('active'), 50);
-                }
-            }
-        };
 
-        // Инициализация данных при загрузке
-        window.addEventListener('load', () => {
-            const user = tg.initDataUnsafe.user;
-            if (user) {
-                document.getElementById('user-display-name').innerText = `${user.first_name} ${user.last_name || ''}`;
-                document.getElementById('user-handle').innerText = `@${user.username || user.id}`;
-                document.getElementById('user-avatar').innerText = user.first_name.charAt(0).toUpperCase();
-            }
+<script>
+    // Скрытие прелоадера при загрузке страницы
+    window.onload = () => {
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+        }, 300);
+    };
 
-            // Плавное скрытие лоадера
+    function loadScreen(id) {
+        // Показываем прелоадер
+        const loader = document.getElementById('loader');
+        loader.style.display = 'flex';
+        loader.style.opacity = '1';
+
+        // Имитация загрузки контента
+        setTimeout(() => {
+            document.querySelectorAll('.screen').forEach(e => e.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // Скрываем прелоадер
+            loader.style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => document.getElementById('loader').style.display = 'none', 600);
-            }, 1200);
-        });
+                loader.style.display = 'none';
+            }, 300);
+        }, 1000); // Задержка 1 секунда
+    }
 
-        /* Дополнительная логика обработки касаний для премиального UX */
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('touchstart', function() {
-                this.style.borderColor = 'var(--accent)';
-            });
-            card.addEventListener('touchend', function() {
-                this.style.borderColor = 'var(--border)';
-            });
-        });
-    </script>
-</body>
+    // Инициализация Telegram WebApp
+    if (window.Telegram?.WebApp) {
+        Telegram.WebApp.expand();
+        const u = Telegram.WebApp.initDataUnsafe?.user;
+        if (u) {
+            document.getElementById("name").innerText = (u.first_name || "") + " " + (u.last_name || "");
+            document.getElementById("user").innerText = "@" + (u.username || "user");
+        }
+    }
+</script>
+
+</div> </body>
 </html>
-
-
