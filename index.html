@@ -61,12 +61,24 @@ body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;}
 
 <div class="container">
         <div id="home" class="screen active">
-    <img class="banner" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
-    <div class="card">
-        <h2 id="name">Retro Company</h2>
-        <p id="user" style="opacity:.6">@guest</p>
+<div id="home" class="screen active">
+    <!-- Двойной баннер -->
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <img style="width: 50%; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/jdg86qFM/file-00000000b030720aaf369c9199102af4.png">
+        <img style="width: 50%; border-radius: 18px; border: 1px solid rgba(255,255,255,0.1);" src="https://i.postimg.cc/85n4WbYm/1000211164.png">
     </div>
-    <h3 class="title-font">Навигация</h3>
+
+    <div class="card" style="text-align: center;">
+        <h2 style="color: #fff; margin-bottom: 5px;">Панель Воркера</h2>
+        <p style="opacity: 0.8; margin-bottom: 15px;">Не знаешь с чего Начать ?</p>
+        <p style="opacity: 0.8;">
+            Специально для вас, мы создали 
+            <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; text-decoration: underline; font-weight: bold;">видео обучение</a> 
+            как пользоваться - @RetroWork_Bot !
+        </p>
+    </div>
+
+    <h3 class="title-font" style="text-align: center; margin-top: 20px;">Навигация</h3>
     <div class="menu-grid">
         <button class="btn btn-outline" onclick="loadScreen('profile')">Профиль</button>
         <button class="btn btn-outline" onclick="loadScreen('mentors')">Наставник</button>
@@ -76,6 +88,8 @@ body{background:#050505;color:#fff;min-height:100vh;overflow-x:hidden;}
         <button class="btn btn-outline" onclick="loadScreen('pastes')">Пасты</button>
         <button class="btn btn-outline" onclick="loadScreen('payouts')">Выплаты</button>
     </div>
+</div>
+            
 </div>
 
 <div id="mentors" class="screen">
