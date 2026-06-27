@@ -7,13 +7,22 @@
     <style>
         :root {
             --bg-dark: #050505;
-            --red-grad: linear-gradient(135deg, #b30000 0%, #330000 100%);
+            /* Тот самый переливающийся градиент на фон */
+            --bg-gradient: radial-gradient(circle at center, #2a0000 0%, #050505 70%);
+            --red-btn: linear-gradient(135deg, #b30000 0%, #5a0000 100%);
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        body { margin: 0; background: var(--bg-dark); color: #fff; font-family: sans-serif; }
+
+        body { 
+            margin: 0; 
+            background: var(--bg-gradient); 
+            background-attachment: fixed; /* Чтобы градиент не двигался при прокрутке */
+            color: #fff; 
+            font-family: sans-serif; 
+            min-height: 100vh;
+        }
         
-        /* Стеклянная панель */
         .glass-card { 
             background: var(--glass); 
             backdrop-filter: blur(15px); 
@@ -23,19 +32,17 @@
             margin: 15px; 
         }
 
-        /* Красивая сетка кнопок */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 15px; }
+        
         .btn { 
             padding: 15px; border-radius: 16px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 700; 
             text-align: center; cursor: pointer; transition: 0.3s; 
         }
-        .btn:active { background: var(--red-grad); transform: scale(0.95); }
+        /* При нажатии кнопка загорается красным градиентом */
+        .btn:active { background: var(--red-btn); transform: scale(0.95); }
 
-        /* Заголовок с красным оттенком */
         .title { font-weight: 900; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
-        
-        /* Рамка для фото */
         .photo { width: 50%; height: 140px; object-fit: cover; border-radius: 20px; border: var(--border); }
         
         .screen { display: none; }
@@ -52,7 +59,7 @@
 
         <div class="glass-card" style="text-align: center;">
             <h1 class="title">ПАНЕЛЬ</h1>
-            <p style="opacity: 0.6; font-size: 14px;">Не знаешь с чего начать?</p>
+            <p style="opacity: 0.6; font-size: 14px; margin: 10px 0;">Не знаешь с чего начать?</p>
             <a href="https://t.me/RetroWork_Bot" style="color: #ff0000; font-weight: 800; text-decoration: none;">ВИДЕО ОБУЧЕНИЕ</a>
         </div>
 
