@@ -6,8 +6,9 @@
     <title>Retro Terminal</title>
     <style>
         :root {
+            --bg-dark: #050505;
             --red: #ff0000;
-            --border: 1px solid rgba(255, 0, 0, 0.2);
+            --border: 1px solid rgba(255, 0, 0, 0.3); /* Общая красная рамка */
         }
 
         body { 
@@ -18,16 +19,21 @@
             display: flex; justify-content: center;
         }
 
-        /* Декоративные бортики по бокам */
-        .wrapper {
+        /* Обертка для "бортиков" (эффект рамки) */
+        .page-wrapper {
             width: 100%; max-width: 500px;
-            border-left: 2px solid rgba(255, 0, 0, 0.1);
-            border-right: 2px solid rgba(255, 0, 0, 0.1);
-            position: relative;
+            border-left: 2px solid rgba(255, 0, 0, 0.2);
+            border-right: 2px solid rgba(255, 0, 0, 0.2);
+            border-top: 2px solid rgba(255, 0, 0, 0.2);
+            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
+            margin: 10px;
+            border-radius: 30px;
             padding: 20px;
+            box-sizing: border-box;
+            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 100%);
         }
 
-        /* Шторки теперь без центральной линии */
+        /* Шторки без центральной линии */
         .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
         .curtain-left { left: 0; }
         .curtain-right { right: 0; }
@@ -43,12 +49,13 @@
             border: var(--border); border-radius: 25px; padding: 20px; 
             background: rgba(255,0,0,0.03); text-align: center;
         }
-        .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; text-shadow: 0 0 10px var(--red); }
+        .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; color: #fff; text-shadow: 0 0 10px var(--red); }
         .desc { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.5; margin: 0; }
 
         .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,0,0,0.02); }
-        .nav-title { text-align: center; font-size: 14px; color: #fff; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        
+        .nav-title { text-align: center; font-size: 14px; color: #fff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow-down { text-align: center; color: var(--red); font-size: 18px; margin-bottom: 15px; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { 
             padding: 15px; border-radius: 12px; border: var(--border);
@@ -64,7 +71,7 @@
     <div class="curtain curtain-left" id="cLeft"></div>
     <div class="curtain curtain-right" id="cRight"></div>
 
-    <div class="wrapper">
+    <div class="page-wrapper">
         <div class="container">
             <div class="photo-container">
                 <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
@@ -73,11 +80,12 @@
 
             <div class="header-box">
                 <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-                <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя - Мы сделали Собственного Бота!</p>
+                <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя, и для нашей Команды - Мы сделали Собственного Бота!</p>
             </div>
 
             <div class="nav-wrapper">
                 <h3 class="nav-title">НАВИГАЦИЯ</h3>
+                <div class="arrow-down">▼</div>
                 <div class="grid">
                     <button class="btn">ПРОФИЛЬ</button>
                     <button class="btn">НАСТАВНИК</button>
@@ -104,3 +112,4 @@
     </script>
 </body>
 </html>
+
