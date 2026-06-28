@@ -77,8 +77,9 @@
             box-shadow: 0 0 30px rgba(255,0,60,0.5);
         }
 
-        #curtain-left.open { transform: translateX(-100%); }
-        #curtain-right.open { transform: translateX(100%); }
+        /* Увеличен сдвиг, чтобы тени от шторок полностью ушли за край экрана */
+        #curtain-left.open { transform: translateX(-150%); }
+        #curtain-right.open { transform: translateX(150%); }
 
         /* App Container */
         #app {
@@ -486,4 +487,4 @@
             <div id="bots-container">
                 <div class="glass-card"><div class="subtitle">Бот #1</div><div class="subdesc">Анонимная отправка SMS</div><button class="action-btn" onclick="window.location.href='https://t.me/example1'">Открыть</button></div>
                 <div class="glass-card"><div class="subtitle">Бот #2</div><div class="subdesc">Генерация фейк чеков</div><button class="action-btn" onclick="window.location.href='https://t.me/example2'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #3</div><div class="subdesc">Отрисовка документов</div><button class="action-btn" onclick="window.location.href='https://t.me/example3'">Открыть</bu
+                <div class="glass-card"><div class="subtitle">Бот #3</div><div class="subdesc">Отрисовка документов</div><but
