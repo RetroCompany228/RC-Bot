@@ -12,10 +12,18 @@
 
         body { 
             margin: 0; padding: 0;
-            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 80%);
+            /* Анимированный фон: переливающийся неон */
+            background: linear-gradient(180deg, #050505 0%, #200000 50%, #050505 100%);
+            background-size: 100% 300%;
+            animation: moveGradient 8s linear infinite;
             color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 0% 100%; }
         }
 
         .page-frame {
@@ -26,6 +34,7 @@
             box-sizing: border-box;
             display: flex; flex-direction: column;
             justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4); /* Чуть затемним подложку, чтобы неон смотрелся лучше */
         }
 
         .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
@@ -48,7 +57,6 @@
 
         .nav-wrapper { border: var(--border); border-radius: 20px; padding: 15px; background: rgba(255,255,255,0.01); display: flex; flex-direction: column; flex-grow: 1; justify-content: start; min-height: 0; }
         
-        /* Изменено только это: размер текста и анимация */
         .nav-title { text-align: center; font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
         
         .arrow-down { 
