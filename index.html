@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Panel</title>
+<title>Work Panel v2</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -15,45 +15,84 @@ justify-content:center;
 align-items:center;
 background:#050505;
 color:#fff;
+overflow:hidden;
+}
+
+/* soft moving glow background */
+body::before{
+content:"";
+position:absolute;
+width:600px;height:600px;
+background:radial-gradient(circle,rgba(255,0,0,.18),transparent 60%);
+top:-200px;left:-200px;
+filter:blur(40px);
+animation:move 8s ease-in-out infinite alternate;
+}
+
+@keyframes move{
+to{transform:translate(250px,180px) scale(1.2);}
 }
 
 .panel{
 width:92%;
-max-width:420px;
-background:#0d0d0d;
+max-width:430px;
+background:rgba(15,15,15,.75);
 border:1px solid rgba(255,0,0,.25);
-border-radius:20px;
+border-radius:22px;
 padding:16px;
-display:flex;
-flex-direction:column;
-gap:12px;
+backdrop-filter:blur(14px);
+box-shadow:0 0 40px rgba(255,0,0,.08);
+animation:fade .6s ease;
+}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px)}
+to{opacity:1;transform:translateY(0)}
 }
 
 .photos{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
+margin-bottom:10px;
 }
 
 .photos img{
 width:100%;
-height:110px;
+height:120px;
 object-fit:cover;
 border-radius:14px;
 border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.photos img:hover{
+transform:scale(1.04);
+filter:brightness(1.1);
 }
 
 .header{
-padding:14px;
-background:#111;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.08);
+padding:16px;
+border-radius:16px;
+background:linear-gradient(180deg,#141414,#0e0e0e);
+border:1px solid rgba(255,255,255,.06);
+position:relative;
+overflow:hidden;
+margin-bottom:10px;
+}
+
+.header::after{
+content:"";
+position:absolute;
+top:-80px;right:-80px;
+width:180px;height:180px;
+background:radial-gradient(circle,rgba(255,0,0,.25),transparent 70%);
 }
 
 .title{
-font-size:22px;
-font-weight:800;
-letter-spacing:2px;
+font-size:24px;
+font-weight:900;
+letter-spacing:3px;
 }
 
 .title span{color:#ff2b2b}
@@ -67,46 +106,65 @@ line-height:1.4;
 
 .menu-title{
 text-align:center;
-font-size:12px;
+font-size:11px;
+letter-spacing:4px;
 color:#777;
-letter-spacing:3px;
-margin-top:6px;
+margin:10px 0;
 }
 
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:8px;
+gap:10px;
 }
 
 .btn{
-padding:14px;
-border-radius:12px;
+height:54px;
+border-radius:14px;
 border:1px solid rgba(255,255,255,.08);
-background:#111;
+background:linear-gradient(180deg,#151515,#101010);
 color:#fff;
-font-weight:700;
+font-weight:800;
 font-size:11px;
+letter-spacing:1px;
 cursor:pointer;
-transition:.2s;
+transition:.25s;
+position:relative;
+overflow:hidden;
+}
+
+.btn::before{
+content:"";
+position:absolute;
+left:-120%;
+top:0;
+width:100%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+transition:.5s;
 }
 
 .btn:hover{
-border-color:#ff2b2b;
-transform:translateY(-2px);
+transform:translateY(-3px);
+border-color:rgba(255,0,0,.5);
+box-shadow:0 10px 25px rgba(255,0,0,.12);
 }
+
+.btn:hover::before{left:120%}
 
 .footer{
 text-align:center;
+margin-top:10px;
 font-size:11px;
 color:#666;
-margin-top:4px;
 }
 
 .footer a{
 color:#ff2b2b;
 text-decoration:none;
 }
+
+.footer a:hover{text-decoration:underline}
 </style>
 </head>
 
@@ -121,10 +179,10 @@ text-decoration:none;
 
 <div class="header">
 <div class="title">WORK <span>PANEL</span></div>
-<div class="desc">Быстрый доступ к инструментам команды и материалам.</div>
+<div class="desc">Премиальный доступ к инструментам и материалам команды в одном интерфейсе.</div>
 </div>
 
-<div class="menu-title">НАВИГАЦИЯ</div>
+<div class="menu-title">NAVIGATION</div>
 
 <div class="grid">
 <button class="btn">ПРОФИЛЬ</button>
@@ -138,14 +196,16 @@ text-decoration:none;
 </div>
 
 <div class="footer">
-<a href="#">Поддержать команду</a>
+<a href="#">Support team</a>
 </div>
 
 </div>
 
 <script>
 document.querySelectorAll(".btn").forEach(b=>{
-b.onclick=()=>b.style.transform="scale(.96)";
+b.addEventListener("click",()=>{
+b.animate([{transform:"scale(.96)"},{transform:"scale(1)"}],{duration:120});
+});
 });
 </script>
 
