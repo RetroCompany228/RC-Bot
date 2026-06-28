@@ -42,7 +42,20 @@
             display:flex; flex-direction:column; overflow:hidden;
         }
 
-        /* CONTENT WRAPPER (для прокрутки внутри разделов) */
+        /* TABS */
+        .tabs-container { padding: 14px 14px 0 14px; display: flex; gap: 8px; }
+        .tab-btn {
+            flex: 1; padding: 12px; border-radius: 18px; border: 1px solid rgba(255,80,80,.25);
+            background: rgba(255,255,255,.04); backdrop-filter: blur(20px);
+            color: rgba(255,255,255,.5); font-size: 12px; font-weight: 700;
+            cursor: pointer; transition: 0.3s; text-align: center;
+        }
+        .tab-btn.active {
+            background: rgba(255,255,255,.12); color: #fff;
+            box-shadow: 0 0 15px rgba(255,0,60,.4); border-color: rgba(255,80,80,.5);
+        }
+
+        /* CONTENT WRAPPER */
         .content-area { flex: 1; overflow-y: auto; padding: 14px; }
         .content-area::-webkit-scrollbar { display: none; }
 
@@ -74,6 +87,11 @@
         .page.active { display: block; }
         .card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,80,80,0.2); }
         
+        /* INFO PAGE STYLES */
+        .glass-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,80,80,.2); padding:20px; border-radius:20px; backdrop-filter:blur(10px); text-align: center; margin-bottom: 15px; }
+        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 15px 0; }
+        .link-text { color: #ff2b3d; text-decoration: underline; cursor: pointer; font-weight: 900; }
+
         /* FOOTER */
         .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); border-top:1px solid rgba(255,80,80,.15); }
         a { color: #ff2b3d; text-decoration: none; }
@@ -83,114 +101,113 @@
     <canvas id="particles"></canvas>
 
     <div class="app">
-        <div id="page-main" class="page active">
-            <div class="top-wrap">
-                <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="main-img">
-            </div>
-            <div class="title-box">
-                <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
-                <div class="desc">
-                    <span class="red-glow">Новичок</span>?<br>
-                    Не знаешь с чего <span class="red-glow">Начать</span>?<br>
-                    <span class="red-glow">Специально</span> для <span class="red-glow">Тебя</span>, и для Наёмников нашей Команды —<br>
-                    <span class="red-glow">Мы</span> создали <span class="red-glow">Собственного Бота</span>!
+        <div class="tabs-container">
+            <div id="tab-menu" class="tab-btn active" onclick="switchMainTab('menu')">МЕНЮ</div>
+            <div id="tab-info" class="tab-btn" onclick="switchMainTab('info')">ИНФО</div>
+        </div>
+
+        <div id="view-menu" class="page active">
+            <div class="content-area" id="menu-content-wrapper">
+                <div id="page-main" class="page active">
+                    <div class="top-wrap">
+                        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="main-img">
+                    </div>
+                    <div class="title-box">
+                        <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
+                        <div class="desc">
+                            <span class="red-glow">Новичок</span>?<br>
+                            Не знаешь с чего <span class="red-glow">Начать</span>?<br>
+                            <span class="red-glow">Специально</span> для <span class="red-glow">Тебя</span>, и для Наёмников нашей Команды —<br>
+                            <span class="red-glow">Мы</span> создали <span class="red-glow">Собственного Бота</span>!
+                        </div>
+                    </div>
+                    <div class="content-area" style="padding-top:14px">
+                        <div class="grid">
+                            <button class="btn" onclick="openPage('page-profile')">ПРОФИЛЬ</button>
+                            <button class="btn" onclick="openPage('page-mentor')">НАСТАВНИК</button>
+                            <button class="btn" onclick="openPage('page-manual')">МАНУАЛ</button>
+                            <button class="btn" onclick="openPage('page-packs')">ПАКИ</button>
+                            <button class="btn" onclick="openPage('page-voice')">ГОЛОСОВЫЕ</button>
+                            <button class="btn" onclick="openPage('page-bots')">БОТЫ</button>
+                            <button class="btn" onclick="openPage('page-pastes')">ПАСТЫ</button>
+                            <button class="btn" onclick="openPage('page-probiv')">ПРОБИВ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="page-profile" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div class="card" id="user-data" style="margin-top:10px">Загрузка...</div>
+                </div>
+
+                <div id="page-mentor" class="page">
+                    <button class="btn" onclick="openPage('page-main')" style="margin-bottom:10px">← Назад</button>
+                    <div class="card"><h3>Kodi</h3><p>НАСТАВНИК №1 (универсал)</p><button class="btn">Написать</button></div>
+                    <div class="card"><h3>Relax</h3><p>НАСТАВНИК №2 (универсал)</p><button class="btn">Написать</button></div>
+                </div>
+
+                <div id="page-manual" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div class="card" style="margin-top:10px"><h3>Мануал (Письменный)</h3><p>Направление: Шантаж</p><button class="btn">Открыть</button></div>
+                    <div class="card"><h3>Мануал (Видео)</h3><p>Направление: Шантаж</p><button class="btn">Смотреть</button></div>
+                </div>
+
+                <div id="page-packs" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div class="grid" style="margin-top:10px">
+                        <div class="card"><h3>Пак 1</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>Пак 2</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>Пак 3</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>Пак 4</h3><button class="btn">Открыть</button></div>
+                    </div>
+                </div>
+
+                <div id="page-voice" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div class="card" style="margin-top:10px"><h3>Голосовые</h3><p>Описание пака</p><button class="btn">Открыть</button></div>
+                </div>
+
+                <div id="page-pastes" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div class="card" style="margin-top:10px"><h3>Паста 1</h3><p id="paste1">Текст пасты 1</p><button class="btn" onclick="copy('paste1')">📋 Скопировать</button></div>
+                    <div class="card"><h3>Паста 2</h3><p id="paste2">Текст пасты 2</p><button class="btn" onclick="copy('paste2')">📋 Скопировать</button></div>
+                    <div class="card"><h3>Паста 3</h3><p id="paste3">Текст пасты 3</p><button class="btn" onclick="copy('paste3')">📋 Скопировать</button></div>
+                </div>
+
+                <div id="page-bots" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div style="margin-top:10px">
+                        <script>for(let i=1; i<=20; i++) document.write(`<div class="card"><h3>Бот №${i}</h3><p>Описание бота</p><button class="btn">Открыть</button></div>`);</script>
+                    </div>
+                </div>
+
+                <div id="page-probiv" class="page">
+                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
+                    <div style="margin-top:10px">
+                        <div class="card"><h3>Глаз Бога</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>QuickOSINT</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>Solaris</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>LeakCheck</h3><button class="btn">Открыть</button></div>
+                        <div class="card"><h3>InfoBaza</h3><button class="btn">Открыть</button></div>
+                    </div>
                 </div>
             </div>
-            <div class="content-area" style="padding-top:0">
-                <div class="grid">
-                    <button class="btn" onclick="openPage('page-profile')">ПРОФИЛЬ</button>
-                    <button class="btn" onclick="openPage('page-mentor')">НАСТАВНИК</button>
-                    <button class="btn" onclick="openPage('page-manual')">МАНУАЛ</button>
-                    <button class="btn" onclick="openPage('page-packs')">ПАКИ</button>
-                    <button class="btn" onclick="openPage('page-voice')">ГОЛОСОВЫЕ</button>
-                    <button class="btn" onclick="openPage('page-bots')">БОТЫ</button>
-                    <button class="btn" onclick="openPage('page-pastes')">ПАСТЫ</button>
-                    <button class="btn" onclick="openPage('page-probiv')">ПРОБИВ</button>
+        </div>
+
+        <div id="view-info" class="page">
+            <div class="content-area">
+                <div class="glass-card">
+                    <div style="font-weight: 900; font-size: 18px; margin-bottom: 10px;">ИНФОРМАЦИЯ</div>
+                    <p style="font-size: 12px; line-height: 1.6;">@RetroWork_Bot — это не просто бот, а объединение лучших материалов в одном месте.<br><br>
+                    Бот создан специально для удобства новичков и воркеров команды Retro Company.</p>
+                    <div class="divider"></div>
+                    <p style="font-size: 12px;">Дата создания:<br>26.06.2026</p>
+                    <div class="divider"></div>
+                    <p style="font-size: 12px;">Наш канал:<br><span class="link-text" onclick="window.open('https://t.me/retronews7')">ТЫК</span></p>
+                    <div class="divider"></div>
+                    <p style="font-size: 12px;">Наш чат:<br><span class="link-text" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span></p>
                 </div>
-            </div>
-        </div>
-
-        <div id="page-profile" class="page">
-            <div class="content-area" id="profile-content">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card" id="user-data">Загрузка...</div>
-            </div>
-        </div>
-
-        <div id="page-mentor" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')" style="margin-bottom:10px">← Назад</button>
-                <div class="card"><h3>Kodi</h3><p>НАСТАВНИК №1 (универсал)</p><button class="btn" onclick="alert('Переход')">Написать</button></div>
-                <div class="card"><h3>Relax</h3><p>НАСТАВНИК №2 (универсал)</p><button class="btn" onclick="alert('Переход')">Написать</button></div>
-            </div>
-        </div>
-
-        <div id="page-manual" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card"><h3>Мануал (Письменный)</h3><p>Направление: Шантаж</p><button class="btn">Открыть</button></div>
-                <div class="card"><h3>Мануал (Видео)</h3><p>Направление: Шантаж</p><button class="btn">Смотреть</button></div>
-            </div>
-        </div>
-
-        <div id="page-packs" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="grid" style="margin-top:10px">
-                    <div class="card"><h3>Пак 1</h3><button class="btn">Открыть</button></div>
-                    <div class="card"><h3>Пак 2</h3><button class="btn">Открыть</button></div>
-                    <div class="card"><h3>Пак 3</h3><button class="btn">Открыть</button></div>
-                    <div class="card"><h3>Пак 4</h3><button class="btn">Открыть</button></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="page-voice" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card"><h3>Голосовые</h3><p>Описание пака</p><button class="btn">Открыть</button></div>
-            </div>
-        </div>
-
-        <div id="page-pastes" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card"><h3>Паста 1</h3><p id="paste1">Текст пасты 1</p><button class="btn" onclick="copy('paste1')">📋 Скопировать</button></div>
-                <div class="card"><h3>Паста 2</h3><p id="paste2">Текст пасты 2</p><button class="btn" onclick="copy('paste2')">📋 Скопировать</button></div>
-                <div class="card"><h3>Паста 3</h3><p id="paste3">Текст пасты 3</p><button class="btn" onclick="copy('paste3')">📋 Скопировать</button></div>
-            </div>
-        </div>
-
-        <div id="page-bots" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <script>
-                    for(let i=1; i<=20; i++) document.write(`<div class="card"><h3>Бот №${i}</h3><p>Описание бота</p><button class="btn">Открыть</button></div>`);
-                </script>
-            </div>
-        </div>
-
-        <div id="page-probiv" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card"><h3>Глаз Бога</h3><button class="btn">Открыть</button></div>
-                <div class="card"><h3>QuickOSINT</h3><button class="btn">Открыть</button></div>
-                <div class="card"><h3>Solaris</h3><button class="btn">Открыть</button></div>
-                <div class="card"><h3>LeakCheck</h3><button class="btn">Открыть</button></div>
-                <div class="card"><h3>InfoBaza</h3><button class="btn">Открыть</button></div>
-            </div>
-        </div>
-
-        <div id="page-info" class="page">
-            <div class="content-area">
-                <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                <div class="card" style="font-size:12px; line-height:1.5;">
-                    @RetroWork_Bot — Это не просто бот, а объединение лучших материалов в одно.<br><br>
-                    Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
-                    Дата создания: 26.06.2026<br><br>
-                    Наш канал — <a href="https://t.me/retronews7">ТЫК</a><br>
-                    Наш чат — <a href="https://t.me/+ezuVC0NmIKFjNThh">ТЫК</a>
-                </div>
+                <button class="btn" onclick="switchMainTab('menu')">← Назад</button>
             </div>
         </div>
 
@@ -200,8 +217,21 @@
     </div>
 
     <script>
+        function switchMainTab(tab) {
+            // Управление вкладками
+            document.getElementById('tab-menu').classList.toggle('active', tab === 'menu');
+            document.getElementById('tab-info').classList.toggle('active', tab === 'info');
+            
+            // Управление страницами
+            document.getElementById('view-menu').classList.toggle('active', tab === 'menu');
+            document.getElementById('view-info').classList.toggle('active', tab === 'info');
+
+            // Если вернулись в меню, всегда сбрасываем на главный экран
+            if(tab === 'menu') openPage('page-main');
+        }
+
         function openPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('#menu-content-wrapper .page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
         }
 
@@ -244,4 +274,3 @@
     </script>
 </body>
 </html>
-
