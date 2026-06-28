@@ -8,71 +8,49 @@
         :root {
             --bg-dark: #050505;
             --red: #ff0000;
-            --glass: rgba(255, 255, 255, 0.04);
-            --border: 1px solid rgba(255, 255, 255, 0.1);
+            --border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         body { 
             margin: 0; padding: 0;
-            background: radial-gradient(circle at 50% 0%, #1a0000 0%, transparent 60%),
-                        radial-gradient(circle at 50% 100%, #1a0000 0%, transparent 60%),
-                        radial-gradient(circle at 50% 50%, #080505 0%, #050505 70%);
-            background-color: #050505;
+            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 80%);
             color: #fff; font-family: sans-serif; 
-            height: 100vh; overflow: hidden;
-            display: flex; flex-direction: column;
+            height: 100vh; overflow-y: auto;
             user-select: none;
         }
 
         /* Шторки */
-        .curtain {
-            position: fixed; top: 0; bottom: 0; width: 50%;
-            background: #050505; z-index: 999;
-            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-        .curtain-left { left: 0; border-right: 1px solid rgba(255, 0, 0, 0.5); }
-        .curtain-right { right: 0; border-left: 1px solid rgba(255, 0, 0, 0.5); }
+        .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
+        .curtain-left { left: 0; border-right: 1px solid rgba(255, 0, 0, 0.3); }
+        .curtain-right { right: 0; border-left: 1px solid rgba(255, 0, 0, 0.3); }
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        /* Анимации (неон стал очень слабым) */
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 2px rgba(255,0,0,0.1); }
-            50% { transform: scale(1.01); box-shadow: 0 0 8px rgba(255,0,0,0.2); }
-            100% { transform: scale(1); box-shadow: 0 0 2px rgba(255,0,0,0.1); }
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
-            60% {transform: translateY(-2px);}
-        }
+        .container { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
 
-        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex-grow: 1; margin-top: 10px; }
-        
+        /* Блок заголовка с описанием */
+        .header-box { 
+            border: var(--border); border-radius: 25px; padding: 20px; 
+            background: rgba(255,255,255,0.02); text-align: center;
+            box-shadow: 0 0 15px rgba(255,0,0,0.1);
+        }
+        .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; color: #fff; text-shadow: 0 0 10px var(--red); }
+        .desc { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin: 0; }
+
+        /* Навигационный блок с общей обводкой */
+        .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,255,255,0.01); }
+        .nav-title { text-align: center; font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 15px; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { 
-            padding: 20px 10px; border-radius: 14px; 
-            background: rgba(255,255,255,0.03); 
-            color: #fff; font-weight: 900; font-size: 15px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(255,255,255,0.3);
-            border: var(--border);
-            animation: pulse 4s infinite;
+            padding: 15px; border-radius: 12px; border: var(--border);
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 800; font-size: 12px;
+            cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
+        .btn:active { background: rgba(255,0,0,0.2); border-color: var(--red); }
 
-        .title { text-align: center; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; font-size: 26px; margin: 20px 0; text-shadow: 0 0 10px var(--red); }
-        
-        /* Заголовок НАВИГАЦИЯ стал ближе к стрелочке */
-        .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin-bottom: 2px; color: rgba(255,255,255,0.4); }
-        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 10px; animation: bounce 2s infinite; }
-        
-        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 15px; }
-        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
-        
-        .screen { display: none; height: 100%; }
-        .screen.active { display: flex; flex-direction: column; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 15px; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-top: 10px; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -80,29 +58,28 @@
     <div class="curtain curtain-left" id="cLeft"></div>
     <div class="curtain curtain-right" id="cRight"></div>
 
-    <div id="home" class="screen active container">
-        <div class="photo-container">
-            <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
+    <div class="container">
+        <div class="header-box">
+            <h1 class="title">ВОРК ПАНЕЛЬ</h1>
+            <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя, и для нашей Команды - Мы сделали Собственного Бота!</p>
         </div>
 
-        <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-
-        <h3 class="nav-title">НАВИГАЦИЯ</h3>
-        <div class="arrow-down">▼</div>
-        
-        <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')">ПРОФИЛЬ</button>
-            <button class="btn" onclick="loadScreen('mentors')">НАСТАВНИК</button>
-            <button class="btn" onclick="loadScreen('manuals')">МАНУАЛ</button>
-            <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
-            <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
-            <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
-            <button class="btn" onclick="loadScreen('bots')">БОТЫ</button>
-            <button class="btn" onclick="loadScreen('dox')">ПРОБИВ</button>
+        <div class="nav-wrapper">
+            <h3 class="nav-title">НАВИГАЦИЯ</h3>
+            <div class="arrow-down">▼</div>
+            <div class="grid">
+                <button class="btn" onclick="location.href='#'">ПРОФИЛЬ</button>
+                <button class="btn" onclick="location.href='#'">НАСТАВНИК</button>
+                <button class="btn" onclick="location.href='#'">МАНУАЛ</button>
+                <button class="btn" onclick="location.href='#'">ПАКИ</button>
+                <button class="btn" onclick="location.href='#'">ГОЛОСОВЫЕ</button>
+                <button class="btn" onclick="location.href='#'">ПАСТЫ</button>
+                <button class="btn" onclick="location.href='#'">БОТЫ</button>
+                <button class="btn" onclick="location.href='#'">ПРОБИВ</button>
+            </div>
         </div>
 
-        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
+        <a href="#" class="support-link">Поддержать Команду</a>
     </div>
 
     <script>
@@ -112,12 +89,6 @@
                 document.getElementById('cRight').classList.add('open');
             }, 2000);
         };
-
-        function loadScreen(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(id);
-            if(target) target.classList.add('active');
-        }
     </script>
 </body>
 </html>
