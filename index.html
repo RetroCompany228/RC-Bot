@@ -14,7 +14,10 @@
 
         body { 
             margin: 0; padding: 0;
-            /* Убрал агрессивные неоновые радиальные градиенты сверху и снизу */
+            /* Приглушенный фон */
+            background: radial-gradient(circle at 50% 0%, #1a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 100%, #1a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 50%, #080505 0%, #050505 70%);
             background-color: #050505;
             color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden;
@@ -22,7 +25,7 @@
             user-select: none;
         }
 
-        /* --- ШТОРКИ --- */
+        /* --- ШТОРКИ (ПРЕЛОАДЕР) --- */
         .curtain {
             position: fixed; top: 0; bottom: 0; width: 50%;
             background: #050505; z-index: 999;
@@ -71,8 +74,8 @@
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
         .photo { 
             width: 48%; height: 100px; object-fit: cover; border-radius: 14px; 
-            border: 2px solid #550000; /* Темно-красная рамка */
-            box-shadow: 0 0 8px rgba(255,0,0,0.3); /* Легкое свечение */
+            border: 2px solid #550000; 
+            box-shadow: 0 0 8px rgba(255,0,0,0.3);
         }
         
         .screen { display: none; height: 100%; }
