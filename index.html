@@ -2,122 +2,250 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ВОРК-ПАНЕЛЬ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ворк-Панель</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root {
-            --neon-red: #ff003c;
-            --bg-dark: #050505;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif; }
 
         body {
-            background-color: var(--bg-dark);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            overflow:hidden;
+            background:#020000;
+            color:#fff;
         }
 
-        /* Частицы */
-        #canvas-bg { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
-
-        /* Основной контейнер */
-        .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
-
-        .banner {
-            width: 100%; height: 200px; border-radius: 20px; object-fit: cover;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* BACKGROUND GLOW */
+        body::before {
+            content:"";
+            position:absolute;
+            inset:-300px;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
+                radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
+            filter:blur(90px);
+            animation:bg 18s ease-in-out infinite alternate;
         }
 
-        /* Эффект Стекла */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        @keyframes bg { to{transform:translate(140px,100px) scale(1.15);} }
+
+        /* PARTICLES */
+        canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+        /* APP */
+        .app {
+            position:relative;
+            z-index:2;
+            width:95%;
+            max-width:460px;
+            height:92vh;
+            border-radius:36px;
+            background:rgba(255,255,255,.06);
+            backdrop-filter:blur(35px);
+            border:1px solid rgba(255,80,80,.15);
+            box-shadow: 0 40px 120px rgba(0,0,0,.85), inset 0 0 80px rgba(255,0,0,.08);
+            display:flex;
+            flex-direction:column;
+            overflow-y: auto; /* Изменено для прокрутки контента */
         }
 
-        h1 { font-size: 24px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); }
-        p { font-size: 14px; opacity: 0.8; line-height: 1.4; }
+        /* PAGE SYSTEM */
+        .page-content { padding: 14px; display: none; }
+        .page-content.active { display: block; }
 
-        /* Кнопки */
-        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        
-        .menu-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--neon-red);
-            padding: 15px;
-            border-radius: 12px;
-            color: white;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 10px rgba(255, 0, 60, 0.2);
+        /* BUTTONS */
+        .btn {
+            padding:16px; border-radius:22px; background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,80,80,.25); backdrop-filter:blur(25px);
+            color:#fff; font-size:12px; font-weight:900; letter-spacing:1.2px;
+            cursor:pointer; transition:.25s; box-shadow: 0 0 10px rgba(255,0,60,.15);
+            text-shadow: 0 0 6px rgba(255,0,60,.6); width: 100%;
         }
+        .btn:hover { transform:translateY(-3px); border-color:rgba(255,60,60,.5); }
+        .back-btn { margin-bottom: 15px; background: rgba(255,255,255,0.1); }
 
-        .menu-btn:active { transform: scale(0.95); background: var(--neon-red); }
+        /* GRID */
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .card { background:rgba(255,255,255,.06); padding:15px; border-radius:20px; border:1px solid rgba(255,80,80,.2); margin-bottom: 10px; }
+        .card h3 { font-size: 14px; margin-bottom: 5px; }
+        .card p { font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 10px; }
+
+        .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); border-top:1px solid rgba(255,80,80,.15); margin-top: auto; }
     </style>
 </head>
 <body>
+    <canvas id="particles"></canvas>
 
-    <canvas id="canvas-bg"></canvas>
-
-    <div class="container">
-        <img src="https://picsum.photos/600/300" class="banner" alt="Banner">
-
-        <div class="glass-card">
-            <h1>ВОРК — ПАНЕЛЬ</h1>
-            <p>Новичок?<br>Не знаешь с чего начать?</p>
-            <p style="margin-top: 10px;">Специально для тебя и нашей команды мы сделали собственную ворк-панель.</p>
+    <div class="app">
+        <div id="page-main" class="page-content active">
+            <div style="text-align:center; padding: 20px;">
+                <div style="font-size:24px; font-weight:900; margin-bottom: 10px;">ВОРК — ПАНЕЛЬ</div>
+            </div>
+            <div class="grid">
+                <button class="btn" onclick="showPage('page-profile')">ПРОФИЛЬ</button>
+                <button class="btn" onclick="showPage('page-mentor')">НАСТАВНИК</button>
+                <button class="btn" onclick="showPage('page-manual')">МАНУАЛ</button>
+                <button class="btn" onclick="showPage('page-packs')">ПАКИ</button>
+                <button class="btn" onclick="showPage('page-voice')">ГОЛОСОВЫЕ</button>
+                <button class="btn" onclick="showPage('page-pastes')">ПАСТЫ</button>
+                <button class="btn" onclick="showPage('page-bots')">БОТЫ</button>
+                <button class="btn" onclick="showPage('page-probiv')">ПРОБИВ</button>
+            </div>
         </div>
 
-        <div class="btn-grid">
-            <button class="menu-btn" onclick="alert('Профиль')">ПРОФИЛЬ</button>
-            <button class="menu-btn" onclick="alert('Наставник')">НАСТАВНИК</button>
-            <button class="menu-btn" onclick="alert('Мануал')">МАНУАЛ</button>
-            <button class="menu-btn" onclick="alert('Паки')">ПАКИ</button>
-            <button class="menu-btn" onclick="alert('Голосовые')">ГОЛОСОВЫЕ</button>
-            <button class="menu-btn" onclick="alert('Пасты')">ПАСТЫ</button>
-            <button class="menu-btn" onclick="alert('Боты')">БОТЫ</button>
-            <button class="menu-btn" onclick="alert('Пробив')">ПРОБИВ</button>
+        <div id="page-profile" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card" id="user-info">
+                <h3>Загрузка профиля...</h3>
+            </div>
+        </div>
+
+        <div id="page-mentor" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card">
+                <h3>Kodi</h3><p>Универсал. Помогу с профитом.</p>
+                <button class="btn" onclick="window.open('https://t.me/example')">Написать</button>
+            </div>
+            <div class="card">
+                <h3>Phantom</h3><p>Спец по сложным схемам.</p>
+                <button class="btn" onclick="window.open('https://t.me/example')">Написать</button>
+            </div>
+        </div>
+
+        <div id="page-manual" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card">
+                <h3>Мануал (Письменный)</h3><p>Направление: Шантаж</p>
+                <button class="btn" onclick="window.open('https://t.me/example')">Открыть</button>
+            </div>
+            <div class="card">
+                <h3>Мануал (Видео)</h3><p>Направление: Шантаж</p>
+                <button class="btn" onclick="window.open('https://t.me/example')">Смотреть</button>
+            </div>
+        </div>
+
+        <div id="page-packs" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="grid">
+                <div class="card"><h3>Пак 1</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+                <div class="card"><h3>Пак 2</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+                <div class="card"><h3>Пак 3</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+                <div class="card"><h3>Пак 4</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+            </div>
+        </div>
+
+        <div id="page-voice" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card">
+                <h3>Голосовые</h3><p>Архив для работы с мамонтами.</p>
+                <button class="btn" onclick="window.open('https://t.me/example')">Перейти</button>
+            </div>
+        </div>
+
+        <div id="page-pastes" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card">
+                <h3>Приветствие</h3><p id="p1">Привет, как дела?</p>
+                <button class="btn" onclick="copy('p1')">📋 Скопировать</button>
+            </div>
+            <div class="card">
+                <h3>Прогрев</h3><p id="p2">Слушай, перейдем в ТГ?</p>
+                <button class="btn" onclick="copy('p2')">📋 Скопировать</button>
+            </div>
+            <div class="card">
+                <h3>Дожим</h3><p id="p3">Посмотри это видео.</p>
+                <button class="btn" onclick="copy('p3')">📋 Скопировать</button>
+            </div>
+        </div>
+
+        <div id="page-bots" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <script>
+                // Генерация 20 ботов
+                for(let i=1; i<=20; i++){
+                    document.write(`
+                        <div class="card">
+                            <h3>Бот #${i}</h3>
+                            <p>Функционал бота номер ${i}</p>
+                            <button class="btn" onclick="window.open('https://t.me/example')">Открыть</button>
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+
+        <div id="page-probiv" class="page-content">
+            <button class="btn back-btn" onclick="showPage('page-main')">← Назад</button>
+            <div class="card"><h3>Глаз Бога</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+            <div class="card"><h3>QuickOSINT</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+            <div class="card"><h3>Solaris</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+            <div class="card"><h3>LeakCheck</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+            <div class="card"><h3>InfoBaza</h3><button class="btn" onclick="window.open('https://t.me/example')">Открыть</button></div>
+        </div>
+
+        <div class="footer">
+            <a href="https://t.me/example" style="color:rgba(255,255,255,.4); text-decoration:none;">Поддержать команду</a>
         </div>
     </div>
 
     <script>
-        // Анимация частиц
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-        for(let i=0; i<50; i++) {
-            particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2 });
+        // Навигация
+        function showPage(id) {
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelector('.app').scrollTop = 0;
         }
 
-        function draw() {
-            ctx.clearRect(0,0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255, 0, 60, 0.2)';
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                ctx.fill();
-                p.y += 0.2;
-                if(p.y > canvas.height) p.y = 0;
-            });
-            requestAnimationFrame(draw);
+        // Копирование
+        function copy(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text);
+            alert('Скопировано!');
         }
-        draw();
+
+        // Профиль Telegram
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        const user = tg.initDataUnsafe.user;
+        const profileDiv = document.getElementById('user-info');
+        
+        if (user) {
+            profileDiv.innerHTML = `
+                <h3>${user.first_name} ${user.last_name || ''}</h3>
+                <p>Username: @${user.username || 'Нет'}</p>
+                <p>ID: ${user.id}</p>
+                <p>Premium: ${user.is_premium ? 'Да' : 'Нет'}</p>
+                <p>Язык: ${user.language_code}</p>
+            `;
+        } else {
+            profileDiv.innerHTML = `<h3>Вы открыли приложение вне Telegram</h3><p>Данные недоступны.</p>`;
+        }
+
+        // Анимация частиц (оригинальный код)
+        const canvas = document.getElementById("particles");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        const colors = ["rgba(255,0,60,.85)", "rgba(255,255,255,.85)", "rgba(0,0,0,.6)"];
+        const particles = [];
+        for(let i=0;i<200;i++){
+            particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*4.8+1.5, speed:Math.random()*3+1.5, color:colors[Math.floor(Math.random()*colors.length)], drift:Math.random()*1.4-0.7});
+        }
+        function animate(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            for(let p of particles){
+                p.y += p.speed; p.x += p.drift;
+                if(p.y > canvas.height){ p.y = -10; p.x = Math.random()*canvas.width; }
+                ctx.beginPath(); ctx.fillStyle = p.color; ctx.shadowBlur = 18; ctx.shadowColor = p.color; ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
