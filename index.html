@@ -49,18 +49,20 @@
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
-        .btn { padding: 8px; border-radius: 14px; border: var(--border); background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .btn img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); }
+        
+        /* Кнопки теперь без картинок, текст по центру */
+        .btn { 
+            padding: 15px; border-radius: 14px; border: var(--border); 
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
 
         .title, .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff0000; }
         .title { font-weight: 900; font-size: 22px; margin: 0; }
         .nav-title { font-size: 16px; margin: 10px 0; }
         
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-        .photo { 
-            width: 48%; height: 100px; object-fit: cover; border-radius: 14px; 
-            border: var(--border); /* Тонкая сероватая обводка как у кнопок */
-        }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
         
         .screen { display: none; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
@@ -87,14 +89,14 @@
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
         <div class="grid">
-            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
-            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
-            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
-            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
-            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
-            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
-            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
-            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+            <button class="btn" onclick="loadScreen('profile')">ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')">НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')">МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')">ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')">ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')">ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')">БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')">ПРОБИВ</button>
         </div>
 
         <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
