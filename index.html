@@ -24,33 +24,44 @@
             user-select: none;
         }
 
-        /* --- ЧИСТЫЕ ШТОРКИ С ЦЕНТРАЛЬНОЙ ЛИНИЕЙ --- */
         .curtain {
             position: fixed; top: 0; bottom: 0; width: 50%;
             background: #050505; z-index: 999;
             transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        
         .curtain-left { left: 0; border-right: 1px solid rgba(255, 0, 0, 0.5); }
         .curtain-right { right: 0; border-left: 1px solid rgba(255, 0, 0, 0.5); }
-
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        /* --- ОСТАЛЬНОЙ СТИЛЬ --- */
         button, a, .btn, .video-btn { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent !important; transition: transform 0.2s ease; }
         button:active, .btn:active, .video-btn:active { transform: scale(0.95); }
+        
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
-        .video-btn { display: block; margin: 10px auto 0; padding: 10px 20px; border: 2px solid #800000; border-radius: 12px; background: rgba(128, 0, 0, 0.3); color: #ff4d4d; font-weight: 900; text-decoration: none; text-transform: uppercase; text-align: center; }
+        
+        .video-btn {
+            display: block; margin: 10px auto 0; padding: 10px 20px;
+            border: 2px solid #800000; border-radius: 12px;
+            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
+            font-weight: 900; text-decoration: none; text-transform: uppercase;
+            text-align: center; 
+        }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         .btn { padding: 8px; border-radius: 14px; border: var(--border); background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
         .btn img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); }
+
         .title, .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff0000; }
         .title { font-weight: 900; font-size: 22px; margin: 0; }
         .nav-title { font-size: 16px; margin: 10px 0; }
+        
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #550000; box-shadow: 0 0 8px rgba(255,0,0,0.3); }
+        .photo { 
+            width: 48%; height: 100px; object-fit: cover; border-radius: 14px; 
+            border: var(--border); /* Тонкая сероватая обводка как у кнопок */
+        }
+        
         .screen { display: none; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
         .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
@@ -58,7 +69,6 @@
 </head>
 <body>
 
-    <!-- Пустые шторки с центральной линией -->
     <div class="curtain curtain-left" id="cLeft"></div>
     <div class="curtain curtain-right" id="cRight"></div>
 
@@ -71,7 +81,7 @@
         <div class="glass-card" style="text-align: center;">
             <h1 class="title">ВОРК ПАНЕЛЬ</h1>
             <p style="opacity: 0.7; font-size: 14px; margin: 10px 0; font-weight: 600;">Новичок ?<br>Не знаешь с чего Начать ?</p>
-            <a href="https://t.me/RetroWork_Bot" class="video-btn">ВИДЕО ОБУЧЕНИЕ</a>
+            <a href="https://t.me/RetroWork_Bot" class="video-btn">БЫСТРЫЙ ЗАПУСК</a>
         </div>
 
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
