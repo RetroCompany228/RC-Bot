@@ -41,13 +41,17 @@
 
         /* TOP IMAGE */
         .top-wrap { padding:14px; }
-        .top-image { width:100%; height:120px; object-fit:cover; border-radius:18px; }
+        .top-image { 
+            width:100%; height:120px; object-fit:cover; border-radius:18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
 
         /* ЗАГОЛОВОК */
         .title-box { margin:0 14px; padding:18px; border-radius:26px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(30px); }
         .title { font-size:24px; font-weight:900; letter-spacing:2px; }
-        .title span { color:#ff2b3d; }
-        .desc { margin-top:8px; font-size:12px; line-height:1.6; color:rgba(255,255,255,.75); }
+        .neon-panel { color:#ff2b3d; text-shadow: 0 0 8px #ff2b3d; }
+        .desc { margin-top:8px; font-size:12px; line-height:1.4; color:rgba(255,255,255,.75); }
         .red-text { color:#ff2b3d; text-shadow:0 0 8px #ff2b3d; }
 
         /* TABS */
@@ -56,20 +60,20 @@
         .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
 
         /* PAGE CONTENT */
-        .content { flex:1; overflow-y:auto; padding:14px; }
-        .page { display:none; }
+        .content { flex:1; overflow:hidden; padding:14px; }
+        .page { display:none; height: 100%; }
         .page.active { display:block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BUTTONS */
-        .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        /* BUTTONS 3D */
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
         .btn {
-            padding:16px; border-radius:22px; background:rgba(255,255,255,.06);
-            border:1px solid rgba(255,80,80,.25); color:#fff; font-size:12px; font-weight:900; 
-            letter-spacing:1.2px; cursor:pointer; transition:all 0.2s ease;
-            box-shadow:0 0 10px rgba(255,0,60,.15); text-shadow:0 0 6px rgba(255,0,60,.6);
+            padding:12px 5px; border-radius:18px; background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,80,80,.25); color:#fff; font-size:11px; font-weight:900; 
+            letter-spacing:1px; cursor:pointer; transition:all 0.1s ease;
+            box-shadow: 0 4px 0 rgba(255,0,60,0.3); text-shadow:0 0 6px rgba(255,0,60,.6);
         }
-        .btn:active { transform:scale(0.95); }
+        .btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(255,0,60,0.3); }
 
         /* INFO CARD */
         .card { background:rgba(255,255,255,.05); padding:15px; border-radius:20px; border:1px solid rgba(255,80,80,.2); font-size:12px; margin-bottom: 10px; }
@@ -88,11 +92,13 @@
         </div>
 
         <div class="title-box">
-            <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
+            <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
             <div class="desc">
-                <span class="red-text">Новичок</span>? Не знаешь с чего <span class="red-text">Начать</span>? <br>
-                <span class="red-text">Специально</span> для <span class="red-text">Тебя</span>, и для <span class="red-text">Наёмников</span> нашей Команды — <br>
-                <span class="red-text">Мы</span> создали <span class="red-text">Собственного Бота</span>!
+                <span class="red-text">Новичок ?</span><br>
+                Не знаешь с чего <span class="red-text">Начать ?</span><br>
+                <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+                и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+                Мы создали <span class="red-text">Собственного Бота !</span>
             </div>
         </div>
 
@@ -104,14 +110,14 @@
         <div class="content" id="content">
             <div id="page-menu" class="page active">
                 <div class="grid">
-                    <button class="btn" onclick="showPage('page-content')">ПРОФИЛЬ</button>
-                    <button class="btn" onclick="showPage('page-content')">НАСТАВНИК</button>
-                    <button class="btn" onclick="showPage('page-content')">МАНУАЛ</button>
-                    <button class="btn" onclick="showPage('page-content')">ПАКИ</button>
-                    <button class="btn" onclick="showPage('page-content')">ГОЛОСОВЫЕ</button>
-                    <button class="btn" onclick="showPage('page-content')">БОТЫ</button>
-                    <button class="btn" onclick="showPage('page-content')">ПАСТЫ</button>
-                    <button class="btn" onclick="showPage('page-content')">ПРОБИВ</button>
+                    <button class="btn">ПРОФИЛЬ</button>
+                    <button class="btn">НАСТАВНИК</button>
+                    <button class="btn">МАНУАЛ</button>
+                    <button class="btn">ПАКИ</button>
+                    <button class="btn">ГОЛОСОВЫЕ</button>
+                    <button class="btn">БОТЫ</button>
+                    <button class="btn">ПАСТЫ</button>
+                    <button class="btn">ПРОБИВ</button>
                 </div>
             </div>
 
@@ -124,11 +130,6 @@
                     Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
                     Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
                 </div>
-                <button class="btn" style="width:100%" onclick="switchTab('menu')">← Назад</button>
-            </div>
-
-            <div id="page-content" class="page">
-                <button class="btn" onclick="switchTab('menu')">← Назад</button>
             </div>
         </div>
 
@@ -147,12 +148,6 @@
                 document.getElementById('tab-info').classList.add('active');
                 document.getElementById('page-info').classList.add('active');
             }
-        }
-
-        function showPage(id) {
-            document.getElementById('page-menu').classList.remove('active');
-            const page = document.getElementById(id);
-            page.classList.add('active');
         }
 
         /* PARTICLES */
