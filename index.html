@@ -24,18 +24,26 @@
             user-select: none;
         }
 
-        /* Убираем все стандартные выделения */
-        button, a, .btn, .video-btn {
-            outline: none !important;
-            box-shadow: none !important;
-            -webkit-tap-highlight-color: transparent !important;
-            transition: transform 0.1s ease;
+        /* --- ШТОРКИ (ПРЕЛОАДЕР) --- */
+        .curtain {
+            position: fixed; top: 0; bottom: 0; width: 50%;
+            background: #050505; z-index: 999;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
         }
+        .curtain-left { left: 0; }
+        .curtain-right { right: 0; }
 
-        /* Возвращаем анимацию нажатия для всех кнопок */
-        button:active, .btn:active, .video-btn:active {
-            transform: scale(0.95);
+        /* Состояние после открытия */
+        .curtain-left.open { transform: translateX(-100%); }
+        .curtain-right.open { transform: translateX(100%); }
+
+        /* --- ОСТАЛЬНОЙ СТИЛЬ --- */
+        button, a, .btn, .video-btn {
+            outline: none !important; box-shadow: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            transition: transform 0.2s ease;
         }
+        button:active, .btn:active, .video-btn:active { transform: scale(0.95); }
         
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
         .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
@@ -47,7 +55,6 @@
             font-weight: 900; text-decoration: none; text-transform: uppercase;
             text-align: center; 
         }
-        .video-btn:active { background: #800000; color: #fff; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
         
@@ -56,20 +63,13 @@
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
-        .btn:active { background: var(--red-btn); }
         
         .btn img { 
             width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
             filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
         }
 
-        /* Яркий неон для заголовков */
-        .title, .nav-title { 
-            text-align: center; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-        }
+        .title, .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
         .title { font-weight: 900; font-size: 22px; margin: 0; }
         .nav-title { font-size: 16px; margin: 10px 0; }
         
@@ -82,6 +82,9 @@
     </style>
 </head>
 <body>
+
+    <div class="curtain curtain-left" id="cLeft"></div>
+    <div class="curtain curtain-right" id="cRight"></div>
 
     <div id="home" class="screen active container">
         <div class="photo-container">
@@ -112,6 +115,14 @@
     </div>
 
     <script>
+        // Анимация открытия шторок через 1 секунду
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('cLeft').classList.add('open');
+                document.getElementById('cRight').classList.add('open');
+            }, 1000);
+        };
+
         function loadScreen(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
