@@ -69,6 +69,7 @@
             overflow:hidden;
         }
 
+        /* TOP - UPDATED */
         .top-wrap{padding:14px;}
         .top-frame{
             padding:12px;
@@ -86,6 +87,7 @@
             display:block;
         }
 
+        /* TITLE */
         .title-box{
             margin:0 14px;
             padding:18px;
@@ -110,6 +112,7 @@
             color:rgba(255,255,255,.75);
         }
 
+        /* TABS */
         .tabs{
             margin:12px 14px;
             display:flex;
@@ -139,6 +142,7 @@
             box-shadow:0 0 20px rgba(255,0,60,.25);
         }
 
+        /* PAGE */
         .page{
             flex:1;
             padding:14px;
@@ -147,6 +151,7 @@
 
         .page.active{display:block;}
 
+        /* BUTTONS NEON GLASS */
         .grid{
             display:grid;
             grid-template-columns:1fr 1fr;
@@ -165,30 +170,34 @@
             letter-spacing:1.2px;
             cursor:pointer;
             transition:.25s;
-            box-shadow: 0 0 10px rgba(255,0,60,.15), inset 0 0 10px rgba(255,255,255,.05);
-            text-shadow: 0 0 6px rgba(255,0,60,.6), 0 0 12px rgba(255,0,60,.35);
+            box-shadow:
+            0 0 10px rgba(255,0,60,.15),
+            inset 0 0 10px rgba(255,255,255,.05);
+            text-shadow:
+            0 0 6px rgba(255,0,60,.6),
+            0 0 12px rgba(255,0,60,.35);
         }
 
         .btn:hover{
             transform:translateY(-3px);
             border-color:rgba(255,60,60,.5);
-            box-shadow: 0 0 25px rgba(255,0,60,.35), 0 0 45px rgba(255,0,60,.15), inset 0 0 10px rgba(255,255,255,.08);
-            text-shadow: 0 0 10px rgba(255,80,80,.9), 0 0 20px rgba(255,0,60,.7);
+            box-shadow:
+            0 0 25px rgba(255,0,60,.35),
+            0 0 45px rgba(255,0,60,.15),
+            inset 0 0 10px rgba(255,255,255,.08);
+            text-shadow:
+            0 0 10px rgba(255,80,80,.9),
+            0 0 20px rgba(255,0,60,.7);
         }
 
-        /* UPDATED FOOTER */
+        /* FOOTER UPDATED */
         .footer{
             text-align:center;
-            padding:20px 12px 25px 12px; /* Увеличили отступ снизу */
-            font-size:14px;
-            font-weight:700;
-            color:#ff2b3d; /* Цвет из заголовка */
-            cursor:pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: .3s;
+            padding: 22px 12px 10px 12px; /* Поднял надпись за счет увеличения верхнего padding */
+            font-size:11px; /* Тот же самый размер */
+            color:rgba(255,255,255,.4);
+            border-top:1px solid rgba(255,80,80,.15);
         }
-        .footer:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -247,7 +256,12 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const colors = ["rgba(255,0,60,.85)", "rgba(255,255,255,.85)", "rgba(0,0,0,.6)"];
+        const colors = [
+            "rgba(255,0,60,.85)",
+            "rgba(255,255,255,.85)",
+            "rgba(0,0,0,.6)"
+        ];
+
         const particles = [];
 
         for(let i=0;i<200;i++){
@@ -279,6 +293,7 @@
             }
             requestAnimationFrame(animate);
         }
+
         animate();
 
         window.addEventListener("resize",()=>{
