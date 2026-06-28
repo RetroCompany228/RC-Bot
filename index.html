@@ -3,271 +3,204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Panel v5 Ultra</title>
+<title>Work Panel v6 God Mode</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Arial}
 
 body{
 height:100vh;
 overflow:hidden;
-background:#050505;
 display:flex;
 justify-content:center;
 align-items:center;
+background:#000;
 color:#fff;
 }
 
-/* BACKGROUND */
+/* iOS STYLE BACKGROUND */
 body::before{
 content:"";
 position:absolute;
-width:900px;height:900px;
-background:radial-gradient(circle,rgba(255,0,0,.16),transparent 60%);
-top:-350px;left:-350px;
-filter:blur(80px);
-animation:bg 14s infinite alternate ease-in-out;
+inset:-200px;
+background:
+radial-gradient(circle at 20% 20%,rgba(255,0,80,.25),transparent 40%),
+radial-gradient(circle at 80% 30%,rgba(120,0,255,.18),transparent 45%),
+radial-gradient(circle at 50% 80%,rgba(255,0,0,.12),transparent 50%);
+filter:blur(60px);
+animation:move 18s ease-in-out infinite alternate;
 }
 
-@keyframes bg{
-to{transform:translate(320px,260px) scale(1.2);}
+@keyframes move{
+to{transform:translate(120px,80px) scale(1.1);}
 }
 
-/* BOOT SCREEN */
-.boot{
-position:absolute;
-inset:0;
-background:#050505;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-z-index:10;
-animation:bootOut 2.2s ease forwards;
-}
-
-.boot h1{
-font-size:18px;
-letter-spacing:4px;
-}
-
-.boot span{
-color:#ff2b2b;
-}
-
-.boot p{
-font-size:11px;
-color:#777;
-margin-top:8px;
-}
-
-@keyframes bootOut{
-0%{opacity:1}
-80%{opacity:1}
-100%{opacity:0;visibility:hidden}
-}
-
-/* PANEL */
-.panel{
-width:94%;
+/* APP FRAME */
+.app{
+width:95%;
 max-width:460px;
 height:92vh;
-background:rgba(15,15,15,.72);
-border:1px solid rgba(255,0,0,.25);
-border-radius:26px;
-backdrop-filter:blur(18px);
+border-radius:32px;
 overflow:hidden;
+background:rgba(20,20,20,.55);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 30px 80px rgba(0,0,0,.6);
 display:flex;
 flex-direction:column;
-box-shadow:0 0 80px rgba(255,0,0,.08);
-animation:enter .6s ease;
+animation:open .6s ease;
 }
 
-@keyframes enter{
-from{opacity:0;transform:scale(.96) translateY(20px)}
-to{opacity:1;transform:scale(1) translateY(0)}
+@keyframes open{
+from{transform:scale(.92);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
-/* PHOTOS */
-.photos{
+/* TOP PHOTOS */
+.top{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-padding:12px;
+padding:14px;
 }
 
-.photos img{
+.top img{
 width:100%;
-height:110px;
-border-radius:14px;
+height:120px;
 object-fit:cover;
-border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
 transition:.25s;
 }
 
-.photos img:hover{
-transform:scale(1.05);
+.top img:hover{
+transform:scale(1.03);
 }
 
-/* HEADER */
-.header{
-margin:0 12px;
-padding:14px;
-border-radius:18px;
-background:linear-gradient(180deg,#151515,#0e0e0e);
-border:1px solid rgba(255,255,255,.06);
+/* TITLE CARD */
+.card{
+margin:0 14px;
+padding:16px;
+border-radius:22px;
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.08);
 }
 
 .title{
 font-size:22px;
-font-weight:900;
-letter-spacing:3px;
+font-weight:800;
+letter-spacing:2px;
 }
 
-.title span{color:#ff2b2b}
+.title span{color:#ff3b5c}
 
 .desc{
 font-size:12px;
-color:#aaa;
+color:rgba(255,255,255,.65);
 margin-top:6px;
 line-height:1.4;
 }
 
-/* NAV */
+/* SEGMENT CONTROL (iOS style tabs) */
 .tabs{
+margin:12px 14px;
 display:flex;
-margin:10px 12px;
-border-bottom:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.06);
+border-radius:14px;
+padding:4px;
 }
 
 .tab{
 flex:1;
 text-align:center;
-padding:10px;
+padding:8px;
 font-size:11px;
-color:#777;
-cursor:pointer;
-position:relative;
-transition:.2s;
-}
-
-.tab.active{color:#fff}
-
-.tab.active::after{
-content:"";
-position:absolute;
-bottom:-1px;
-left:25%;
-width:50%;
-height:2px;
-background:#ff2b2b;
 border-radius:10px;
+color:rgba(255,255,255,.5);
+cursor:pointer;
+transition:.25s;
 }
 
-/* SCREENS (ultra smooth) */
-.screen{
+.tab.active{
+background:rgba(255,255,255,.12);
+color:#fff;
+}
+
+/* PAGES */
+.page{
 flex:1;
-padding:12px;
-opacity:0;
-transform:translateX(30px) scale(.98);
-pointer-events:none;
-transition:.35s cubic-bezier(.2,.8,.2,1);
-position:absolute;
-width:100%;
+padding:14px;
+display:none;
+animation:fade .35s ease;
 }
 
-.screen.active{
-opacity:1;
-transform:translateX(0) scale(1);
-pointer-events:auto;
-position:relative;
+.page.active{display:block}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(10px)}
+to{opacity:1;transform:translateY(0)}
 }
 
-/* GRID */
+/* GRID APPS */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
-margin-top:10px;
 }
 
 .btn{
-height:52px;
-border-radius:14px;
+padding:14px;
+border-radius:16px;
+background:rgba(255,255,255,.06);
 border:1px solid rgba(255,255,255,.08);
-background:linear-gradient(180deg,#151515,#101010);
 color:#fff;
-font-weight:800;
 font-size:11px;
+font-weight:700;
 cursor:pointer;
 transition:.2s;
-position:relative;
-overflow:hidden;
+backdrop-filter:blur(10px);
 }
 
 .btn:active{
-transform:scale(.94);
+transform:scale(.96);
 }
 
 .btn:hover{
-border-color:rgba(255,0,0,.6);
-box-shadow:0 10px 25px rgba(255,0,0,.12);
+background:rgba(255,255,255,.1);
+border-color:rgba(255,59,92,.4);
 }
 
 /* FOOTER */
 .footer{
 text-align:center;
-padding:10px;
+padding:12px;
 font-size:11px;
-color:#666;
+color:rgba(255,255,255,.4);
 border-top:1px solid rgba(255,255,255,.06);
-}
-
-/* GLASS LIGHT */
-.glow{
-position:absolute;
-width:600px;height:600px;
-background:radial-gradient(circle,rgba(255,0,0,.12),transparent 65%);
-filter:blur(90px);
-top:-200px;
-right:-200px;
-animation:glow 16s infinite alternate ease-in-out;
-}
-
-@keyframes glow{
-to{transform:translate(-260px,220px) scale(1.25);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="boot">
-<h1>WORK <span>PANEL</span></h1>
-<p>booting cyber ui system...</p>
-</div>
+<div class="app">
 
-<div class="glow"></div>
-
-<div class="panel">
-
-<div class="photos">
+<div class="top">
 <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
 <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
 </div>
 
-<div class="header">
+<div class="card">
 <div class="title">WORK <span>PANEL</span></div>
-<div class="desc">Ultra cyber control system. Smooth UI engine active.</div>
+<div class="desc">iOS-style cyber control interface. Smooth, modern, adaptive UI system.</div>
 </div>
 
 <div class="tabs">
-<div class="tab active" onclick="go(0)">MENU</div>
+<div class="tab active" onclick="go(0)">HOME</div>
 <div class="tab" onclick="go(1)">INFO</div>
 </div>
 
-<!-- SCREENS -->
-<div class="screen active">
+<div class="page active">
 <div class="grid">
 <button class="btn">ПРОФИЛЬ</button>
 <button class="btn">НАСТАВНИК</button>
@@ -280,45 +213,38 @@ to{transform:translate(-260px,220px) scale(1.25);}
 </div>
 </div>
 
-<div class="screen">
-<div style="font-size:12px;color:#aaa;line-height:1.6">
-WORK PANEL v5 ULTRA<br><br>
-Engine: cyber glass OS<br>
-Render: smooth transition system<br>
-UI level: premium interactive<br><br>
-System fully optimized.
+<div class="page">
+<div style="padding:6px 2px;font-size:12px;color:rgba(255,255,255,.65);line-height:1.6">
+WORK PANEL v6 GOD MODE<br><br>
+UI: iOS glass system<br>
+Engine: smooth interaction layer<br>
+Design: Apple-inspired cyber style<br><br>
+Status: ultra stable build ✔
 </div>
 </div>
 
-<div class="footer">Support team</div>
+<div class="footer">© Cyber UI System</div>
 
 </div>
 
 <script>
 const tabs=document.querySelectorAll(".tab");
-const screens=document.querySelectorAll(".screen");
+const pages=document.querySelectorAll(".page");
 
 function go(i){
 tabs.forEach(t=>t.classList.remove("active"));
-screens.forEach(s=>s.classList.remove("active"));
+pages.forEach(p=>p.classList.remove("active"));
 
 tabs[i].classList.add("active");
-screens[i].classList.add("active");
+pages[i].classList.add("active");
 }
 
-/* button feedback */
+/* micro interaction */
 document.querySelectorAll(".btn").forEach(b=>{
-b.addEventListener("click",()=>{
-b.animate([{transform:"scale(.94)"},{transform:"scale(1)"}],{duration:120});
-});
-});
-
-/* parallax micro movement */
-document.addEventListener("mousemove",(e)=>{
-const x=(e.clientX/window.innerWidth-0.5)*8;
-const y=(e.clientY/window.innerHeight-0.5)*8;
-document.querySelector(".panel").style.transform=
-`translate(${x}px,${y}px)`;
+b.onclick=()=>b.animate(
+[{transform:"scale(.96)"},{transform:"scale(1)"}],
+{duration:120}
+);
 });
 </script>
 
