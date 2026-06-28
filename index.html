@@ -1,214 +1,216 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Ворк-Панель</title>
+<!DOCTYPE html>  
+<html lang="ru">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
+<title>Ворк-Панель</title>  
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Montserrat', sans-serif;
-}
-
-body{
-height:100vh;
+<style>  
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');  
+  
+*{  
+margin:0;  
+padding:0;  
+box-sizing:border-box;  
+font-family:'Montserrat', sans-serif;  
+-webkit-tap-highlight-color: transparent;
+}  
+  
+body{  
+height:100vh;  
+display:flex;  
+justify-content:center;  
+align-items:center;  
+overflow:hidden;  
+background:#020000;  
+color:#fff;  
+}  
+  
+/* BACKGROUND GLOW */  
+body::before{  
+content:"";  
+position:absolute;  
+inset:-300px;  
+background:  
+radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),  
+radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),  
+radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);  
+filter:blur(90px);  
+animation:bg 18s ease-in-out infinite alternate;  
+}  
+  
+@keyframes bg{  
+to{transform:translate(140px,100px) scale(1.15);}  
+}  
+  
+/* PARTICLES */  
+canvas{  
+position:fixed;  
+top:0;  
+left:0;  
+width:100%;  
+height:100%;  
+z-index:0;  
+pointer-events:none;  
+}  
+  
+/* APP */  
+.app{  
+position:relative;  
+z-index:2;  
+width:95%;  
+max-width:460px;  
+height:92vh;  
+border-radius:36px;  
+  
+background:rgba(255,255,255,.06);  
+backdrop-filter:blur(35px);  
+  
+border:1px solid rgba(255,80,80,.15);  
+  
+box-shadow:  
+0 40px 120px rgba(0,0,0,.85),  
+inset 0 0 80px rgba(255,0,0,.08);  
+  
+display:flex;  
+flex-direction:column;  
+overflow:hidden;  
+}  
+  
+/* TOP */  
+.top-wrap{padding:14px;}  
+.top-frame{  
 display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-background:#020000;
-color:#fff;
-}
-
-/* BACKGROUND GLOW */
-body::before{
-content:"";
-position:absolute;
-inset:-300px;
-background:
-radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
-radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
-radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
-filter:blur(90px);
-animation:bg 18s ease-in-out infinite alternate;
-}
-
-@keyframes bg{
-to{transform:translate(140px,100px) scale(1.15);}
-}
-
-/* PARTICLES */
-canvas{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-z-index:0;
-pointer-events:none;
-}
-
-/* APP */
-.app{
-position:relative;
-z-index:2;
-width:95%;
-max-width:460px;
-height:92vh;
-border-radius:36px;
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(35px);
-border:1px solid rgba(255,80,80,.15);
-box-shadow:
-0 40px 120px rgba(0,0,0,.85),
-inset 0 0 80px rgba(255,0,0,.08);
-display:flex;
-flex-direction:column;
-overflow:hidden;
-}
-
-/* TOP */
-.top-wrap{padding:14px;}
-.top-frame{
-padding:12px;
-border-radius:24px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,80,80,.25);
-backdrop-filter:blur(20px);
-}
-
-.top-frame img{
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:18px;
-transition:.3s;
-}
-
-/* TITLE */
-.title-box{
-margin:0 14px;
-padding:18px;
-border-radius:26px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.12);
-backdrop-filter:blur(30px);
-}
-
-.title{
-font-size:24px;
-font-weight:900;
-letter-spacing:2px;
-}
-
-.title span{color:#ff2b3d;}
-
-.desc{
-margin-top:8px;
-font-size:12px;
-line-height:1.6;
-color:rgba(255,255,255,.75);
-}
-
-/* TABS */
-.tabs{
-margin:12px 14px;
-display:flex;
-gap:6px;
-padding:5px;
-border-radius:18px;
-background:rgba(255,255,255,.04);
-border:1px solid rgba(255,80,80,.15);
-backdrop-filter:blur(20px);
-}
-
-.tab{
-flex:1;
-text-align:center;
-padding:10px;
-border-radius:14px;
-font-size:12px;
-font-weight:700;
-color:rgba(255,255,255,.6);
-cursor:pointer;
-transition:.25s;
-}
-
-.tab.active{
-background:rgba(255,255,255,.12);
-color:#fff;
-box-shadow:0 0 20px rgba(255,0,60,.25);
-}
-
-/* PAGE */
-.page{
-flex:1;
-padding:14px;
+padding:12px;  
+border-radius:24px;  
+background:rgba(255,255,255,.04);  
+border:1px solid rgba(255,80,80,.25);  
+backdrop-filter:blur(20px);  
+}  
+  
+.top-frame img{  
+width:100%;  
+height:120px;  
+object-fit:cover;  
+border-radius:18px;  
+transition:.3s;  
+}  
+  
+/* TITLE */  
+.title-box{  
+margin:0 14px;  
+padding:18px;  
+border-radius:26px;  
+background:rgba(255,255,255,.06);  
+border:1px solid rgba(255,255,255,.12);  
+backdrop-filter:blur(30px);  
+}  
+  
+.title{  
+font-size:24px;  
+font-weight:900;  
+letter-spacing:2px;  
+}  
+  
+.title span{color:#ff2b3d;}  
+  
+.desc{  
+margin-top:8px;  
+font-size:12px;  
+line-height:1.6;  
+color:rgba(255,255,255,.75);  
+}  
+  
+/* TABS */  
+.tabs{  
+margin:12px 14px;  
+display:flex;  
+gap:6px;  
+padding:5px;  
+border-radius:18px;  
+background:rgba(255,255,255,.04);  
+border:1px solid rgba(255,80,80,.15);  
+backdrop-filter:blur(20px);  
+}  
+  
+.tab{  
+flex:1;  
+text-align:center;  
+padding:10px;  
+border-radius:14px;  
+font-size:12px;  
+font-weight:700;  
+color:rgba(255,255,255,.6);  
+cursor:pointer;  
+transition:.25s;  
+}  
+  
+.tab.active{  
+background:rgba(255,255,255,.12);  
+color:#fff;  
+box-shadow:0 0 20px rgba(255,0,60,.25);  
+}  
+  
+/* PAGE */  
+.page{  
+flex:1;  
+padding:14px;  
 display:none;
-overflow-y:auto;
+overflow-y: auto;
+}  
+  
+.page.active{display:block;}  
+  
+/* BUTTONS NEON GLASS */  
+.grid{  
+display:grid;  
+grid-template-columns:1fr 1fr;  
+gap:10px;  
+}  
+  
+.btn{  
+padding:16px;  
+border-radius:22px;  
+background:rgba(255,255,255,.06);  
+border:1px solid rgba(255,80,80,.25);  
+backdrop-filter:blur(25px);  
+color:#fff;  
+font-size:12px;  
+font-weight:900;  
+letter-spacing:1.2px;  
+cursor:pointer;  
+transition: 0.3s ease;
+outline: none;
+box-shadow: 0 0 10px rgba(255,0,60,.15), inset 0 0 10px rgba(255,255,255,.05);  
+}  
+  
+.btn:hover{  
+transform:translateY(-3px);  
+border-color:rgba(255,60,60,.5);  
+box-shadow: 0 0 25px rgba(255,0,60,.35), 0 0 45px rgba(255,0,60,.15), inset 0 0 10px rgba(255,255,255,.08);  
+text-shadow: 0 0 10px rgba(255,80,80,.9), 0 0 20px rgba(255,0,60,.7);  
 }
 
-.page.active{display:block;}
-.page::-webkit-scrollbar { width: 0; }
-
-/* BUTTONS NEON GLASS */
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+.btn:active {
+    transform: scale(0.95);
 }
+  
+/* FOOTER */  
+.footer{  
+text-align:center;  
+padding:12px;  
+font-size:11px;  
+color:rgba(255,255,255,.4);  
+border-top:1px solid rgba(255,80,80,.15);  
+}  
 
-.btn{
-padding:16px;
-border-radius:22px;
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,80,80,.25);
-backdrop-filter:blur(25px);
-color:#fff;
-font-size:12px;
-font-weight:900;
-letter-spacing:1.2px;
-cursor:pointer;
-transition:all .3s ease;
-box-shadow: 0 0 10px rgba(255,0,60,.15), inset 0 0 10px rgba(255,255,255,.05);
-outline: none; /* Убрана синяя обводка */
-}
-
-.btn:active { transform: scale(0.95); }
-
-.btn:hover{
-transform:translateY(-3px);
-border-color:rgba(255,60,60,.5);
-box-shadow:
-0 0 25px rgba(255,0,60,.35),
-0 0 45px rgba(255,0,60,.15),
-inset 0 0 10px rgba(255,255,255,.08);
-text-shadow: 0 0 10px rgba(255,80,80,.9), 0 0 20px rgba(255,0,60,.7);
-}
-
-/* FOOTER */
-.footer{
-text-align:center;
-padding:12px;
-font-size:11px;
-color:rgba(255,255,255,.4);
-border-top:1px solid rgba(255,80,80,.15);
-}
-.footer a { color: inherit; text-decoration: none; }
-
+/* PAGES */
 .sub-page {
   display: none;
   flex: 1;
   padding: 14px;
   overflow-y: auto;
 }
-.sub-page::-webkit-scrollbar { width: 0; }
-
 .glass-card {
   padding: 16px;
   border-radius: 20px;
@@ -220,114 +222,150 @@ border-top:1px solid rgba(255,80,80,.15);
   flex-direction: column;
   gap: 10px;
 }
-</style>
-</head>
-<body>
+.support-link { color: rgba(255,255,255,.4); text-decoration: none; }
+</style>  
+</head>  
+<body>  
 <canvas id="particles"></canvas>
 
-<div class="app">
-  <div class="top-wrap">
-    <div class="top-frame">
-      <img src="ССЫЛКА_НА_ВАШЕ_ФОТО">
+<div class="app">    
+  <div class="top-wrap">  
+    <div class="top-frame">  
+      <img src="URL_ВАШЕЙ_ФОТОГРАФИИ">  
+    </div>  
+  </div>    
+  <div class="title-box">  
+    <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>  
+    <div class="desc">Здесь ваш новый текст</div>  
+  </div>    
+  <div class="tabs">  
+    <div class="tab active" onclick="go(0)">МЕНЮ</div>  
+    <div class="tab" onclick="go(1)">ИНФО</div>  
+  </div>    
+
+  <div class="page active" id="main-grid">  
+    <div class="grid">  
+      <button class="btn" onclick="openPage('profile-page')">ПРОФИЛЬ</button>  
+      <button class="btn" onclick="openPage('mentor-page')">НАСТАВНИК</button>  
+      <button class="btn" onclick="openPage('manual-page')">МАНУАЛ</button>  
+      <button class="btn" onclick="openPage('packs-page')">ПАКИ</button>  
+      <button class="btn" onclick="openPage('voice-page')">ГОЛОСОВЫЕ</button>  
+      <button class="btn" onclick="openPage('bots-page')">БОТЫ</button>  
+      <button class="btn" onclick="openPage('pastes-page')">ПАСТЫ</button>  
+      <button class="btn" onclick="openPage('probiv-page')">ПРОБИВ</button>  
+    </div>  
+  </div>    
+
+  <div class="page" id="info-tab">  
+    <div class="glass-card">
+      Здесь находится информация о системе, правила и важные уведомления для воркеров.
     </div>
-  </div>
-  <div class="title-box">
-    <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
-    <div class="desc">Ваш текст здесь</div>
-  </div>
-  <div class="tabs">
-    <div class="tab active" onclick="go(0)">МЕНЮ</div>
-    <div class="tab" onclick="go(1)">ИНФО</div>
+  </div>    
+
+  <div id="profile-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <div class="glass-card" id="profile-container">Загрузка...</div>
   </div>
 
-  <div class="page active" id="main-grid">
-    <div class="grid">
-      <button class="btn" onclick="openPage('profile-page')">ПРОФИЛЬ</button>
-      <button class="btn" onclick="openPage('mentor-page')">НАСТАВНИК</button>
-      <button class="btn" onclick="openPage('manual-page')">МАНУАЛ</button>
-      <button class="btn" onclick="openPage('packs-page')">ПАКИ</button>
-      <button class="btn" onclick="openPage('voice-page')">ГОЛОСОВЫЕ</button>
-      <button class="btn" onclick="openPage('bots-page')">БОТЫ</button>
-      <button class="btn" onclick="openPage('pastes-page')">ПАСТЫ</button>
-      <button class="btn" onclick="openPage('probiv-page')">ПРОБИВ</button>
-    </div>
+  <div id="mentor-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
   </div>
 
-  <div class="page" id="info-tab">
-    <div class="glass-card">Информация о системе и правилах использования.</div>
+  <div id="manual-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
   </div>
 
-  <div id="profile-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button><div class="glass-card" id="profile-container"></div></div>
-  <div id="mentor-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
-  <div id="manual-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
-  <div id="packs-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
-  <div id="voice-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
-  <div id="bots-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button><div id="bots-container"></div></div>
-  <div id="pastes-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
-  <div id="probiv-page" class="sub-page"><button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button></div>
+  <div id="packs-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+  </div>
+
+  <div id="voice-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+  </div>
+
+  <div id="pastes-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+  </div>
+
+  <div id="bots-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <div id="bots-container"></div>
+  </div>
+
+  <div id="probiv-page" class="sub-page">
+    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+  </div>
 
   <div class="footer">
-    <a href="ВАША_ССЫЛКА">Поддержать Команду</a>
-  </div>
-</div>
+    <a href="URL_ССЫЛКИ" class="support-link">Поддержать Команду</a>
+  </div>  
+</div>  
 
-<script>
-function go(i){
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.querySelectorAll(".tab")[i].classList.add("active");
-  document.querySelectorAll(".page")[i].classList.add("active");
-}
-
-function openPage(pageId) {
-  document.querySelector('.top-wrap').style.display = 'none';
-  document.querySelector('.title-box').style.display = 'none';
-  document.querySelector('.tabs').style.display = 'none';
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  document.getElementById(pageId).style.display = 'block';
+<script>  
+function go(i){  
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));  
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));  
+  document.querySelectorAll(".tab")[i].classList.add("active");  
+  document.querySelectorAll(".page")[i].classList.add("active");  
+}  
+  
+function openPage(pageId) {  
+  document.querySelector('.top-wrap').style.display = 'none';  
+  document.querySelector('.title-box').style.display = 'none';  
+  document.querySelector('.tabs').style.display = 'none';  
+  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');  
+  document.getElementById(pageId).style.display = 'block';  
   if(pageId === 'profile-page') loadTelegramProfile();
-}
-
-function closePage() {
-  document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
-  document.querySelector('.top-wrap').style.display = 'block';
-  document.querySelector('.title-box').style.display = 'block';
-  document.querySelector('.tabs').style.display = 'flex';
-  const activeTabIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t => t.classList.contains('active'));
-  go(activeTabIdx !== -1 ? activeTabIdx : 0);
-}
-
-function loadTelegramProfile() {
-  const container = document.getElementById('profile-container');
-  const tg = window.Telegram.WebApp;
-  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    container.innerHTML = `Имя: ${user.first_name}<br>ID: ${user.id}`;
-  } else {
-    container.innerHTML = "Данные профиля недоступны.";
-  }
-}
-
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const particles = Array.from({length: 100}, () => ({
-  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-  size: Math.random()*3+1, speed: Math.random()*2+1, drift: Math.random()-0.5
-}));
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p => {
-    p.y += p.speed; p.x += p.drift;
-    if(p.y > canvas.height) p.y = -10;
-    ctx.fillStyle = "rgba(255,255,255,0.2)";
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
-</body>
+}  
+  
+function closePage() {  
+  document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');  
+  document.querySelector('.top-wrap').style.display = 'block';  
+  document.querySelector('.title-box').style.display = 'block';  
+  document.querySelector('.tabs').style.display = 'flex';  
+  let activeTabIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t => t.classList.contains('active'));  
+  go(activeTabIdx !== -1 ? activeTabIdx : 0);  
+}  
+  
+function loadTelegramProfile() {  
+  const container = document.getElementById('profile-container');  
+  const tg = window.Telegram.WebApp;  
+  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {  
+    const user = tg.initDataUnsafe.user;  
+    container.innerHTML = `ID: ${user.id}<br>Имя: ${user.first_name}`;  
+  } else {  
+    container.innerHTML = "Данные не найдены";  
+  }  
+}  
+  
+document.addEventListener("DOMContentLoaded", () => {  
+  const botsContainer = document.getElementById('bots-container');  
+  let html = '';  
+  for(let i = 1; i <= 5; i++) {  
+    html += `<div class="glass-card">Бот ${i}</div>`;  
+  }  
+  if(botsContainer) botsContainer.innerHTML = html;  
+});  
+  
+const canvas = document.getElementById("particles");  
+const ctx = canvas.getContext("2d");  
+canvas.width = window.innerWidth;  
+canvas.height = window.innerHeight;  
+const particles = [];  
+for(let i=0;i<100;i++){  
+particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*3+1, speed:Math.random()*2+1, drift:Math.random()-0.5});  
+}  
+function animate(){  
+ctx.clearRect(0,0,canvas.width,canvas.height);  
+for(let p of particles){  
+p.y += p.speed; p.x += p.drift;  
+if(p.y > canvas.height) p.y = -10;  
+ctx.fillStyle = "rgba(255,255,255,0.2)";  
+ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();  
+}  
+requestAnimationFrame(animate);  
+}  
+animate();  
+</script>  
+</body>  
 </html>
