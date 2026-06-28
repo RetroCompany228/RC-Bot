@@ -18,7 +18,6 @@
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* Здесь рамка стала менее насыщенной за счет rgba */
         .page-frame {
             width: 94%; height: 94vh;
             border: 2px solid rgba(255, 0, 0, 0.3); 
@@ -48,8 +47,10 @@
         .desc { color: rgba(255,255,255,0.5); font-size: 12px; line-height: 1.3; margin: 0; }
 
         .nav-wrapper { border: var(--border); border-radius: 20px; padding: 15px; background: rgba(255,255,255,0.01); display: flex; flex-direction: column; flex-grow: 1; justify-content: start; min-height: 0; }
-        .nav-title { text-align: center; font-size: 16px; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
-        .arrow-down { text-align: center; color: var(--red); font-size: 22px; margin-bottom: 12px; }
+        
+        /* Увеличенные элементы навигации */
+        .nav-title { text-align: center; font-size: 22px; color: rgba(255,255,255,0.8); margin-bottom: 10px; text-transform: uppercase; font-weight: 900; }
+        .arrow-down { text-align: center; color: var(--red); font-size: 32px; margin-bottom: 15px; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { 
