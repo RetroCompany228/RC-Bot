@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Panel v6 God Mode</title>
+<title>Work Panel v7 iOS Mode</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Arial}
@@ -11,196 +11,222 @@
 body{
 height:100vh;
 overflow:hidden;
+background:#000;
 display:flex;
 justify-content:center;
 align-items:center;
-background:#000;
 color:#fff;
 }
 
-/* iOS STYLE BACKGROUND */
+/* iOS background */
 body::before{
 content:"";
 position:absolute;
 inset:-200px;
 background:
-radial-gradient(circle at 20% 20%,rgba(255,0,80,.25),transparent 40%),
-radial-gradient(circle at 80% 30%,rgba(120,0,255,.18),transparent 45%),
-radial-gradient(circle at 50% 80%,rgba(255,0,0,.12),transparent 50%);
+radial-gradient(circle at 20% 20%,rgba(255,80,120,.25),transparent 40%),
+radial-gradient(circle at 80% 30%,rgba(120,80,255,.22),transparent 45%),
+radial-gradient(circle at 50% 80%,rgba(255,0,80,.15),transparent 50%);
 filter:blur(60px);
-animation:move 18s ease-in-out infinite alternate;
+animation:bg 18s infinite alternate ease-in-out;
 }
 
-@keyframes move{
+@keyframes bg{
 to{transform:translate(120px,80px) scale(1.1);}
 }
 
-/* APP FRAME */
-.app{
-width:95%;
-max-width:460px;
+/* PHONE FRAME */
+.phone{
+width:100%;
+max-width:420px;
 height:92vh;
-border-radius:32px;
+border-radius:38px;
 overflow:hidden;
-background:rgba(20,20,20,.55);
-backdrop-filter:blur(25px);
+position:relative;
+background:rgba(20,20,20,.35);
+backdrop-filter:blur(30px);
 border:1px solid rgba(255,255,255,.08);
-box-shadow:0 30px 80px rgba(0,0,0,.6);
+box-shadow:0 40px 100px rgba(0,0,0,.7);
+}
+
+/* HOME SCREEN */
+.home{
+padding:18px;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+padding-top:60px;
+}
+
+/* APP ICON */
+.app{
+width:100%;
+aspect-ratio:1/1;
+border-radius:18px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(15px);
 display:flex;
 flex-direction:column;
-animation:open .6s ease;
+align-items:center;
+justify-content:center;
+font-size:10px;
+cursor:pointer;
+transition:.2s;
+border:1px solid rgba(255,255,255,.1);
 }
 
-@keyframes open{
-from{transform:scale(.92);opacity:0}
-to{transform:scale(1);opacity:1}
+.app:active{
+transform:scale(.92);
 }
 
-/* TOP PHOTOS */
-.top{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-padding:14px;
+.dot{
+width:32px;
+height:32px;
+border-radius:10px;
+background:linear-gradient(135deg,#ff3b5c,#7a5cff);
+margin-bottom:6px;
 }
 
-.top img{
-width:100%;
-height:120px;
-object-fit:cover;
-border-radius:18px;
-transition:.25s;
-}
-
-.top img:hover{
-transform:scale(1.03);
-}
-
-/* TITLE CARD */
-.card{
-margin:0 14px;
-padding:16px;
-border-radius:22px;
+/* DOCK */
+.dock{
+position:absolute;
+bottom:12px;
+left:10px;
+right:10px;
+height:70px;
 background:rgba(255,255,255,.06);
 backdrop-filter:blur(20px);
+border-radius:24px;
+display:flex;
+justify-content:space-around;
+align-items:center;
 border:1px solid rgba(255,255,255,.08);
 }
 
-.title{
-font-size:22px;
-font-weight:800;
-letter-spacing:2px;
-}
-
-.title span{color:#ff3b5c}
-
-.desc{
-font-size:12px;
-color:rgba(255,255,255,.65);
-margin-top:6px;
-line-height:1.4;
-}
-
-/* SEGMENT CONTROL (iOS style tabs) */
-.tabs{
-margin:12px 14px;
-display:flex;
-background:rgba(255,255,255,.06);
+.dock .app{
+width:52px;
+height:52px;
 border-radius:14px;
-padding:4px;
 }
 
-.tab{
-flex:1;
-text-align:center;
-padding:8px;
-font-size:11px;
-border-radius:10px;
-color:rgba(255,255,255,.5);
+/* OPEN APP SCREEN */
+.screen{
+position:absolute;
+inset:0;
+background:rgba(10,10,10,.95);
+backdrop-filter:blur(30px);
+transform:translateY(100%);
+transition:.35s ease;
+display:flex;
+flex-direction:column;
+padding:18px;
+}
+
+.screen.active{
+transform:translateY(0);
+}
+
+/* top bar */
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:16px;
+}
+
+.back{
+font-size:12px;
+color:#ff3b5c;
 cursor:pointer;
-transition:.25s;
 }
 
-.tab.active{
-background:rgba(255,255,255,.12);
-color:#fff;
-}
-
-/* PAGES */
-.page{
-flex:1;
-padding:14px;
-display:none;
-animation:fade .35s ease;
-}
-
-.page.active{display:block}
-
-@keyframes fade{
-from{opacity:0;transform:translateY(10px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-/* GRID APPS */
+/* grid inside app */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
+margin-top:10px;
 }
 
 .btn{
 padding:14px;
 border-radius:16px;
-background:rgba(255,255,255,.06);
 border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.06);
 color:#fff;
 font-size:11px;
 font-weight:700;
 cursor:pointer;
 transition:.2s;
-backdrop-filter:blur(10px);
 }
 
-.btn:active{
-transform:scale(.96);
-}
+.btn:active{transform:scale(.96)}
 
-.btn:hover{
-background:rgba(255,255,255,.1);
-border-color:rgba(255,59,92,.4);
-}
-
-/* FOOTER */
-.footer{
-text-align:center;
-padding:12px;
-font-size:11px;
-color:rgba(255,255,255,.4);
-border-top:1px solid rgba(255,255,255,.06);
+.title{
+font-size:18px;
+font-weight:800;
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="phone">
 
-<div class="top">
-<img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-<img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
+<!-- HOME -->
+<div class="home" id="home">
+
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Профиль
 </div>
 
-<div class="card">
-<div class="title">WORK <span>PANEL</span></div>
-<div class="desc">iOS-style cyber control interface. Smooth, modern, adaptive UI system.</div>
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Наставник
 </div>
 
-<div class="tabs">
-<div class="tab active" onclick="go(0)">HOME</div>
-<div class="tab" onclick="go(1)">INFO</div>
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Мануал
 </div>
 
-<div class="page active">
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Паки
+</div>
+
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Голоса
+</div>
+
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Пасты
+</div>
+
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Боты
+</div>
+
+<div class="app" onclick="openApp()">
+<div class="dot"></div>Пробив
+</div>
+
+</div>
+
+<!-- DOCK -->
+<div class="dock">
+<div class="app" onclick="openApp()"><div class="dot"></div></div>
+<div class="app" onclick="openApp()"><div class="dot"></div></div>
+<div class="app" onclick="openApp()"><div class="dot"></div></div>
+<div class="app" onclick="openApp()"><div class="dot"></div></div>
+</div>
+
+<!-- APP SCREEN -->
+<div class="screen" id="screen">
+
+<div class="topbar">
+<div class="back" onclick="closeApp()">‹ Назад</div>
+<div class="title">WORK PANEL</div>
+<div></div>
+</div>
+
 <div class="grid">
 <button class="btn">ПРОФИЛЬ</button>
 <button class="btn">НАСТАВНИК</button>
@@ -211,40 +237,28 @@ border-top:1px solid rgba(255,255,255,.06);
 <button class="btn">БОТЫ</button>
 <button class="btn">ПРОБИВ</button>
 </div>
-</div>
 
-<div class="page">
-<div style="padding:6px 2px;font-size:12px;color:rgba(255,255,255,.65);line-height:1.6">
-WORK PANEL v6 GOD MODE<br><br>
-UI: iOS glass system<br>
-Engine: smooth interaction layer<br>
-Design: Apple-inspired cyber style<br><br>
-Status: ultra stable build ✔
 </div>
-</div>
-
-<div class="footer">© Cyber UI System</div>
 
 </div>
 
 <script>
-const tabs=document.querySelectorAll(".tab");
-const pages=document.querySelectorAll(".page");
-
-function go(i){
-tabs.forEach(t=>t.classList.remove("active"));
-pages.forEach(p=>p.classList.remove("active"));
-
-tabs[i].classList.add("active");
-pages[i].classList.add("active");
+function openApp(){
+document.getElementById("screen").classList.add("active");
 }
 
-/* micro interaction */
-document.querySelectorAll(".btn").forEach(b=>{
-b.onclick=()=>b.animate(
-[{transform:"scale(.96)"},{transform:"scale(1)"}],
+function closeApp(){
+document.getElementById("screen").classList.remove("active");
+}
+
+/* small haptic feel */
+document.querySelectorAll(".app, .btn").forEach(el=>{
+el.addEventListener("click",()=>{
+el.animate(
+[{transform:"scale(.95)"},{transform:"scale(1)"}],
 {duration:120}
 );
+});
 });
 </script>
 
