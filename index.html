@@ -4,459 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ВОРК-ПАНЕЛЬ</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-
         :root {
-            --red-neon: #ff003c;
-            --bg-black: #050505;
-            --glass-bg: rgba(20, 0, 0, 0.4);
-            --glass-border: rgba(255, 0, 60, 0.3);
-            --text-white: #ffffff;
+            --neon-red: #ff003c;
+            --bg-dark: #050505;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-black);
-            color: var(--text-white);
+            background-color: var(--bg-dark);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
             overflow-x: hidden;
-            user-select: none;
         }
 
-        /* Background Layers */
-        .bg-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -3;
-        }
-        
-        .bg-gradient {
-            background: linear-gradient(180deg, #000000 0%, rgba(255, 0, 60, 0.15) 50%, #000000 100%);
-            z-index: -2;
-        }
+        /* Частицы */
+        #canvas-bg { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
 
-        .noise-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none; z-index: -1; opacity: 0.04;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
-        }
+        /* Основной контейнер */
+        .container { width: 100%; max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
 
-        canvas#particles {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* App Container */
-        #app {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            display: block;
-        }
-
-        .view {
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .view.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* UI Elements */
         .banner {
-            width: 100%;
-            height: 140px;
-            border-radius: 16px;
-            object-fit: cover;
-            margin-bottom: 20px;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
-            border: 1px solid var(--glass-border);
+            width: 100%; height: 200px; border-radius: 20px; object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        /* Эффект Стекла */
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 0, 60, 0.05);
-        }
-
-        .title {
-            font-size: 24px;
-            font-weight: 800;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
-            letter-spacing: 2px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        .desc {
-            font-size: 14px;
-            text-align: center;
-            color: #ccc;
-            line-height: 1.5;
-        }
+        h1 { font-size: 24px; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; color: var(--neon-red); text-shadow: 0 0 15px var(--neon-red); }
+        p { font-size: 14px; opacity: 0.8; line-height: 1.4; }
 
-        /* Grid & Buttons */
-        .btn-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .glass-btn {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 0, 60, 0.5);
-            border-radius: 12px;
-            padding: 18px 10px;
-            color: var(--text-white);
-            font-weight: 800;
-            font-size: 14px;
-            text-align: center;
-            text-transform: uppercase;
-            box-shadow: 0 0 15px rgba(255, 0, 60, 0.15);
-            text-shadow: 0 0 8px rgba(255, 0, 60, 0.9);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .glass-btn:hover {
-            box-shadow: 0 0 25px rgba(255, 0, 60, 0.5);
-            border-color: rgba(255, 0, 60, 0.9);
-            text-shadow: 0 0 12px rgba(255, 0, 60, 1);
-        }
-
-        .glass-btn:active {
-            transform: scale(0.94);
-        }
-
-        /* Action Buttons (Inside Cards) */
-        .action-btn {
-            width: 100%;
-            background: rgba(255, 0, 60, 0.15);
-            border: 1px solid var(--red-neon);
-            color: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            margin-top: 15px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.2s;
-            text-shadow: 0 0 5px var(--red-neon);
-            text-transform: uppercase;
-        }
-
-        .action-btn:active { transform: scale(0.96); }
-
-        /* Ripple Effect */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple-anim 0.6s linear;
-            background: rgba(255, 255, 255, 0.4);
-            pointer-events: none;
-        }
-
-        @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .back-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-white);
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            text-shadow: 0 0 5px var(--red-neon);
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-            padding-bottom: 20px;
-        }
-
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 60, 0.5), transparent);
-            margin-bottom: 15px;
-        }
-
-        .footer-link {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 12px;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer-link:active {
-            color: var(--red-neon);
-        }
-
-        /* Specific Page Elements */
-        .profile-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 8px;
-        }
-        .profile-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .profile-label { color: #aaa; font-size: 13px; }
-        .profile-value { font-weight: 600; text-shadow: 0 0 5px rgba(255, 0, 60, 0.5); }
-
-        .card-img {
-            width: 100%; height: 120px; object-fit: cover;
-            border-radius: 8px; margin-bottom: 15px;
-            border: 1px solid rgba(255,0,60,0.2);
-        }
-        .avatar-img {
-            width: 60px; height: 60px; border-radius: 50%;
-            object-fit: cover; margin-right: 15px;
-            border: 2px solid var(--red-neon);
-            box-shadow: 0 0 10px rgba(255,0,60,0.5);
-        }
-        .flex-row { display: flex; align-items: center; margin-bottom: 15px; }
+        /* Кнопки */
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         
-        .paste-text {
-            background: rgba(0,0,0,0.5); padding: 10px;
-            border-radius: 6px; font-family: monospace;
-            font-size: 12px; color: #ddd; margin-bottom: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-            word-wrap: break-word;
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--neon-red);
+            padding: 15px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 10px rgba(255, 0, 60, 0.2);
         }
 
-        .subtitle { font-size: 18px; font-weight: 600; margin-bottom: 5px; color: #fff; text-shadow: 0 0 5px var(--red-neon); }
-        .subdesc { font-size: 13px; color: #aaa; }
+        .menu-btn:active { transform: scale(0.95); background: var(--neon-red); }
     </style>
 </head>
 <body>
 
-    <div class="bg-layer"></div>
-    <div class="bg-layer bg-gradient"></div>
-    <div class="noise-overlay"></div>
-    <canvas id="particles"></canvas>
+    <canvas id="canvas-bg"></canvas>
 
-    <div id="app">
-        
-        <section id="view-main" class="view active">
-            <img src="https://picsum.photos/900/350" alt="Banner" class="banner">
-            
-            <div class="glass-card">
-                <div class="title">ВОРК — ПАНЕЛЬ</div>
-                <div class="desc">
-                    Новичок?<br>
-                    Не знаешь с чего начать?<br><br>
-                    Специально для тебя и нашей команды мы сделали собственную ворк-панель.
-                </div>
-            </div>
+    <div class="container">
+        <img src="https://picsum.photos/600/300" class="banner" alt="Banner">
 
-            <div class="btn-grid">
-                <div class="glass-btn" onclick="nav('view-profile')">ПРОФИЛЬ</div>
-                <div class="glass-btn" onclick="nav('view-mentor')">НАСТАВНИК</div>
-                <div class="glass-btn" onclick="nav('view-manual')">МАНУАЛ</div>
-                <div class="glass-btn" onclick="nav('view-packs')">ПАКИ</div>
-                <div class="glass-btn" onclick="nav('view-voice')">ГОЛОСОВЫЕ</div>
-                <div class="glass-btn" onclick="nav('view-pastes')">ПАСТЫ</div>
-                <div class="glass-btn" onclick="nav('view-bots')">БОТЫ</div>
-                <div class="glass-btn" onclick="nav('view-probiv')">ПРОБИВ</div>
-            </div>
-        </section>
+        <div class="glass-card">
+            <h1>ВОРК — ПАНЕЛЬ</h1>
+            <p>Новичок?<br>Не знаешь с чего начать?</p>
+            <p style="margin-top: 10px;">Специально для тебя и нашей команды мы сделали собственную ворк-панель.</p>
+        </div>
 
-        <section id="view-profile" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">ПРОФИЛЬ</div>
-            
-            <div class="glass-card" id="profile-container">
-                <div class="desc" style="margin-bottom: 15px;" id="profile-fallback">
-                    Загрузка данных Telegram...<br>Если вы открыли сайт вне Telegram, данные недоступны.
-                </div>
-                <div id="profile-data" style="display: none;">
-                    <div class="profile-row"><span class="profile-label">Имя</span><span class="profile-value" id="p-name">-</span></div>
-                    <div class="profile-row"><span class="profile-label">Username</span><span class="profile-value" id="p-user">-</span></div>
-                    <div class="profile-row"><span class="profile-label">Telegram ID</span><span class="profile-value" id="p-id">-</span></div>
-                    <div class="profile-row"><span class="profile-label">Premium</span><span class="profile-value" id="p-prem">-</span></div>
-                    <div class="profile-row"><span class="profile-label">Язык</span><span class="profile-value" id="p-lang">-</span></div>
-                </div>
-            </div>
-        </section>
+        <div class="btn-grid">
+            <button class="menu-btn" onclick="alert('Профиль')">ПРОФИЛЬ</button>
+            <button class="menu-btn" onclick="alert('Наставник')">НАСТАВНИК</button>
+            <button class="menu-btn" onclick="alert('Мануал')">МАНУАЛ</button>
+            <button class="menu-btn" onclick="alert('Паки')">ПАКИ</button>
+            <button class="menu-btn" onclick="alert('Голосовые')">ГОЛОСОВЫЕ</button>
+            <button class="menu-btn" onclick="alert('Пасты')">ПАСТЫ</button>
+            <button class="menu-btn" onclick="alert('Боты')">БОТЫ</button>
+            <button class="menu-btn" onclick="alert('Пробив')">ПРОБИВ</button>
+        </div>
+    </div>
 
-        <section id="view-mentor" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">НАСТАВНИКИ</div>
+    <script>
+        // Анимация частиц
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-            <div class="glass-card">
-                <div class="flex-row">
-                    <img src="https://picsum.photos/100/100?random=1" alt="Avatar" class="avatar-img">
-                    <div>
-                        <div class="subtitle">Наставник №1</div>
-                        <div class="subdesc">Kodi (Универсал)</div>
-                    </div>
-                </div>
-                <div class="desc" style="text-align: left;">Опытный куратор. Поможет с любыми вопросами по ворку, доведет до первого профита.</div>
-                <button class="action-btn" onclick="window.location.href='https://t.me/example'">Написать</button>
-            </div>
+        let particles = [];
+        for(let i=0; i<50; i++) {
+            particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2 });
+        }
 
-            <div class="glass-card">
-                <div class="flex-row">
-                    <img src="https://picsum.photos/100/100?random=2" alt="Avatar" class="avatar-img">
-                    <div>
-                        <div class="subtitle">Наставник №2</div>
-                        <div class="subdesc">Phantom (Спец)</div>
-                    </div>
-                </div>
-                <div class="desc" style="text-align: left;">Специалист по сложным схемам. Разбор ошибок и масштабирование.</div>
-                <button class="action-btn" onclick="window.location.href='https://t.me/example'">Написать</button>
-            </div>
-        </section>
-
-        <section id="view-manual" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">МАНУАЛЫ</div>
-
-            <div class="glass-card">
-                <div class="subtitle">Мануал (Письменный)</div>
-                <div class="subdesc" style="margin-bottom: 10px;">Направление: Шантаж</div>
-                <button class="action-btn" onclick="window.location.href='https://t.me/example'">Открыть</button>
-            </div>
-
-            <div class="glass-card">
-                <div class="subtitle">Мануал (Видео)</div>
-                <div class="subdesc" style="margin-bottom: 10px;">Направление: Шантаж</div>
-                <button class="action-btn" onclick="window.location.href='https://t.me/example'">Смотреть</button>
-            </div>
-        </section>
-
-        <section id="view-packs" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">ПАКИ</div>
-
-            <div class="btn-grid">
-                <div class="glass-card" style="padding: 15px; margin-bottom: 0;">
-                    <img src="https://picsum.photos/200/150?random=11" class="card-img" alt="Pack">
-                    <div class="subtitle" style="text-align: center; font-size: 16px;">ПАК 1</div>
-                    <button class="action-btn" onclick="window.location.href='https://t.me/example'">Открыть</button>
-                </div>
-                <div class="glass-card" style="padding: 15px; margin-bottom: 0;">
-                    <img src="https://picsum.photos/200/150?random=12" class="card-img" alt="Pack">
-                    <div class="subtitle" style="text-align: center; font-size: 16px;">ПАК 2</div>
-                    <button class="action-btn" onclick="window.location.href='https://t.me/example'">Открыть</button>
-                </div>
-                <div class="glass-card" style="padding: 15px; margin-bottom: 0;">
-                    <img src="https://picsum.photos/200/150?random=13" class="card-img" alt="Pack">
-                    <div class="subtitle" style="text-align: center; font-size: 16px;">ПАК 3</div>
-                    <button class="action-btn" onclick="window.location.href='https://t.me/example'">Открыть</button>
-                </div>
-                <div class="glass-card" style="padding: 15px; margin-bottom: 0;">
-                    <img src="https://picsum.photos/200/150?random=14" class="card-img" alt="Pack">
-                    <div class="subtitle" style="text-align: center; font-size: 16px;">ПАК 4</div>
-                    <button class="action-btn" onclick="window.location.href='https://t.me/example'">Открыть</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="view-voice" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">ГОЛОСОВЫЕ</div>
-
-            <div class="glass-card">
-                <img src="https://picsum.photos/600/300?random=20" class="card-img" style="height: 180px;" alt="Voice">
-                <div class="subtitle">База голосовых сообщений</div>
-                <div class="desc" style="text-align: left; margin-top: 10px;">Огромный архив прогретых голосовых сообщений для работы с мамонтами. Женские и мужские голоса под разные ситуации.</div>
-                <button class="action-btn" onclick="window.location.href='https://t.me/example'">Перейти</button>
-            </div>
-        </section>
-
-        <section id="view-pastes" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">ПАСТЫ</div>
-
-            <div class="glass-card">
-                <div class="subtitle">Паста №1 (Приветствие)</div>
-                <div class="paste-text" id="paste1">Привет! Случайно наткнулась на твой профиль, очень классные фотки. Чем занимаешься по жизни?</div>
-                <button class="action-btn" onclick="copyText(this, 'paste1')">Скопировать</button>
-            </div>
-            <div class="glass-card">
-                <div class="subtitle">Паста №2 (Прогрев)</div>
-                <div class="paste-text" id="paste2">Слушай, а давай перейдем в тг? Тут не очень удобно общаться, уведомления не всегда приходят. Мой юз: @example</div>
-                <button class="action-btn" onclick="copyText(this, 'paste2')">Скопировать</button>
-            </div>
-            <div class="glass-card">
-                <div class="subtitle">Паста №3 (Дожим)</div>
-                <div class="paste-text" id="paste3">Я сейчас немного занята, но очень хочу продолжить общение. Посмотри пока видео, я для тебя записала.</div>
-                <button class="action-btn" onclick="copyText(this, 'paste3')">Скопировать</button>
-            </div>
-        </section>
-
-        <section id="view-bots" class="view">
-            <div class="top-bar">
-                <button class="back-btn" onclick="nav('view-main')">← Назад</button>
-            </div>
-            <div class="title" style="margin-bottom: 20px;">БОТЫ</div>
-            <div id="bots-container">
-                <div class="glass-card"><div class="subtitle">Бот #1</div><div class="subdesc">Анонимная отправка SMS</div><button class="action-btn" onclick="window.location.href='https://t.me/example1'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #2</div><div class="subdesc">Генерация фейк чеков</div><button class="action-btn" onclick="window.location.href='https://t.me/example2'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #3</div><div class="subdesc">Отрисовка документов</div><button class="action-btn" onclick="window.location.href='https://t.me/example3'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #4</div><div class="subdesc">Смена голоса в ГС</div><button class="action-btn" onclick="window.location.href='https://t.me/example4'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #5</div><div class="subdesc">Парсер аудитории VK</div><button class="action-btn" onclick="window.location.href='https://t.me/example5'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #6</div><div class="subdesc">Парсер аудитории TG</div><button class="action-btn" onclick="window.location.href='https://t.me/example6'">Открыть</button></div>
-                <div class="glass-card"><div class="subtitle">Бот #7</div><div class="subdesc">Рассыльщик TG</div><button class="action-btn" onclick="window.location.href='https://t.me/examp
+        function draw() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(255, 0, 60, 0.2)';
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+                p.y += 0.2;
+                if(p.y > canvas.height) p.y = 0;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    </script>
+</body>
+</html>
