@@ -1,315 +1,632 @@
-<!DOCTYPE html>  <html lang="ru">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>Ворк-Панель</title>  <style>  
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');  
-  
-*{  
-margin:0;  
-padding:0;  
-box-sizing:border-box;  
-font-family:'Montserrat', sans-serif;  
-}  
-  
-body{  
-height:100vh;  
-display:flex;  
-justify-content:center;  
-align-items:center;  
-overflow:hidden;  
-background:#020000;  
-color:#fff;  
-}  
-  
-/* BACKGROUND GLOW */  
-body::before{  
-content:"";  
-position:absolute;  
-inset:-300px;  
-background:  
-radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),  
-radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),  
-radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);  
-filter:blur(90px);  
-animation:bg 18s ease-in-out infinite alternate;  
-}  
-  
-@keyframes bg{  
-to{transform:translate(140px,100px) scale(1.15);}  
-}  
-  
-/* PARTICLES */  
-canvas{  
-position:fixed;  
-top:0;  
-left:0;  
-width:100%;  
-height:100%;  
-z-index:0;  
-pointer-events:none;  
-}  
-  
-/* APP */  
-.app{  
-position:relative;  
-z-index:2;  
-width:95%;  
-max-width:460px;  
-height:92vh;  
-border-radius:36px;  
-  
-background:rgba(255,255,255,.06);  
-backdrop-filter:blur(35px);  
-  
-border:1px solid rgba(255,80,80,.15);  
-  
-box-shadow:  
-0 40px 120px rgba(0,0,0,.85),  
-inset 0 0 80px rgba(255,0,0,.08);  
-  
-display:flex;  
-flex-direction:column;  
-overflow:hidden;  
-}  
-  
-/* TOP */  
-.top-wrap{padding:14px;}  
-.top-frame{  
-display:grid;  
-grid-template-columns:1fr 1fr;  
-gap:10px;  
-padding:12px;  
-border-radius:24px;  
-background:rgba(255,255,255,.04);  
-border:1px solid rgba(255,80,80,.25);  
-backdrop-filter:blur(20px);  
-}  
-  
-.top-frame img{  
-width:100%;  
-height:120px;  
-object-fit:cover;  
-border-radius:18px;  
-transition:.3s;  
-}  
-  
-.top-frame img:hover{  
-transform:scale(1.05);  
-filter:brightness(1.2);  
-}  
-  
-/* TITLE */  
-.title-box{  
-margin:0 14px;  
-padding:18px;  
-border-radius:26px;  
-background:rgba(255,255,255,.06);  
-border:1px solid rgba(255,255,255,.12);  
-backdrop-filter:blur(30px);  
-}  
-  
-.title{  
-font-size:24px;  
-font-weight:900;  
-letter-spacing:2px;  
-}  
-  
-.title span{color:#ff2b3d;}  
-  
-.desc{  
-margin-top:8px;  
-font-size:12px;  
-line-height:1.6;  
-color:rgba(255,255,255,.75);  
-}  
-  
-/* TABS */  
-.tabs{  
-margin:12px 14px;  
-display:flex;  
-gap:6px;  
-padding:5px;  
-border-radius:18px;  
-background:rgba(255,255,255,.04);  
-border:1px solid rgba(255,80,80,.15);  
-backdrop-filter:blur(20px);  
-}  
-  
-.tab{  
-flex:1;  
-text-align:center;  
-padding:10px;  
-border-radius:14px;  
-font-size:12px;  
-font-weight:700;  
-color:rgba(255,255,255,.6);  
-cursor:pointer;  
-transition:.25s;  
-}  
-  
-.tab.active{  
-background:rgba(255,255,255,.12);  
-color:#fff;  
-box-shadow:0 0 20px rgba(255,0,60,.25);  
-}  
-  
-/* PAGE */  
-.page{  
-flex:1;  
-padding:14px;  
-display:none;  
-}  
-  
-.page.active{display:block;}  
-  
-/* BUTTONS NEON GLASS */  
-.grid{  
-display:grid;  
-grid-template-columns:1fr 1fr;  
-gap:10px;  
-}  
-  
-.btn{  
-padding:16px;  
-border-radius:22px;  
-  
-background:rgba(255,255,255,.06);  
-border:1px solid rgba(255,80,80,.25);  
-  
-backdrop-filter:blur(25px);  
-  
-color:#fff;  
-font-size:12px;  
-font-weight:900;  
-letter-spacing:1.2px;  
-  
-cursor:pointer;  
-transition:.25s;  
-  
-box-shadow:  
-0 0 10px rgba(255,0,60,.15),  
-inset 0 0 10px rgba(255,255,255,.05);  
-  
-text-shadow:  
-0 0 6px rgba(255,0,60,.6),  
-0 0 12px rgba(255,0,60,.35);  
-}  
-  
-.btn:hover{  
-transform:translateY(-3px);  
-  
-border-color:rgba(255,60,60,.5);  
-  
-box-shadow:  
-0 0 25px rgba(255,0,60,.35),  
-0 0 45px rgba(255,0,60,.15),  
-inset 0 0 10px rgba(255,255,255,.08);  
-  
-text-shadow:  
-0 0 10px rgba(255,80,80,.9),  
-0 0 20px rgba(255,0,60,.7);  
-}  
-  
-/* FOOTER */  
-.footer{  
-text-align:center;  
-padding:12px;  
-font-size:11px;  
-color:rgba(255,255,255,.4);  
-border-top:1px solid rgba(255,80,80,.15);  
-}  
-</style>  </head>  <body>  <canvas id="particles"></canvas>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ворк-Панель</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<div class="app">    <div class="top-wrap">  
-    <div class="top-frame">  
-      <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">  
-      <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">  
-    </div>  
-  </div>    <div class="title-box">  
-    <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>  
-    <div class="desc">Киберпанк интерфейс с неоном и стеклом</div>  
-  </div>    <div class="tabs">  
-    <div class="tab active" onclick="go(0)">МЕНЮ</div>  
-    <div class="tab" onclick="go(1)">ИНФО</div>  
-  </div>    <div class="page active">  
-    <div class="grid">  
-      <button class="btn">ПРОФИЛЬ</button>  
-      <button class="btn">НАСТАВНИК</button>  
-      <button class="btn">МАНУАЛ</button>  
-      <button class="btn">ПАКИ</button>  
-      <button class="btn">ГОЛОСОВЫЕ</button>  
-      <button class="btn">БОТЫ</button>  
-      <button class="btn">ПАСТЫ</button>  
-      <button class="btn">ПРОБИВ</button>  
-    </div>  
-  </div>    <div class="page">  
-    <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.75)">  
-      Версия: ULTRA CYBER v7<br>  
-      Glass + Neon UI Engine<br>  
-    </div>  
-  </div>    <div class="footer">CYBER GLASS SYSTEM</div>  </div>  <script>  
-function go(i){  
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));  
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));  
-document.querySelectorAll(".tab")[i].classList.add("active");  
-document.querySelectorAll(".page")[i].classList.add("active");  
-}  
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #020000;
+  color: #fff;
+  touch-action: none; /* Запрет любого скролла на уровне body */
+}
+
+/* BACKGROUND GLOW */
+body::before {
+  content: "";
+  position: absolute;
+  inset: -300px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
+  filter: blur(90px);
+  animation: bg 18s ease-in-out infinite alternate;
+}
+
+@keyframes bg {
+  to { transform: translate(140px,100px) scale(1.15); }
+}
+
+/* PARTICLES */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* APP */
+.app {
+  position: relative;
+  z-index: 2;
+  width: 95%;
+  max-width: 460px;
+  height: 92vh;
+  border-radius: 36px;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(35px);
+  border: 1px solid rgba(255,80,80,.15);
+  box-shadow:
+    0 40px 120px rgba(0,0,0,.85),
+    inset 0 0 80px rgba(255,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* TOP */
+.top-wrap { padding: 14px; }
+.top-frame {
+  display: block;
+  padding: 12px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,80,80,.25);
+  backdrop-filter: blur(20px);
+}
+
+.top-frame img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 18px;
+  transition: 0.3s;
+  display: block;
+}
+
+/* ЗАГОЛОВОК */
+.title-box {
+  margin: 0 14px;
+  padding: 18px;
+  border-radius: 26px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  backdrop-filter: blur(30px);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.title span { color: #ff2b3d; }
+
+.desc {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.75);
+}
+
+.glow-red {
+  color: #ff2b3d;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(255,43,61,0.6);
+}
+
+/* TABS */
+.tabs {
+  margin: 12px 14px;
+  display: flex;
+  gap: 6px;
+  padding: 5px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,80,80,.15);
+  backdrop-filter: blur(20px);
+  flex-shrink: 0;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,.6);
+  cursor: pointer;
+  transition: .25s;
+}
+
+.tab.active {
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255,0,60,.25);
+}
+
+/* PAGE WRAPPER & SCROLL (Internal logic for dynamic pages) */
+.page-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  touch-action: pan-y;
+  padding: 0 14px 14px 14px;
+}
+.page-wrapper::-webkit-scrollbar { display: none; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+.view { display: none; animation: fadeIn 0.2s ease; }
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* BUTTONS NEON GLASS */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn {
+  padding: 16px;
+  border-radius: 22px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,80,80,.25);
+  backdrop-filter: blur(25px);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.25s, border-color 0.25s;
+  box-shadow:
+    0 0 10px rgba(255,0,60,.15),
+    inset 0 0 10px rgba(255,255,255,.05);
+  text-shadow:
+    0 0 6px rgba(255,0,60,.6),
+    0 0 12px rgba(255,0,60,.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.btn:hover {
+  border-color: rgba(255,60,60,.5);
+  box-shadow:
+    0 0 25px rgba(255,0,60,.35),
+    0 0 45px rgba(255,0,60,.15),
+    inset 0 0 10px rgba(255,255,255,.08);
+  text-shadow:
+    0 0 10px rgba(255,80,80,.9),
+    0 0 20px rgba(255,0,60,.7);
+}
+
+.btn-back {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: rgba(255,0,60,.15);
+  border-color: rgba(255,0,60,.4);
+}
+
+/* CARDS FOR SUBPAGES */
+.card {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,80,80,.25);
+  border-radius: 18px;
+  padding: 14px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(25px);
+  box-shadow: 0 0 10px rgba(255,0,60,.10);
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255,0,60,.6);
+}
+
+.card-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  margin-bottom: 10px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.card-img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.card-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 12px;
+  margin-bottom: 5px;
+}
+
+.clearfix::after { content: ""; clear: both; display: table; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 12px;
+  font-size: 12px;
+  border-top: 1px solid rgba(255,80,80,.15);
+  flex-shrink: 0;
+}
+
+.footer-link {
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.footer-link:hover {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255,0,60,.8);
+}
+
+.custom-link {
+  color: #ff2b3d;
+  text-decoration: underline;
+  text-shadow: 0 0 6px rgba(255,43,61,0.6);
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+
+<div class="app">
+  <div class="top-wrap">
+    <div class="top-frame">
+      <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" alt="Header Image">
+    </div>
+  </div>
   
-/* PARTICLES */  
-const canvas = document.getElementById("particles");  
-const ctx = canvas.getContext("2d");  
+  <div class="title-box">
+    <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
+    <div class="desc">
+      Новичок?<br>
+      Не знаешь с чего <span class="glow-red">Начать</span>?<br>
+      Специально для <span class="glow-red">Тебя</span>, и для Наёмников нашей Команды —<br>
+      Мы создали <span class="glow-red">Собственного Бота</span>!
+    </div>
+  </div>
   
-canvas.width = window.innerWidth;  
-canvas.height = window.innerHeight;  
+  <div class="tabs">
+    <div class="tab active">МЕНЮ</div>
+    <div class="tab">ИНФО</div>
+  </div>
   
-const colors = [  
-"rgba(255,0,60,.85)",  
-"rgba(255,255,255,.85)",  
-"rgba(0,0,0,.6)"  
-];  
+  <div class="page-wrapper">
+    <div class="page active">
+      <div class="view active" id="view-main">
+        <div class="grid">
+          <button class="btn" data-target="view-profile">ПРОФИЛЬ</button>
+          <button class="btn" data-target="view-mentor">НАСТАВНИК</button>
+          <button class="btn" data-target="view-manual">МАНУАЛ</button>
+          <button class="btn" data-target="view-packs">ПАКИ</button>
+          <button class="btn" data-target="view-voice">ГОЛОСОВЫЕ</button>
+          <button class="btn" data-target="view-bots">БОТЫ</button>
+          <button class="btn" data-target="view-pastes">ПАСТЫ</button>
+          <button class="btn" data-target="view-probiv">ПРОБИВ</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-profile">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="card" id="profile-content">
+          </div>
+      </div>
+
+      <div class="view" id="view-mentor">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="card clearfix">
+          <img src="https://ui-avatars.com/api/?name=Retro&background=ff003c&color=fff" class="card-avatar">
+          <div class="card-title">Наставник Retro</div>
+          <div class="card-desc">Поможет разобраться с первыми шагами, ответит на вопросы и направит в правильное русло.</div>
+          <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_mentor1">Написать</button>
+        </div>
+        <div class="card clearfix">
+          <img src="https://ui-avatars.com/api/?name=Mentor&background=ff003c&color=fff" class="card-avatar">
+          <div class="card-title">Наставник Cyber</div>
+          <div class="card-desc">Помощь с продвинутыми инструментами, пастами и сложными ситуациями.</div>
+          <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_mentor2">Написать</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-manual">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="card">
+          <div class="card-title">Мануал (Письменный)</div>
+          <div class="card-desc"><b>Направление:</b> Шантаж</div>
+          <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_manual_text">Открыть</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Мануал (Видео)</div>
+          <div class="card-desc"><b>Направление:</b> Шантаж</div>
+          <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_manual_video">Смотреть</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-packs">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="grid-2">
+          <div class="card" style="margin-bottom:0;">
+            <img src="https://placehold.co/200x200/1a1a1a/ff003c?text=Pack+1" class="card-img" style="height:70px;">
+            <div class="card-title" style="font-size:12px;text-align:center;">Женский Пак</div>
+            <button class="btn" style="width:100%; padding:8px; font-size:10px;" data-link="https://t.me/temp_pack1">Открыть</button>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <img src="https://placehold.co/200x200/1a1a1a/ff003c?text=Pack+2" class="card-img" style="height:70px;">
+            <div class="card-title" style="font-size:12px;text-align:center;">Мужской Пак</div>
+            <button class="btn" style="width:100%; padding:8px; font-size:10px;" data-link="https://t.me/temp_pack2">Открыть</button>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <img src="https://placehold.co/200x200/1a1a1a/ff003c?text=Pack+3" class="card-img" style="height:70px;">
+            <div class="card-title" style="font-size:12px;text-align:center;">VIP Пак</div>
+            <button class="btn" style="width:100%; padding:8px; font-size:10px;" data-link="https://t.me/temp_pack3">Открыть</button>
+          </div>
+          <div class="card" style="margin-bottom:0;">
+            <img src="https://placehold.co/200x200/1a1a1a/ff003c?text=Pack+4" class="card-img" style="height:70px;">
+            <div class="card-title" style="font-size:12px;text-align:center;">MIX Пак</div>
+            <button class="btn" style="width:100%; padding:8px; font-size:10px;" data-link="https://t.me/temp_pack4">Открыть</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="view" id="view-voice">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="card">
+          <img src="https://placehold.co/400x150/1a1a1a/ff003c?text=Voice+Pack" class="card-img">
+          <div class="card-title">Архив Голосовых</div>
+          <div class="card-desc">Огромная база заготовленных голосовых сообщений под любой сценарий и диалог.</div>
+          <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_voice">Перейти</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-pastes">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div class="card">
+          <div class="card-title">Паста: Приветствие</div>
+          <div class="card-desc" id="paste1">Привет! Заинтересовала твоя анкета, давай пообщаемся? 😊</div>
+          <button class="btn" style="width:100%; padding:10px;" data-copy="paste1">📋 Скопировать</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Паста: Прогрев</div>
+          <div class="card-desc" id="paste2">Слушай, мне здесь не очень удобно общаться. Может перейдем в Телеграм? Там проще фотками делиться.</div>
+          <button class="btn" style="width:100%; padding:10px;" data-copy="paste2">📋 Скопировать</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Паста: Финал</div>
+          <div class="card-desc" id="paste3">Теперь смотри внимательно. Если не хочешь, чтобы это увидели твои друзья, мы договоримся. Жду ответ.</div>
+          <button class="btn" style="width:100%; padding:10px;" data-copy="paste3">📋 Скопировать</button>
+        </div>
+      </div>
+
+      <div class="view" id="view-bots">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div id="bots-container"></div>
+      </div>
+
+      <div class="view" id="view-probiv">
+        <button class="btn btn-back" data-back="true">← Назад</button>
+        <div id="probiv-container"></div>
+      </div>
+    </div>
+
+    <div class="page">
+      <div class="card">
+        <div class="card-title" style="font-size:16px;">@RetroWork_Bot</div>
+        <div class="card-desc" style="font-size:13px;">— Это не просто бот, а объединение всех лучших материалов в одно.<br><br>Бот создан для удобства воркеров и новичков нашей команды — Retro Company.</div>
+        <div class="card-desc" style="font-size:13px;">
+          <b>Дата создания:</b><br>26.06.2026
+        </div>
+        <div class="card-desc" style="font-size:13px;">
+          Наш канал — <a href="https://t.me/retronews7" class="custom-link" target="_blank">ТЫК</a><br>
+          Наш чат — <a href="https://t.me/+ezuVC0NmIKFjNThh" class="custom-link" target="_blank">ТЫК</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a href="http://t.me/send?start=IV1dLorNmNQV" class="footer-link" target="_blank">Поддержать Команду</a>
+  </div>
+</div>
+
+<script>
+// --- Генерация списков Ботов и Пробива ---
+window.addEventListener('DOMContentLoaded', () => {
+  let botsHtml = '';
+  for(let i=1; i<=20; i++){
+    botsHtml += `
+      <div class="card">
+        <div class="card-title">Бот #${i}</div>
+        <div class="card-desc">Полезный инструмент для работы и автоматизации #${i}.</div>
+        <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_bot${i}">Открыть</button>
+      </div>`;
+  }
+  document.getElementById('bots-container').innerHTML = botsHtml;
+
+  let probivHtml = '';
+  for(let i=1; i<=5; i++){
+    probivHtml += `
+      <div class="card">
+        <div class="card-title">Пробив #${i}</div>
+        <div class="card-desc">Сервис для поиска информации и сбора данных #${i}.</div>
+        <button class="btn" style="width:100%; padding:10px;" data-link="https://t.me/temp_probiv${i}">Открыть</button>
+      </div>`;
+  }
+  document.getElementById('probiv-container').innerHTML = probivHtml;
+
+  // --- Загрузка профиля Telegram ---
+  const tg = window.Telegram?.WebApp;
+  const profileCard = document.getElementById('profile-content');
   
-const particles = [];  
-  
-for(let i=0;i<200;i++){  
-particles.push({  
-x:Math.random()*canvas.width,  
-y:Math.random()*canvas.height,  
-size:Math.random()*4.8+1.5,  
-speed:Math.random()*3+1.5,  
-color:colors[Math.floor(Math.random()*colors.length)],  
-drift:Math.random()*1.4-0.7  
-});  
-}  
-  
-function animate(){  
-ctx.clearRect(0,0,canvas.width,canvas.height);  
-  
-for(let p of particles){  
-p.y += p.speed;  
-p.x += p.drift;  
-  
-if(p.y > canvas.height){  
-p.y = -10;  
-p.x = Math.random()*canvas.width;  
-}  
-  
-ctx.beginPath();  
-ctx.fillStyle = p.color;  
-ctx.shadowBlur = 18;  
-ctx.shadowColor = p.color;  
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);  
-ctx.fill();  
-}  
-  
-requestAnimationFrame(animate);  
-}  
-  
-animate();  
-  
-window.addEventListener("resize",()=>{  
-canvas.width = window.innerWidth;  
-canvas.height = window.innerHeight;  
-});  
-</script>  </body>  
-             </html>
+  if(tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user) {
+    const u = tg.initDataUnsafe.user;
+    profileCard.innerHTML = `
+      <div class="card-title" style="margin-bottom:12px;">Твой Профиль</div>
+      <div class="card-desc"><b>Имя:</b> ${u.first_name} ${u.last_name || ''}</div>
+      <div class="card-desc"><b>Username:</b> ${u.username ? '@'+u.username : 'Отсутствует'}</div>
+      <div class="card-desc"><b>Telegram ID:</b> ${u.id}</div>
+      <div class="card-desc"><b>Premium:</b> ${u.is_premium ? 'Есть 💎' : 'Нет'}</div>
+      <div class="card-desc"><b>Язык:</b> ${u.language_code ? u.language_code.toUpperCase() : 'Неизвестно'}</div>
+    `;
+  } else {
+    profileCard.innerHTML = `
+      <div class="card-desc" style="text-align:center; padding: 20px 0;">
+        <div style="font-size:30px; margin-bottom:10px;">🛡️</div>
+        <b>Приложение открыто вне Telegram!</b><br><br>Пожалуйста, запустите мини-приложение внутри мессенджера для отображения данных.
+      </div>
+    `;
+  }
+});
+
+// --- Глобальный обработчик кликов и анимаций ---
+document.addEventListener('click', function(e) {
+  let btn = e.target.closest('.btn');
+  let tab = e.target.closest('.tab');
+  let targetElem = btn || tab;
+
+  if(!targetElem) return;
+
+  // Если это не обычная ссылка с href, предотвращаем стандартное поведение
+  if(!targetElem.hasAttribute('href')) {
+    e.preventDefault();
+  }
+
+  // Блокируем повторные клики на время анимации
+  targetElem.style.pointerEvents = 'none';
+
+  // 1 этап: Кнопка уменьшается
+  targetElem.style.transform = 'scale(0.92)';
+
+  setTimeout(() => {
+    // 2 этап: Плавное возвращение
+    targetElem.style.transform = '';
+
+    setTimeout(() => {
+      targetElem.style.pointerEvents = 'auto'; // Возвращаем кликабельность
+
+      // 3 этап: Выполнение перехода или действия
+      if(tab) {
+        let tabs = Array.from(document.querySelectorAll('.tab'));
+        let pages = document.querySelectorAll('.page');
+        let idx = tabs.indexOf(tab);
+        
+        tabs.forEach(t => t.classList.remove('active'));
+        pages.forEach(p => p.classList.remove('active'));
+        
+        tab.classList.add('active');
+        pages[idx].classList.add('active');
+      } 
+      else if(btn) {
+        // Открытие внутренней страницы
+        if(btn.dataset.target) {
+          document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+          document.getElementById(btn.dataset.target).classList.add('active');
+          document.querySelector('.page-wrapper').scrollTop = 0; // Сброс скролла при переходе
+        }
+        // Кнопка Назад
+        else if(btn.dataset.back) {
+          document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+          document.getElementById('view-main').classList.add('active');
+        }
+        // Переход по ссылке
+        else if(btn.dataset.link) {
+          window.open(btn.dataset.link, '_blank');
+        }
+        // Копирование текста
+        else if(btn.dataset.copy) {
+          let textId = btn.dataset.copy;
+          let text = document.getElementById(textId).innerText;
+          navigator.clipboard.writeText(text).then(() => {
+            let oldHtml = btn.innerHTML;
+            btn.innerHTML = "✅ Скопировано";
+            setTimeout(() => { btn.innerHTML = oldHtml; }, 2000);
+          }).catch(err => {
+            console.error('Ошибка копирования', err);
+          });
+        }
+      }
+    }, 150); // Время на возвращение кнопки в исходный размер
+  }, 100); // Время удержания в уменьшенном состоянии
+});
+
+// --- PARTICLES ENGINE ---
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const colors = [
+  "rgba(255,0,60,.85)",
+  "rgba(255,255,255,.85)",
+  "rgba(0,0,0,.6)"
+];
+
+const particles = [];
+
+for(let i=0; i<200; i++){
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 4.8 + 1.5,
+    speed: Math.random() * 3 + 1.5,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    drift: Math.random() * 1.4 - 0.7
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  for(let p of particles){
+    p.y += p.speed;
+    p.x += p.drift;
+
+    if(p.y > canvas.height){
+      p.y = -10;
+      p.x = Math.random() * canvas.width;
+    }
+
+    ctx.beg
