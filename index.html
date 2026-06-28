@@ -2,7 +2,7 @@
 <html lang="ru">  
 <head>  
 <meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
 <title>Ворк-Панель</title>  
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>  
@@ -13,6 +13,9 @@ margin:0;
 padding:0;  
 box-sizing:border-box;  
 font-family:'Montserrat', sans-serif;  
+/* УБИРАЕМ СИНЮЮ ОБВОДКУ И ВЫДЕЛЕНИЕ ПРИ НАЖАТИИ */
+-webkit-tap-highlight-color: transparent;
+outline: none !important;
 }  
   
 body{  
@@ -23,6 +26,9 @@ align-items:center;
 overflow:hidden;  
 background:#020000;  
 color:#fff;  
+/* ЗАПРЕТ ПРОКРУТКИ НА УРОВНЕ СТРАНИЦЫ */
+position: fixed;
+width: 100%;
 }  
   
 /* BACKGROUND GLOW */  
@@ -79,9 +85,7 @@ overflow:hidden;
 /* TOP */  
 .top-wrap{padding:14px;}  
 .top-frame{  
-display:grid;  
-grid-template-columns:1fr 1fr;  
-gap:10px;  
+display:block;  
 padding:12px;  
 border-radius:24px;  
 background:rgba(255,255,255,.04);  
@@ -89,6 +93,7 @@ border:1px solid rgba(255,80,80,.25);
 backdrop-filter:blur(20px);  
 }  
   
+/* ОДНО ШИРОКОЕ ФОТО */
 .top-frame img{  
 width:100%;  
 height:120px;  
@@ -98,8 +103,8 @@ transition:.3s;
 }  
   
 .top-frame img:hover{  
-transform:scale(1.05);  
-filter:brightness(1.2);  
+transform:scale(1.02);  
+filter:brightness(1.1);  
 }  
   
 /* TITLE */  
@@ -126,6 +131,13 @@ font-size:12px;
 line-height:1.6;  
 color:rgba(255,255,255,.75);  
 }  
+
+/* СВЕЧЕНИЕ ДЛЯ ОПРЕДЕЛЕННЫХ СЛОВ */
+.glow-text {
+color:#ff3344;
+text-shadow: 0 0 8px rgba(255,0,60,0.6);
+font-weight: 700;
+}
   
 /* TABS */  
 .tabs{  
@@ -162,6 +174,7 @@ box-shadow:0 0 20px rgba(255,0,60,.25);
 flex:1;  
 padding:14px;  
 display:none;  
+overflow:hidden; /* Полная статика */
 }  
   
 .page.active{display:block;}  
@@ -188,7 +201,7 @@ font-weight:900;
 letter-spacing:1.2px;  
   
 cursor:pointer;  
-transition:.25s;  
+transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s, box-shadow 0.25s, text-shadow 0.25s;  
   
 box-shadow:  
 0 0 10px rgba(255,0,60,.15),  
@@ -200,8 +213,6 @@ text-shadow:
 }  
   
 .btn:hover{  
-transform:translateY(-3px);  
-  
 border-color:rgba(255,60,60,.5);  
   
 box-shadow:  
@@ -213,54 +224,70 @@ text-shadow:
 0 0 10px rgba(255,80,80,.9),  
 0 0 20px rgba(255,0,60,.7);  
 }  
+
+/* КЛАСС ДЛЯ КРАСИВОЙ СЖИМАЮЩЕЙСЯ АНИМАЦИИ */
+.btn-click-anim {
+transform: scale(0.92) translateY(1px);
+}
   
 /* FOOTER */  
 .footer{  
 text-align:center;  
-padding:12px;  
-font-size:11px;  
-color:rgba(255,255,255,.4);  
+padding:14px;  
+font-size:12px;  
 border-top:1px solid rgba(255,80,80,.15);  
 }
 
-/* --- ДОБАВЛЕННЫЕ СТИЛИ ДЛЯ НОВЫХ СТРАНИЦ --- */
-.sub-page {
-  display: none;
-  flex: 1;
-  padding: 14px;
-  overflow-y: auto;
+/* СТИЛИЗАЦИЯ ССЫЛКИ ПОДДЕРЖКИ */
+.support-link {
+color: rgba(255,255,255,.5);
+text-decoration: none;
+font-weight: 700;
+letter-spacing: 0.5px;
+transition: 0.3s;
+display: inline-block;
 }
-/* Скрываем скроллбар для красоты, сохраняя функционал */
+.support-link:hover {
+color: #ff2b3d;
+text-shadow: 0 0 10px rgba(255,0,60,.6);
+}
+
+/* СТИЛИ ДЛЯ ВНУТРЕННИХ СТРАНИЦ */
+.sub-page {
+display: none;
+flex: 1;
+padding: 14px;
+overflow-y: auto; /* Внутренние списки могут прокручиваться только внутри своего контейнера, если ботов много */
+}
 .sub-page::-webkit-scrollbar { width: 0; }
 
 .glass-card {
-  padding: 16px;
-  border-radius: 20px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,80,80,.15);
-  backdrop-filter: blur(20px);
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+padding: 14px;
+border-radius: 20px;
+background: rgba(255,255,255,.04);
+border: 1px solid rgba(255,80,80,.15);
+backdrop-filter: blur(20px);
+margin-bottom: 10px;
+display: flex;
+flex-direction: column;
+gap: 8px;
 }
 
 .glass-card img {
-  width: 100%;
-  border-radius: 12px;
-  object-fit: cover;
+width: 100%;
+border-radius: 12px;
+object-fit: cover;
 }
 
-.support-link {
-  color: rgba(255,255,255,.4);
-  text-decoration: none;
-  display: block;
-  margin-top: 5px;
-  transition: 0.3s;
+/* СТИЛЬ ССЫЛОК ИЗ КАТЕГОРИИ ИНФО */
+.info-link {
+color: #ff2b3d;
+text-decoration: underline;
+font-weight: 700;
+transition: 0.25s;
 }
-.support-link:hover {
-  color: rgba(255,80,80,.8);
-  text-shadow: 0 0 8px rgba(255,0,60,.5);
+.info-link:hover {
+text-shadow: 0 0 8px rgba(255,0,60,.7);
 }
 </style>  
 </head>  
@@ -270,342 +297,289 @@ border-top:1px solid rgba(255,80,80,.15);
 <div class="app">    
   <div class="top-wrap">  
     <div class="top-frame">  
-      <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">  
-      <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">  
+      <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg">  
     </div>  
   </div>    
+
   <div class="title-box">  
     <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>  
-    <div class="desc">Киберпанк интерфейс с неоном и стеклом</div>  
-  </div>    
-  <div class="tabs">  
-    <div class="tab active" onclick="go(0)">МЕНЮ</div>  
-    <div class="tab" onclick="go(1)">ИНФО</div>  
-  </div>    
-
-  <div class="page active" id="main-grid">  
-    <div class="grid">  
-      <button class="btn" onclick="openPage('profile-page')">ПРОФИЛЬ</button>  
-      <button class="btn" onclick="openPage('mentor-page')">НАСТАВНИК</button>  
-      <button class="btn" onclick="openPage('manual-page')">МАНУАЛ</button>  
-      <button class="btn" onclick="openPage('packs-page')">ПАКИ</button>  
-      <button class="btn" onclick="openPage('voice-page')">ГОЛОСОВЫЕ</button>  
-      <button class="btn" onclick="openPage('bots-page')">БОТЫ</button>  
-      <button class="btn" onclick="openPage('pastes-page')">ПАСТЫ</button>  
-      <button class="btn" onclick="openPage('probiv-page')">ПРОБИВ</button>  
+    <div class="desc" id="main-description">
+      Новичок? Не знаешь с чего <span class="glow-text">Начать</span>?<br>
+      Специально для <span class="glow-text">Тебя</span>, и для Наёмников нашей Команды — Мы создали <span class="glow-text">Собственного Бота</span>!
     </div>  
   </div>    
 
-  <div class="page" id="info-tab">  
-    <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.75)">  
-      Версия: ULTRA CYBER v7<br>  
-      Glass + Neon UI Engine<br>  
+  <div class="tabs">  
+    <div class="tab active" onclick="handleTabClick(0, this)">МЕНЮ</div>  
+    <div class="tab" onclick="handleTabClick(1, this)">ИНФО</div>  
+  </div>    
+
+  <div class="page active" id="page-menu">  
+    <div class="grid">  
+      <button class="btn" onclick="handleNavClick('profile-page')">ПРОФИЛЬ</button>  
+      <button class="btn" onclick="handleNavClick('mentor-page')">НАСТАВНИК</button>  
+      <button class="btn" onclick="handleNavClick('manual-page')">МАНУАЛ</button>  
+      <button class="btn" onclick="handleNavClick('packs-page')">ПАКИ</button>  
+      <button class="btn" onclick="handleNavClick('voice-page')">ГОЛОСОВЫЕ</button>  
+      <button class="btn" onclick="handleNavClick('bots-page')">БОТЫ</button>  
+      <button class="btn" onclick="handleNavClick('pastes-page')">ПАСТЫ</button>  
+      <button class="btn" onclick="handleNavClick('probiv-page')">ПРОБИВ</button>  
+    </div>  
+  </div>    
+
+  <div class="page" id="page-info">  
+    <div style="font-size:12px; line-height:1.7; color:rgba(255,255,255,.85)">  
+      <span style="color:#ff2b3d; font-weight:700;">@RetroWork_Bot</span> — Это не просто бот, а объединение всех лучших материалов в одно!<br><br>
+      Бот создан для удобства воркеров и новичков нашей команды — <span style="font-weight:700; color:#fff;">Retro Company</span>!<br><br>
+      <b>Дата создания:</b> 26.06.2026<br><br>
+      Наш канал — <a href="https://t.me/retronews7" target="_blank" class="info-link">ТЫК</a><br>
+      Наш чат — <a href="https://t.me/+ezuVC0NmIKFjNThh" target="_blank" class="info-link">ТЫК</a>
     </div>  
   </div>    
 
   <div id="profile-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     <div class="glass-card" id="profile-container">
-      <div style="text-align:center; padding: 20px;">Загрузка данных...</div>
+      <div style="text-align:center; padding: 10px;">Загрузка данных...</div>
     </div>
   </div>
 
   <div id="mentor-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     
     <div class="glass-card">
-      <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png" style="height:140px;">
-      <div style="font-size:16px; font-weight:bold; color:#ff2b3d;">Наставник №1</div>
-      <div style="font-weight:700;">Kodi (Универсал)</div>
-      <div class="desc">Полное сопровождение до профита. Ответы на любые вопросы по ворку, поддержка 24/7.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='https://t.me/placeholder1'">Написать</button>
+      <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:100px;">
+      <div style="font-size:15px; font-weight:900; color:#ff2b3d;">Наставник №1</div>
+      <div style="font-weight:700; font-size:13px;">Kodi (Универсал)</div>
+      <div class="desc" style="margin-top:2px;">Описание</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleExternalLink('https://t.me/placeholder_mentor1')">Написать</button>
     </div>
 
     <div class="glass-card">
-      <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png" style="height:140px;">
-      <div style="font-size:16px; font-weight:bold; color:#ff2b3d;">Наставник №2</div>
-      <div class="desc">Эксперт по социальной инженерии и анонимности. Разбор ошибок и прокачка навыков.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='https://t.me/placeholder2'">Написать</button>
+      <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:100px;">
+      <div style="font-size:15px; font-weight:900; color:#ff2b3d;">Наставник №2</div>
+      <div class="desc" style="margin-top:2px;">Описание</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleExternalLink('https://t.me/placeholder_mentor2')">Написать</button>
     </div>
   </div>
 
   <div id="manual-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     
     <div class="glass-card">
-      <div style="font-size:16px; font-weight:bold; color:#ff2b3d;">Мануал (Письменный)</div>
-      <div class="desc" style="font-weight:bold; color:#fff;">Направление: Шантаж</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="window.location.href='#'">Открыть</button>
+      <div style="font-weight:900; color:#ff2b3d;">Мануал (Письменный)</div>
+      <div class="desc" style="margin: 2px 0;">Направление: Шантаж</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleExternalLink('#')">Открыть</button>
     </div>
 
     <div class="glass-card">
-      <div style="font-size:16px; font-weight:bold; color:#ff2b3d;">Мануал (Видео)</div>
-      <div class="desc" style="font-weight:bold; color:#fff;">Направление: Шантаж</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="window.location.href='#'">Смотреть</button>
+      <div style="font-weight:900; color:#ff2b3d;">Мануал (Видео)</div>
+      <div class="desc" style="margin: 2px 0;">Направление: Шантаж</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleExternalLink('#')">Смотреть</button>
     </div>
   </div>
 
   <div id="packs-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     <div class="grid">
-      <div class="glass-card" style="padding:12px; text-align:center;">
-        <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png" style="height:80px; margin-bottom:5px;">
-        <div style="font-weight:bold; font-size:12px; margin-bottom:8px;">Пак 1</div>
-        <button class="btn" style="padding:8px;" onclick="window.location.href='#'">Открыть</button>
+      <div class="glass-card" style="padding:10px; text-align:center; margin-bottom:0;">
+        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:65px; object-fit:cover;">
+        <div style="font-weight:700; font-size:11px; margin:4px 0;">Пак 1</div>
+        <button class="btn" style="padding:8px; font-size:10px;" onclick="handleExternalLink('#')">Открыть</button>
       </div>
-      <div class="glass-card" style="padding:12px; text-align:center;">
-        <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png" style="height:80px; margin-bottom:5px;">
-        <div style="font-weight:bold; font-size:12px; margin-bottom:8px;">Пак 2</div>
-        <button class="btn" style="padding:8px;" onclick="window.location.href='#'">Открыть</button>
+      <div class="glass-card" style="padding:10px; text-align:center; margin-bottom:0;">
+        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:65px; object-fit:cover;">
+        <div style="font-weight:700; font-size:11px; margin:4px 0;">Пак 2</div>
+        <button class="btn" style="padding:8px; font-size:10px;" onclick="handleExternalLink('#')">Открыть</button>
       </div>
-      <div class="glass-card" style="padding:12px; text-align:center;">
-        <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png" style="height:80px; margin-bottom:5px;">
-        <div style="font-weight:bold; font-size:12px; margin-bottom:8px;">Пак 3</div>
-        <button class="btn" style="padding:8px;" onclick="window.location.href='#'">Открыть</button>
+      <div class="glass-card" style="padding:10px; text-align:center; margin-bottom:0;">
+        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:65px; object-fit:cover;">
+        <div style="font-weight:700; font-size:11px; margin:4px 0;">Пак 3</div>
+        <button class="btn" style="padding:8px; font-size:10px;" onclick="handleExternalLink('#')">Открыть</button>
       </div>
-      <div class="glass-card" style="padding:12px; text-align:center;">
-        <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png" style="height:80px; margin-bottom:5px;">
-        <div style="font-weight:bold; font-size:12px; margin-bottom:8px;">Пак 4</div>
-        <button class="btn" style="padding:8px;" onclick="window.location.href='#'">Открыть</button>
+      <div class="glass-card" style="padding:10px; text-align:center; margin-bottom:0;">
+        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:65px; object-fit:cover;">
+        <div style="font-weight:700; font-size:11px; margin:4px 0;">Пак 4</div>
+        <button class="btn" style="padding:8px; font-size:10px;" onclick="handleExternalLink('#')">Открыть</button>
       </div>
     </div>
   </div>
 
   <div id="voice-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     <div class="glass-card">
-      <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png" style="height:140px;">
-      <div style="font-size:16px; font-weight:bold; color:#ff2b3d;">База голосовых</div>
-      <div class="desc">Готовые аудиосообщения (мужские и женские) для прогрева, доверия и шантажа.</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="window.location.href='#'">Перейти</button>
+      <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" style="height:110px;">
+      <div class="desc" style="color:#fff; font-weight:700;">Описание</div>
+      <button class="btn" style="padding:12px;" onclick="handleExternalLink('#')">Перейти</button>
     </div>
   </div>
 
   <div id="pastes-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     
     <div class="glass-card">
-      <div style="font-size:14px; font-weight:bold; color:#ff2b3d;">Паста: Знакомство</div>
-      <div class="desc" id="paste-1">Привет! Увидела твой профиль, показался очень интересным. Давай познакомимся? 😊</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="copyText('paste-1', this)">📋 Скопировать</button>
+      <div style="font-size:13px; font-weight:900; color:#ff2b3d;">Название пасты №1</div>
+      <div class="desc" id="p-text-1" style="color:#fff;">Текст пасты №1 для быстрого копирования воркерами.</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleCopyClick('p-text-1', this)">📋 Скопировать</button>
     </div>
 
     <div class="glass-card">
-      <div style="font-size:14px; font-weight:bold; color:#ff2b3d;">Паста: Прогрев</div>
-      <div class="desc" id="paste-2">Слушай, у меня тут телефон немного тупит, не могу разобраться. Можешь помочь?</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="copyText('paste-2', this)">📋 Скопировать</button>
+      <div style="font-size:13px; font-weight:900; color:#ff2b3d;">Название пасты №2</div>
+      <div class="desc" id="p-text-2" style="color:#fff;">Текст пасты №2 для быстрого диалога с клиентом.</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleCopyClick('p-text-2', this)">📋 Скопировать</button>
     </div>
 
     <div class="glass-card">
-      <div style="font-size:14px; font-weight:bold; color:#ff2b3d;">Паста: Уведомление</div>
-      <div class="desc" id="paste-3">Здравствуйте. В вашей учетной записи замечена подозрительная активность. Подтвердите данные.</div>
-      <button class="btn" style="padding:12px; margin-top:5px;" onclick="copyText('paste-3', this)">📋 Скопировать</button>
+      <div style="font-size:13px; font-weight:900; color:#ff2b3d;">Название пасты №3</div>
+      <div class="desc" id="p-text-3" style="color:#fff;">Текст пасты №3 — шаблоны ответов на возражения.</div>
+      <button class="btn" style="padding:10px; font-size:11px;" onclick="handleCopyClick('p-text-3', this)">📋 Скопировать</button>
     </div>
   </div>
 
   <div id="bots-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
-    <div id="bots-container"></div>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
+    <div id="bots-list-container"></div>
   </div>
 
   <div id="probiv-page" class="sub-page">
-    <button class="btn" style="width:100%; margin-bottom:15px;" onclick="closePage()">← Назад</button>
+    <button class="btn" style="width:100%; margin-bottom:12px;" onclick="handleBackClick()">← Назад</button>
     
-    <div class="glass-card">
-      <div style="font-weight:bold; color:#ff2b3d;">Глаз Бога</div>
-      <div class="desc">Поиск информации по ФИО, номеру авто, телефону и соцсетям.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='#'">Открыть</button>
-    </div>
-    <div class="glass-card">
-      <div style="font-weight:bold; color:#ff2b3d;">QuickOSINT Bot</div>
-      <div class="desc">Быстрый сбор открытых данных по email и логинам.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='#'">Открыть</button>
-    </div>
-    <div class="glass-card">
-      <div style="font-weight:bold; color:#ff2b3d;">GetContact Premium</div>
-      <div class="desc">Узнать, как записан номер у других людей.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='#'">Открыть</button>
-    </div>
-    <div class="glass-card">
-      <div style="font-weight:bold; color:#ff2b3d;">LeakSearch</div>
-      <div class="desc">Поиск паролей и слитых баз данных по почте.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='#'">Открыть</button>
-    </div>
-    <div class="glass-card">
-      <div style="font-weight:bold; color:#ff2b3d;">IP Tracker Info</div>
-      <div class="desc">Точная геолокация и данные провайдера по IP-адресу.</div>
-      <button class="btn" style="padding:12px;" onclick="window.location.href='#'">Открыть</button>
-    </div>
+    <div class="glass-card"><div style="font-weight:900; color:#ff2b3d;">Название 1</div><div class="desc">Описание</div><button class="btn" style="padding:10px;" onclick="handleExternalLink('#')">Открыть</button></div>
+    <div class="glass-card"><div style="font-weight:900; color:#ff2b3d;">Название 2</div><div class="desc">Описание</div><button class="btn" style="padding:10px;" onclick="handleExternalLink('#')">Открыть</button></div>
+    <div class="glass-card"><div style="font-weight:900; color:#ff2b3d;">Название 3</div><div class="desc">Описание</div><button class="btn" style="padding:10px;" onclick="handleExternalLink('#')">Открыть</button></div>
+    <div class="glass-card"><div style="font-weight:900; color:#ff2b3d;">Название 4</div><div class="desc">Описание</div><button class="btn" style="padding:10px;" onclick="handleExternalLink('#')">Открыть</button></div>
+    <div class="glass-card"><div style="font-weight:900; color:#ff2b3d;">Название 5</div><div class="desc">Описание</div><button class="btn" style="padding:10px;" onclick="handleExternalLink('#')">Открыть</button></div>
   </div>
 
   <div class="footer">
-    CYBER GLASS SYSTEM<br>
-    <a href="https://t.me/temporary_link" class="support-link">Поддержать команду</a>
+    <a href="http://t.me/send?start=IV1dLorNmNQV" class="support-link" onclick="handleLinkClick(event, 'http://t.me/send?start=IV1dLorNmNQV')">Поддержать Команду</a>
   </div>  
 </div>  
 
 <script>  
-// Оригинальная функция переключения главных вкладок
-function go(i){  
-  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));  
-  // Воздействуем только на главные страницы (.page), чтобы не сломать логику
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));  
-  document.querySelectorAll(".tab")[i].classList.add("active");  
-  document.querySelectorAll(".page")[i].classList.add("active");  
-}  
-  
-// --- ДОБАВЛЕННЫЙ ФУНКЦИОНАЛ НАВИГАЦИИ И СТРАНИЦ ---
+// Ссылка на активную подстраницу
+let currentSubPageId = null;
 
-// Открытие внутренних страниц
-function openPage(pageId) {
-  // Скрываем элементы главного меню
-  document.querySelector('.top-wrap').style.display = 'none';
-  document.querySelector('.title-box').style.display = 'none';
-  document.querySelector('.tabs').style.display = 'none';
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  
-  // Показываем нужную подстраницу
-  document.getElementById(pageId).style.display = 'block';
-
-  // Если открыт профиль, подгружаем данные TG
-  if(pageId === 'profile-page') {
-    loadTelegramProfile();
-  }
+// Универсальная функция применения анимации сжатия перед действием
+function animateButton(element, callback) {
+  element.classList.add('btn-click-anim');
+  setTimeout(() => {
+    element.classList.remove('btn-click-anim');
+    // Вызов действия происходит строго после завершения возврата кнопки (200мс)
+    setTimeout(callback, 100);
+  }, 200);
 }
 
-// Возврат в главное меню
-function closePage() {
-  // Скрываем все подстраницы
-  document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
-  
-  // Возвращаем элементы главного экрана
-  document.querySelector('.top-wrap').style.display = 'block';
-  document.querySelector('.title-box').style.display = 'block';
-  document.querySelector('.tabs').style.display = 'flex';
-  
-  // Восстанавливаем активную вкладку (Меню или Инфо)
-  let activeTabIdx = Array.from(document.querySelectorAll('.tab')).findIndex(t => t.classList.contains('active'));
-  go(activeTabIdx !== -1 ? activeTabIdx : 0);
-}
-
-// Загрузка профиля Telegram WebApp
-function loadTelegramProfile() {
-  const container = document.getElementById('profile-container');
-  const tg = window.Telegram.WebApp;
-  tg.expand(); // Расширяем апп на весь экран
-
-  if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    container.innerHTML = `
-      <div style="font-size:18px; font-weight:bold; color:#ff2b3d; margin-bottom: 12px; text-align:center;">👤 Твой Профиль</div>
-      <div style="font-size:14px; line-height:1.8;">
-        <b>Имя:</b> ${user.first_name} ${user.last_name || ''}<br>
-        <b>Username:</b> ${user.username ? '@' + user.username : 'Скрыт'}<br>
-        <b>ID:</b> ${user.id}<br>
-        <b>Premium:</b> ${user.is_premium ? 'Да ⭐️' : 'Нет'}<br>
-        <b>Язык:</b> ${user.language_code ? user.language_code.toUpperCase() : 'Неизвестно'}
-      </div>
-    `;
-  } else {
-    // Красивая заглушка, если открыто не из ТГ
-    container.innerHTML = `
-      <div style="text-align:center; padding: 10px;">
-        <span style="font-size:35px">🌐</span><br><br>
-        <div style="font-weight:bold; color:#ff2b3d; margin-bottom:10px;">Вход вне Telegram</div>
-        <div class="desc">Вы открыли панель через обычный браузер. Данные профиля доступны только внутри Telegram WebApp.</div>
-      </div>
-    `;
-  }
-}
-
-// Копирование паст
-function copyText(elementId, btn) {
-  const text = document.getElementById(elementId).innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const originalText = btn.innerText;
-    btn.innerText = "✅ Скопировано!";
-    btn.style.color = "#a5ffaf";
-    setTimeout(() => {
-      btn.innerText = originalText;
-      btn.style.color = "#fff";
-    }, 1500);
-  }).catch(err => {
-    console.error('Ошибка копирования', err);
+// Переключение основных вкладок МЕНЮ и ИНФО
+function handleTabClick(index, element) {
+  animateButton(element, () => {
+    // Скрываем подстраницы, если они были открыты, возвращая главный экран
+    resetToMainMenuElements();
+    
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));  
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));  
+    
+    document.querySelectorAll(".tab")[index].classList.add("active");  
+    document.querySelectorAll(".page")[index].classList.add("active");  
   });
 }
 
-// Генерация 20 карточек Ботов, чтобы не засорять HTML
-document.addEventListener("DOMContentLoaded", () => {
-  const botsContainer = document.getElementById('bots-container');
-  let html = '';
-  for(let i = 1; i <= 20; i++) {
-    html += `
-      <div class="glass-card">
-        <div style="font-weight:bold; color:#ff2b3d;">Бот №${i}</div>
-        <div class="desc">Полезный инструмент для автоматизации и помощи в ворке. Версия ${i}.0</div>
-        <button class="btn" style="padding:12px; margin-top:5px;" onclick="window.location.href='https://t.me/temp_bot_${i}'">Открыть</button>
-      </div>
-    `;
-  }
-  botsContainer.innerHTML = html;
-});
+// Открытие внутренних страниц с главного экрана
+function handleNavClick(pageId) {
+  const btnElement = event.currentTarget;
+  animateButton(btnElement, () => {
+    // Прячем основные блоки приложения
+    document.querySelector('.top-wrap').style.display = 'none';
+    document.querySelector('.title-box').style.display = 'none';
+    document.querySelector('.tabs').style.display = 'none';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));  
+    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');  
+    
+    // Отображаем нужную страницу
+    currentSubPageId = pageId;
+    const targetPage = document.getElementById(pageId);
+    targetPage.style.display = 'block';
+    
+    if(pageId === 'profile-page') {
+      loadTelegramProfile();
+    }
+  });
+}
 
+// Исправление ошибки: Корректный возврат назад и восстановление главных 8 кнопок
+function handleBackClick() {
+  const btnElement = event.currentTarget;
+  animateButton(btnElement, () => {
+    if (currentSubPageId) {
+      document.getElementById(currentSubPageId).style.display = 'none';
+      currentSubPageId = null;
+    }
+    
+    // Восстанавливаем видимость структуры главного меню
+    resetToMainMenuElements();
+    
+    // Активируем заново вкладку МЕНЮ (индекс 0)
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));  
+    document.querySelectorAll(".page").forEach(p => p.style.display = ''); 
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));  
+    
+    document.querySelectorAll(".tab")[0].classList.add("active");  
+    document.getElementById("page-menu").classList.add("active");  
+  });
+}
 
-/* PARTICLES (Оригинальный скрипт частиц, без изменений) */  
-const canvas = document.getElementById("particles");  
-const ctx = canvas.getContext("2d");  
-  
-canvas.width = window.innerWidth;  
-canvas.height = window.innerHeight;  
-  
-const colors = [  
-"rgba(255,0,60,.85)",  
-"rgba(255,255,255,.85)",  
-"rgba(0,0,0,.6)"  
-];  
-  
-const particles = [];  
-  
-for(let i=0;i<200;i++){  
-particles.push({  
-x:Math.random()*canvas.width,  
-y:Math.random()*canvas.height,  
-size:Math.random()*4.8+1.5,  
-speed:Math.random()*3+1.5,  
-color:colors[Math.floor(Math.random()*colors.length)],  
-drift:Math.random()*1.4-0.7  
-});  
-}  
-  
-function animate(){  
-ctx.clearRect(0,0,canvas.width,canvas.height);  
-  
-for(let p of particles){  
-p.y += p.speed;  
-p.x += p.drift;  
-  
-if(p.y > canvas.height){  
-p.y = -10;  
-p.x = Math.random()*canvas.width;  
-}  
-  
-ctx.beginPath();  
-ctx.fillStyle = p.color;  
-ctx.shadowBlur = 18;  
-ctx.shadowColor = p.color;  
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);  
-ctx.fill();  
-}  
-  
-requestAnimationFrame(animate);  
-}  
-  
-animate();  
-  
-window.addEventListener("resize",()=>{  
-canvas.width = window.innerWidth;  
-canvas.height = window.innerHeight;  
-});  
-</script>  
-</body>  
-</html>
+// Вспомогательная функция сброса видимости главного экрана
+function resetToMainMenuElements() {
+  document.querySelector('.top-wrap').style.display = 'block';
+  document.querySelector('.title-box').style.display = 'block';
+  document.querySelector('.tabs').style.display = 'flex';
+  document.querySelectorAll('.sub-page').forEach(p => p.style.display = 'none');
+}
+
+// Переход по внешним ссылкам внутри карточек
+function handleExternalLink(url) {
+  const btnElement = event.currentTarget;
+  animateButton(btnElement, () => {
+    if (url !== '#') {
+      window.location.href = url;
+    }
+  });
+}
+
+// Переход по ссылке поддержки в подвале
+function handleLinkClick(e, url) {
+  e.preventDefault();
+  const linkElement = e.currentTarget;
+  linkElement.classList.add('btn-click-anim');
+  setTimeout(() => {
+    linkElement.classList.remove('btn-click-anim');
+    setTimeout(() => {
+      window.location.href = url;
+    }, 100);
+  }, 200);
+}
+
+// Копирование текста паст через буфер обмена
+function handleCopyClick(elementId, btn) {
+  animateButton(btn, () => {
+    const text = document.getElementById(elementId).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const originalText = btn.innerText;
+      btn.innerText = "✅ Скопировано!";
+      btn.style.color = "#a5ffaf";
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.color = "#fff";
+      }, 1500);
+    }).catch(err => {
+      console.error('Ошибка буфера обмена', err);
+    });
+  });
+}
+
+// Подгрузка профиля Telegram WebApp / Заглушка
+function loadTelegramProfile() {
+  const container = document.getElementById('profile-container');
+  const tg = window.Telegram.WebApp;
+  try {
+    tg.ex
