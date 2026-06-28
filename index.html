@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-dark: #050505;
-            --red-btn: #800000;
+            --red: #ff0000;
             --glass: rgba(255, 255, 255, 0.04);
             --border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -34,39 +34,40 @@
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        button, a, .btn, .video-btn { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent !important; transition: transform 0.2s ease; }
-        button:active, .btn:active, .video-btn:active { transform: scale(0.95); }
+        button, .btn { 
+            outline: none !important; border: var(--border);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+        button:active { transform: scale(0.95); }
         
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; flex-grow: 1; margin-top: 20px; }
         
-        .video-btn {
-            display: block; margin: 10px auto 0; padding: 10px 20px;
-            border: 2px solid #800000; border-radius: 12px;
-            background: rgba(128, 0, 0, 0.3); color: #ff4d4d;
-            font-weight: 900; text-decoration: none; text-transform: uppercase;
-            text-align: center; 
-        }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
-        
-        /* Кнопки теперь без картинок, текст по центру */
+        /* Стиль кнопок: жирный шрифт + неон */
         .btn { 
-            padding: 15px; border-radius: 14px; border: var(--border); 
-            background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
+            padding: 20px 10px; border-radius: 14px; 
+            background: rgba(255,255,255,0.03); 
+            color: #fff; font-weight: 900; font-size: 15px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
+            text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+            box-shadow: inset 0 0 10px rgba(255,0,0,0.1);
+        }
+        
+        .btn:hover {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 0 10px rgba(255,0,0,0.1);
+            border-color: rgba(255, 0, 0, 0.5);
         }
 
-        .title, .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff0000; }
-        .title { font-weight: 900; font-size: 22px; margin: 0; }
-        .nav-title { font-size: 16px; margin: 10px 0; }
+        .title { text-align: center; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; font-size: 26px; margin: 20px 0; text-shadow: 0 0 10px var(--red); }
+        .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; font-size: 16px; margin-top: 10px; color: rgba(255,255,255,0.5); }
         
-        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 20px; }
         .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
         
         .screen { display: none; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 20px; }
     </style>
 </head>
 <body>
@@ -80,11 +81,7 @@
             <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
         </div>
 
-        <div class="glass-card" style="text-align: center;">
-            <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-            <p style="opacity: 0.7; font-size: 14px; margin: 10px 0; font-weight: 600;">Новичок ?<br>Не знаешь с чего Начать ?</p>
-            <a href="https://t.me/RetroWork_Bot" class="video-btn">БЫСТРЫЙ ЗАПУСК</a>
-        </div>
+        <h1 class="title">ВОРК ПАНЕЛЬ</h1>
 
         <h3 class="nav-title">НАВИГАЦИЯ</h3>
         
@@ -118,3 +115,4 @@
     </script>
 </body>
 </html>
+
