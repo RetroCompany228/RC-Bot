@@ -7,50 +7,87 @@
     <style>
         :root {
             --bg-dark: #050505;
-            --red: #ff0000;
+            --red-btn: #800000;
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         body { 
             margin: 0; padding: 0;
-            background: radial-gradient(circle at 50% 50%, #080505 0%, #050505 70%);
+            background: radial-gradient(circle at 50% 0%, #1a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 100%, #1a0000 0%, transparent 60%),
+                        radial-gradient(circle at 50% 50%, #080505 0%, #050505 70%);
             background-color: #050505;
             color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden;
+            display: flex; flex-direction: column;
             user-select: none;
         }
 
-        /* --- ИДЕАЛЬНО СИММЕТРИЧНЫЕ ШТОРКИ --- */
+        /* --- ЧИСТЫЕ ШТОРКИ С ЦЕНТРАЛЬНОЙ ЛИНИЕЙ --- */
         .curtain {
             position: fixed; top: 0; bottom: 0; width: 50%;
             background: #050505; z-index: 999;
-            display: flex; align-items: center; justify-content: center;
             transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
         
-        /* Линия разделителя */
-        .curtain-left { left: 0; border-right: 1px solid rgba(255, 0, 0, 0.3); }
-        .curtain-right { right: 0; border-left: 1px solid rgba(255, 0, 0, 0.3); }
-        
-        .curtain-text {
-            font-size: 18px; font-weight: 900; color: var(--red);
-            text-transform: uppercase; letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--red);
-        }
+        .curtain-left { left: 0; border-right: 1px solid rgba(255, 0, 0, 0.5); }
+        .curtain-right { right: 0; border-left: 1px solid rgba(255, 0, 0, 0.5); }
 
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        /* Контент (для проверки) */
-        .container { height: 100vh; display: flex; align-items: center; justify-content: center; color: #333; }
+        /* --- ОСТАЛЬНОЙ СТИЛЬ --- */
+        button, a, .btn, .video-btn { outline: none !important; box-shadow: none !important; -webkit-tap-highlight-color: transparent !important; transition: transform 0.2s ease; }
+        button:active, .btn:active, .video-btn:active { transform: scale(0.95); }
+        .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
+        .glass-card { background: var(--glass); backdrop-filter: blur(15px); border: var(--border); border-radius: 20px; padding: 15px; margin-bottom: 10px; }
+        .video-btn { display: block; margin: 10px auto 0; padding: 10px 20px; border: 2px solid #800000; border-radius: 12px; background: rgba(128, 0, 0, 0.3); color: #ff4d4d; font-weight: 900; text-decoration: none; text-transform: uppercase; text-align: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
+        .btn { padding: 8px; border-radius: 14px; border: var(--border); background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+        .btn img { width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); }
+        .title, .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff0000; }
+        .title { font-weight: 900; font-size: 22px; margin: 0; }
+        .nav-title { font-size: 16px; margin: 10px 0; }
+        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #550000; box-shadow: 0 0 8px rgba(255,0,0,0.3); }
+        .screen { display: none; height: 100%; }
+        .screen.active { display: flex; flex-direction: column; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="curtain curtain-left" id="cLeft"><span class="curtain-text">ДОБРО</span></div>
-    <div class="curtain curtain-right" id="cRight"><span class="curtain-text">ПОЖАЛОВАТЬ</span></div>
+    <!-- Пустые шторки с центральной линией -->
+    <div class="curtain curtain-left" id="cLeft"></div>
+    <div class="curtain curtain-right" id="cRight"></div>
 
-    <div class="container">
-        <h1>ТВОЙ КОНТЕНТ</h1>
+    <div id="home" class="screen active container">
+        <div class="photo-container">
+            <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
+            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
+        </div>
+
+        <div class="glass-card" style="text-align: center;">
+            <h1 class="title">ВОРК ПАНЕЛЬ</h1>
+            <p style="opacity: 0.7; font-size: 14px; margin: 10px 0; font-weight: 600;">Новичок ?<br>Не знаешь с чего Начать ?</p>
+            <a href="https://t.me/RetroWork_Bot" class="video-btn">ВИДЕО ОБУЧЕНИЕ</a>
+        </div>
+
+        <h3 class="nav-title">НАВИГАЦИЯ</h3>
+        
+        <div class="grid">
+            <button class="btn" onclick="loadScreen('profile')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОФИЛЬ</button>
+            <button class="btn" onclick="loadScreen('mentors')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> НАСТАВНИК</button>
+            <button class="btn" onclick="loadScreen('manuals')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> МАНУАЛ</button>
+            <button class="btn" onclick="loadScreen('packs')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАКИ</button>
+            <button class="btn" onclick="loadScreen('voice')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ГОЛОСОВЫЕ</button>
+            <button class="btn" onclick="loadScreen('pastes')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПАСТЫ</button>
+            <button class="btn" onclick="loadScreen('bots')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> БОТЫ</button>
+            <button class="btn" onclick="loadScreen('dox')"><img src="https://i.postimg.cc/1Rq1pKbZ/file-00000000817c71f4a7454602d4aff41f.png"> ПРОБИВ</button>
+        </div>
+
+        <a href="http://t.me/send?start=IVP6IT4GmUuc" class="support-link">Поддержать Команду</a>
     </div>
 
     <script>
@@ -58,8 +95,14 @@
             setTimeout(() => {
                 document.getElementById('cLeft').classList.add('open');
                 document.getElementById('cRight').classList.add('open');
-            }, 2000); 
+            }, 2000);
         };
+
+        function loadScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if(target) target.classList.add('active');
+        }
     </script>
 </body>
 </html>
