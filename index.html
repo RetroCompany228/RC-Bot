@@ -35,16 +35,16 @@
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        /* Анимации */
+        /* Анимации (неон стал очень слабым) */
         @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 5px rgba(255,0,0,0.2); }
-            50% { transform: scale(1.02); box-shadow: 0 0 15px rgba(255,0,0,0.4); }
-            100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,0,0,0.2); }
+            0% { transform: scale(1); box-shadow: 0 0 2px rgba(255,0,0,0.1); }
+            50% { transform: scale(1.01); box-shadow: 0 0 8px rgba(255,0,0,0.2); }
+            100% { transform: scale(1); box-shadow: 0 0 2px rgba(255,0,0,0.1); }
         }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-2px);}
         }
 
         .container { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
@@ -56,21 +56,23 @@
             color: #fff; font-weight: 900; font-size: 15px;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 0 0 8px rgba(255,255,255,0.5);
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
             border: var(--border);
-            animation: pulse 3s infinite;
+            animation: pulse 4s infinite;
         }
 
         .title { text-align: center; text-transform: uppercase; letter-spacing: 3px; font-weight: 900; font-size: 26px; margin: 20px 0; text-shadow: 0 0 10px var(--red); }
-        .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; font-size: 16px; margin-top: 20px; color: rgba(255,255,255,0.5); }
-        .arrow-down { text-align: center; color: var(--red); font-size: 24px; margin: 5px 0; animation: bounce 2s infinite; }
         
-        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 20px; }
+        /* Заголовок НАВИГАЦИЯ стал ближе к стрелочке */
+        .nav-title { text-align: center; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin-bottom: 2px; color: rgba(255,255,255,0.4); }
+        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 10px; animation: bounce 2s infinite; }
+        
+        .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 15px; }
         .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
         
         .screen { display: none; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
-        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 20px; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-decoration: underline; text-align: center; margin-top: auto; padding: 15px; }
     </style>
 </head>
 <body>
@@ -86,7 +88,7 @@
 
         <h1 class="title">ВОРК ПАНЕЛЬ</h1>
 
-        <h3 class="nav-title">ВЫБЕРИТЕ РАЗДЕЛ</h3>
+        <h3 class="nav-title">НАВИГАЦИЯ</h3>
         <div class="arrow-down">▼</div>
         
         <div class="grid">
