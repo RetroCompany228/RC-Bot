@@ -1,314 +1,1448 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ворк-Панель</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CYBER GLASS V10</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-        body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #000000, #ff0000, #000000);
-            color: #fff;
-        }
+<style>
 
-        /* BACKGROUND GLOW */
-        body::before {
-            content: "";
-            position: absolute;
-            inset: -300px;
-            background: 
-            radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
-            radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
-            radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
-            filter: blur(90px);
-            animation: bg 18s ease-in-out infinite alternate;
-        }
+:root{
 
-        @keyframes bg {
-            to { transform: translate(140px, 100px) scale(1.15); }
-        }
+--bg:#040404;
 
-        /* PARTICLES */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
+--glass:rgba(255,255,255,.055);
 
-        /* APP */
-        .app {
-            position: relative;
-            z-index: 2;
-            width: 95%;
-            max-width: 460px;
-            height: 92vh;
-            border-radius: 36px;
-            background: rgba(255,255,255,.06);
-            backdrop-filter: blur(35px);
-            border: 1px solid rgba(255,80,80,.15);
-            box-shadow: 
-            0 40px 120px rgba(0,0,0,.85),
-            inset 0 0 80px rgba(255,0,0,.08);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+--glass2:rgba(255,255,255,.035);
 
-        /* TOP */
-        .top-wrap {
-            padding: 14px;
-        }
+--line:rgba(255,80,80,.18);
 
-        .top-frame {
-            padding: 12px;
-            border-radius: 24px;
-            background: rgba(255,255,255,.04);
-            border: 1px solid rgba(255,80,80,.25);
-            backdrop-filter: blur(20px);
-        }
+--red:#ff2645;
 
-        .top-frame img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 18px;
-            display: block;
-        }
+--white:#ffffff;
 
-        /* TITLE */
-        .title-box {
-            margin: 0 14px;
-            padding: 18px;
-            border-radius: 26px;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.12);
-            backdrop-filter: blur(30px);
-        }
+}
 
-        .title {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
 
-        .title span {
-            color: #ff2b3d;
-        }
+html,body{
+height:100%;
+overflow:hidden;
+background:var(--bg);
+color:white;
+}
 
-        .desc {
-            margin-top: 8px;
-            font-size: 12px;
-            line-height: 1.6;
-            color: rgba(255,255,255,.75);
-        }
+body{
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
 
-        /* TABS */
-        .tabs {
-            margin: 12px 14px;
-            display: flex;
-            gap: 6px;
-            padding: 5px;
-            border-radius: 18px;
-            background: rgba(255,255,255,.04);
-            border: 1px solid rgba(255,80,80,.15);
-            backdrop-filter: blur(20px);
-        }
+/* background glow */
 
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            border-radius: 14px;
-            font-size: 12px;
-            font-weight: 700;
-            color: rgba(255,255,255,.6);
-            cursor: pointer;
-            transition: .25s;
-        }
+body::before{
 
-        .tab.active {
-            background: rgba(255,255,255,.12);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255,0,60,.25);
-        }
+content:"";
 
-        /* PAGE */
-        .page {
-            flex: 1;
-            padding: 14px;
-            display: none;
-            flex-direction: column;
-        }
+position:absolute;
 
-        .page.active {
-            display: flex;
-        }
+inset:-500px;
 
-        /* BUTTONS */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
+background:
 
-        .btn {
-            padding: 16px;
-            border-radius: 22px;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,80,80,.25);
-            color: #fff;
-            font-size: 12px;
-            font-weight: 900;
-            cursor: pointer;
-            transition: .2s;
-        }
+radial-gradient(circle at 15% 15%,rgba(255,0,70,.25),transparent 40%),
 
-        .btn:hover {
-            background: rgba(255,255,255,.1);
-        }
+radial-gradient(circle at 80% 30%,rgba(180,0,40,.22),transparent 45%),
 
-        /* FOOTER & SEPARATOR */
-        .sep {
-            height: 1px;
-            background: rgba(255,80,80,.2);
-            margin: 15px 0;
-        }
+radial-gradient(circle at 50% 100%,rgba(255,20,20,.12),transparent 50%),
 
-        .footer {
-            text-align: center;
-            padding: 15px;
-            font-size: 11px;
-            color: rgba(255,255,255,.5);
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="particles"></canvas>
+radial-gradient(circle at 50% 50%,rgba(0,0,0,.7),transparent 80%);
 
-    <div class="app">
-        <div class="top-wrap">
-            <div class="top-frame">
-                <img src="https://i.postimg.cc/43DYTgKF/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" alt="Главное изображение">
-            </div>
-        </div>
+filter:blur(120px);
 
-        <div class="title-box">
-            <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
-            <div class="desc">Киберпанк интерфейс с неоном и стеклом</div>
-        </div>
+animation:bgMove 18s ease-in-out infinite alternate;
 
-        <div class="tabs">
-            <div class="tab active" onclick="go(0)">МЕНЮ</div>
-            <div class="tab" onclick="go(1)">ИНФО</div>
-        </div>
+}
 
-        <div class="page active">
-            <div class="grid">
-                <button class="btn">ПРОФИЛЬ</button>
-                <button class="btn">НАСТАВНИК</button>
-                <button class="btn">МАНУАЛ</button>
-                <button class="btn">ПАКИ</button>
-                <button class="btn">ГОЛОСОВЫЕ</button>
-                <button class="btn">БОТЫ</button>
-                <button class="btn">ПАСТЫ</button>
-                <button class="btn">ПРОБИВ</button>
-            </div>
-            <div style="flex: 1;"></div>
-            <div class="sep"></div>
-            <div class="footer">ПОДДЕРЖАТЬ КОМАНДУ</div>
-        </div>
+@keyframes bgMove{
 
-        <div class="page">
-            <div style="font-size: 12px; color: rgba(255,255,255,.75);">
-                Версия: ULTRA CYBER v7<br>
-                Glass + Neon UI Engine<br>
-            </div>
-            <div style="flex: 1;"></div>
-            <div class="sep"></div>
-            <div class="footer">ПОДДЕРЖАТЬ КОМАНДУ</div>
-        </div>
-    </div>
+100%{
 
-    <script>
-        function go(i) {
-            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-            document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-            document.querySelectorAll(".tab")[i].classList.add("active");
-            document.querySelectorAll(".page")[i].classList.add("active");
-        }
+transform:translate(180px,120px) scale(1.2);
 
-        /* PARTICLES */
-        const canvas = document.getElementById("particles");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+}
 
-        const colors = [
-            "rgba(255,0,60,.85)",
-            "rgba(255,255,255,.85)",
-            "rgba(0,0,0,.6)"
-        ];
+}
 
-        const particles = [];
+/* particles */
 
-        for (let i = 0; i < 200; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 4.8 + 1.5,
-                speed: Math.random() * 3 + 1.5,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                drift: Math.random() * 1.4 - 0.7
-            });
-        }
+#particles{
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let p of particles) {
-                p.y += p.speed;
-                p.x += p.drift;
-                if (p.y > canvas.height) {
-                    p.y = -10;
-                    p.x = Math.random() * canvas.width;
+position:fixed;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+pointer-events:none;
+
+z-index:0;
+
+}
+
+/* loader */
+
+.loader{
+
+position:fixed;
+
+inset:0;
+
+background:#050505;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+z-index:999;
+
+transition:.8s;
+
+}
+
+.loader h1{
+
+font-size:30px;
+
+font-weight:900;
+
+letter-spacing:8px;
+
+color:white;
+
+text-shadow:
+
+0 0 12px rgba(255,0,50,.8),
+
+0 0 25px rgba(255,0,50,.4);
+
+}
+
+.loader span{
+
+margin-top:15px;
+
+font-size:12px;
+
+opacity:.7;
+
+letter-spacing:2px;
+
+}
+
+.app{
+
+position:relative;
+
+z-index:5;
+
+width:94%;
+
+max-width:460px;
+
+height:92vh;
+
+border-radius:36px;
+
+overflow:hidden;
+
+background:var(--glass);
+
+backdrop-filter:blur(35px);
+
+border:1px solid var(--line);
+
+box-shadow:
+
+0 35px 90px rgba(0,0,0,.8),
+
+0 0 50px rgba(255,0,60,.08),
+
+inset 0 0 60px rgba(255,255,255,.03);
+
+display:flex;
+
+flex-direction:column;
+
+animation:open .8s cubic-bezier(.2,.8,.2,1);
+
+}
+
+@keyframes open{
+
+from{
+
+opacity:0;
+
+transform:scale(.93);
+
+}
+
+to{
+
+opacity:1;
+
+transform:scale(1);
+
+}
+
+}
+
+/* shine */
+
+.shine{
+
+position:absolute;
+
+top:-120%;
+
+left:-60%;
+
+width:80%;
+
+height:300%;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.08),
+
+transparent
+
+);
+
+transform:rotate(25deg);
+
+animation:shine 8s linear infinite;
+
+pointer-events:none;
+
+}
+
+@keyframes shine{
+
+100%{
+
+transform:translateX(900px) rotate(25deg);
+
+}
+
+}
+
+/* top */
+
+.top{
+
+padding:16px;
+
+}
+
+.banner{
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:24px;
+
+background:var(--glass2);
+
+border:1px solid rgba(255,90,90,.22);
+
+padding:10px;
+
+box-shadow:
+
+0 0 30px rgba(255,0,60,.12),
+
+inset 0 0 20px rgba(255,255,255,.03);
+
+}
+
+.banner img{
+
+width:100%;
+
+height:185px;
+
+object-fit:cover;
+
+border-radius:18px;
+
+display:block;
+
+transition:.45s;
+
+}
+
+.banner:hover img{
+
+transform:scale(1.03);
+
+filter:brightness(1.08);
+
+}
+
+/* ===========================
+   TITLE
+=========================== */
+
+.title-box{
+
+margin:0 16px;
+
+padding:18px;
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.055);
+
+border:1px solid rgba(255,80,80,.18);
+
+backdrop-filter:blur(30px);
+
+box-shadow:
+
+0 0 30px rgba(255,0,60,.08),
+
+inset 0 0 20px rgba(255,255,255,.03);
+
+}
+
+.title-box::before{
+
+content:"";
+
+position:absolute;
+
+left:-60%;
+
+top:-120%;
+
+width:80%;
+
+height:300%;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.06),
+
+transparent
+
+);
+
+transform:rotate(25deg);
+
+animation:titleShine 9s linear infinite;
+
+}
+
+@keyframes titleShine{
+
+100%{
+
+transform:translateX(800px) rotate(25deg);
+
+}
+
+}
+
+.title{
+
+font-size:24px;
+
+font-weight:900;
+
+letter-spacing:2px;
+
+text-shadow:
+
+0 0 10px rgba(255,0,60,.35);
+
+}
+
+.title span{
+
+color:var(--red);
+
+text-shadow:
+
+0 0 12px rgba(255,0,60,.8),
+
+0 0 25px rgba(255,0,60,.45);
+
+}
+
+.desc{
+
+margin-top:10px;
+
+font-size:12px;
+
+line-height:1.8;
+
+opacity:.75;
+
+}
+
+/* ===========================
+   NAVIGATION
+=========================== */
+
+.tabs{
+
+margin:14px 16px;
+
+padding:5px;
+
+display:flex;
+
+gap:8px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(255,80,80,.16);
+
+backdrop-filter:blur(20px);
+
+}
+
+.tab{
+
+flex:1;
+
+height:46px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+border-radius:15px;
+
+font-size:12px;
+
+font-weight:800;
+
+letter-spacing:1px;
+
+cursor:pointer;
+
+transition:.35s;
+
+color:rgba(255,255,255,.55);
+
+}
+
+.tab:hover{
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+}
+
+.tab.active{
+
+color:white;
+
+background:rgba(255,255,255,.09);
+
+box-shadow:
+
+0 0 20px rgba(255,0,60,.18),
+
+inset 0 0 12px rgba(255,255,255,.05);
+
+}
+
+/* ===========================
+   PAGE
+=========================== */
+
+.pages{
+
+flex:1;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.page{
+
+position:absolute;
+
+inset:0;
+
+padding:16px;
+
+opacity:0;
+
+transform:translateY(25px);
+
+pointer-events:none;
+
+transition:.45s;
+
+}
+
+.page.active{
+
+opacity:1;
+
+transform:translateY(0);
+
+pointer-events:auto;
+
+}
+
+/* ===========================
+   BUTTON GRID
+=========================== */
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:12px;
+
+}
+
+/* ===========================
+   GLASS BUTTON
+=========================== */
+
+.btn{
+
+position:relative;
+
+overflow:hidden;
+
+height:62px;
+
+border:none;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.055);
+
+border:1px solid rgba(255,80,80,.18);
+
+backdrop-filter:blur(25px);
+
+color:white;
+
+font-size:12px;
+
+font-weight:900;
+
+letter-spacing:1px;
+
+cursor:pointer;
+
+transition:.35s;
+
+text-shadow:
+
+0 0 8px rgba(255,0,60,.65),
+
+0 0 18px rgba(255,0,60,.35);
+
+box-shadow:
+
+0 0 12px rgba(255,0,60,.08),
+
+inset 0 0 10px rgba(255,255,255,.03);
+
+}
+
+.btn::before{
+
+content:"";
+
+position:absolute;
+
+left:-120%;
+
+top:0;
+
+width:65%;
+
+height:100%;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,.12),
+
+transparent
+
+);
+
+transition:.55s;
+
+}
+
+.btn:hover::before{
+
+left:170%;
+
+}
+
+.btn:hover{
+
+transform:translateY(-3px);
+
+border-color:rgba(255,60,60,.35);
+
+box-shadow:
+
+0 0 30px rgba(255,0,60,.22),
+
+0 0 60px rgba(255,0,60,.08),
+
+inset 0 0 12px rgba(255,255,255,.05);
+
+}
+
+.btn:active{
+
+transform:scale(.96);
+
+}
+
+/* ripple */
+
+.ripple{
+
+position:absolute;
+
+border-radius:50%;
+
+transform:scale(0);
+
+animation:ripple .7s linear;
+
+background:rgba(255,255,255,.25);
+
+pointer-events:none;
+
+}
+
+@keyframes ripple{
+
+to{
+
+transform:scale(12);
+
+opacity:0;
+
+}
+
+    }
+
+/* ===========================
+   INFO CARD
+=========================== */
+
+.info-card{
+
+position:relative;
+
+padding:18px;
+
+border-radius:24px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,80,80,.16);
+
+backdrop-filter:blur(28px);
+
+overflow:hidden;
+
+box-shadow:
+
+0 0 30px rgba(255,0,60,.08),
+
+inset 0 0 18px rgba(255,255,255,.03);
+
+}
+
+.info-card::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+rgba(255,255,255,.04),
+
+transparent 40%,
+
+rgba(255,0,60,.03)
+
+);
+
+pointer-events:none;
+
+}
+
+.info-title{
+
+font-size:18px;
+
+font-weight:900;
+
+letter-spacing:1px;
+
+margin-bottom:14px;
+
+color:white;
+
+text-shadow:
+
+0 0 12px rgba(255,0,60,.45);
+
+}
+
+.info-text{
+
+font-size:13px;
+
+line-height:1.8;
+
+opacity:.75;
+
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+.footer{
+
+height:54px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:11px;
+
+font-weight:700;
+
+letter-spacing:3px;
+
+color:rgba(255,255,255,.45);
+
+border-top:1px solid rgba(255,80,80,.12);
+
+background:rgba(255,255,255,.03);
+
+backdrop-filter:blur(20px);
+
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+width:6px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:rgba(255,0,60,.35);
+
+border-radius:20px;
+
+}
+
+/* ===========================
+   FLOATING GLOW
+=========================== */
+
+.app::after{
+
+content:"";
+
+position:absolute;
+
+width:220px;
+
+height:220px;
+
+border-radius:50%;
+
+background:rgba(255,0,60,.06);
+
+filter:blur(80px);
+
+right:-60px;
+
+bottom:-60px;
+
+animation:floatGlow 8s ease-in-out infinite alternate;
+
+pointer-events:none;
+
+}
+
+@keyframes floatGlow{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+100%{
+
+transform:translateY(-50px);
+
+}
+
+}
+
+/* ===========================
+   PANEL BREATHING
+=========================== */
+
+@keyframes breathing{
+
+0%{
+
+box-shadow:
+
+0 35px 90px rgba(0,0,0,.82),
+
+0 0 40px rgba(255,0,60,.06),
+
+inset 0 0 60px rgba(255,255,255,.03);
+
+}
+
+100%{
+
+box-shadow:
+
+0 35px 90px rgba(0,0,0,.82),
+
+0 0 65px rgba(255,0,60,.14),
+
+inset 0 0 60px rgba(255,255,255,.05);
+
+}
+
+}
+
+.app{
+
+animation:
+
+open .8s ease,
+
+breathing 4s ease-in-out infinite alternate;
+
+}
+
+/* ===========================
+   IMAGE GLOW
+=========================== */
+
+.banner::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border-radius:22px;
+
+box-shadow:
+
+inset 0 0 25px rgba(255,255,255,.04),
+
+0 0 35px rgba(255,0,60,.18);
+
+pointer-events:none;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:420px){
+
+.title{
+
+font-size:21px;
+
+}
+
+.banner img{
+
+height:165px;
+
+}
+
+.btn{
+
+height:58px;
+
+font-size:11px;
+
+}
+
+.tabs{
+
+margin:12px;
+
+}
+
+.page{
+
+padding:12px;
+
+}
+
                 }
-                ctx.beginPath();
-                ctx.fillStyle = p.color;
-                ctx.shadowBlur = 18;
-                ctx.shadowColor = p.color;
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            requestAnimationFrame(animate);
-        }
 
-        animate();
+/* ==================================
+   CYBER GLASS V10
+   ENGINE
+================================== */
 
-        window.addEventListener("resize", () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    </script>
-</body>
-                </html>
+const tabs=document.querySelectorAll(".tab");
+const pages=document.querySelectorAll(".page");
 
+function go(index){
+
+tabs.forEach(t=>t.classList.remove("active"));
+pages.forEach(p=>p.classList.remove("active"));
+
+tabs[index].classList.add("active");
+pages[index].classList.add("active");
+
+}
+
+/* ==================================
+   LOADER
+================================== */
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+
+document.querySelector(".loader").style.opacity="0";
+document.querySelector(".loader").style.pointerEvents="none";
+
+setTimeout(()=>{
+
+document.querySelector(".loader").remove();
+
+},800);
+
+},1800);
+
+});
+
+/* ==================================
+   RIPPLE BUTTONS
+================================== */
+
+document.querySelectorAll(".btn").forEach(btn=>{
+
+btn.addEventListener("click",e=>{
+
+const ripple=document.createElement("span");
+
+ripple.className="ripple";
+
+const size=Math.max(btn.offsetWidth,btn.offsetHeight);
+
+ripple.style.width=size+"px";
+ripple.style.height=size+"px";
+
+const rect=btn.getBoundingClientRect();
+
+ripple.style.left=e.clientX-rect.left-size/2+"px";
+ripple.style.top=e.clientY-rect.top-size/2+"px";
+
+btn.appendChild(ripple);
+
+setTimeout(()=>{
+
+ripple.remove();
+
+},700);
+
+});
+
+});
+
+/* ==================================
+   PARTICLES
+================================== */
+
+const canvas=document.getElementById("particles");
+
+const ctx=canvas.getContext("2d");
+
+function resize(){
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+}
+
+resize();
+
+window.addEventListener("resize",resize);
+
+const colors=[
+
+"rgba(255,0,60,.95)",
+
+"rgba(255,255,255,.95)",
+
+"rgba(0,0,0,.6)"
+
+];
+
+const particles=[];
+
+/* 420 particles */
+
+for(let i=0;i<420;i++){
+
+particles.push({
+
+x:Math.random()*canvas.width,
+
+y:Math.random()*canvas.height,
+
+size:Math.random()*5+1,
+
+speed:Math.random()*3+1,
+
+drift:Math.random()*1.2-.6,
+
+alpha:Math.random()*.7+.3,
+
+color:colors[Math.floor(Math.random()*colors.length)]
+
+});
+
+    }
+
+/* ==================================
+   PARTICLE ENGINE
+================================== */
+
+function renderParticles(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+for(const p of particles){
+
+/* movement */
+
+p.y+=p.speed;
+
+p.x+=p.drift;
+
+/* reset */
+
+if(p.y>canvas.height+20){
+
+p.y=-20;
+
+p.x=Math.random()*canvas.width;
+
+p.size=Math.random()*5+1;
+
+p.speed=Math.random()*3+1;
+
+}
+
+/* glow */
+
+ctx.beginPath();
+
+ctx.globalAlpha=p.alpha;
+
+ctx.fillStyle=p.color;
+
+ctx.shadowBlur=22;
+
+ctx.shadowColor=p.color;
+
+ctx.arc(
+
+p.x,
+
+p.y,
+
+p.size,
+
+0,
+
+Math.PI*2
+
+);
+
+ctx.fill();
+
+/* trail */
+
+ctx.beginPath();
+
+ctx.moveTo(p.x,p.y);
+
+ctx.lineTo(
+
+p.x,
+
+p.y-p.size*7
+
+);
+
+ctx.lineWidth=.35;
+
+ctx.strokeStyle=p.color;
+
+ctx.stroke();
+
+}
+
+/* restore */
+
+ctx.globalAlpha=1;
+
+requestAnimationFrame(renderParticles);
+
+}
+
+renderParticles();
+
+/* ==================================
+   IMAGE PARALLAX
+================================== */
+
+const banner=document.querySelector(".banner img");
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(e.clientX/window.innerWidth-.5)*8;
+
+const y=(e.clientY/window.innerHeight-.5)*8;
+
+banner.style.transform=
+
+`translate(${x}px,${y}px) scale(1.03)`;
+
+});
+
+/* ==================================
+   RANDOM GLOW
+================================== */
+
+setInterval(()=>{
+
+document.querySelector(".app").style.boxShadow=
+
+`
+
+0 35px 90px rgba(0,0,0,.82),
+
+0 0 ${45+Math.random()*40}px rgba(255,0,60,.15),
+
+inset 0 0 60px rgba(255,255,255,.03)
+
+`;
+
+},1600);
+
+/* ==================================
+   TAB TRANSITION
+================================== */
+
+pages.forEach(page=>{
+
+page.style.transition=".45s cubic-bezier(.2,.8,.2,1)";
+
+});
+
+/* ==================================
+   BUTTON HOVER GLOW
+================================== */
+
+document.querySelectorAll(".btn").forEach(btn=>{
+
+btn.addEventListener("mouseenter",()=>{
+
+btn.style.textShadow=
+
+`
+
+0 0 10px rgba(255,0,60,.9),
+
+0 0 20px rgba(255,0,60,.8),
+
+0 0 35px rgba(255,0,60,.45)
+
+`;
+
+});
+
+btn.addEventListener("mouseleave",()=>{
+
+btn.style.textShadow=
+
+`
+
+0 0 8px rgba(255,0,60,.6),
+
+0 0 18px rgba(255,0,60,.35)
+
+`;
+
+});
+
+});
+
+/* ==================================
+   CYBER GLASS V10
+   FINAL ENGINE
+================================== */
+
+/* Ambient glow animation */
+
+const app=document.querySelector(".app");
+
+let glow=0;
+
+setInterval(()=>{
+
+glow+=0.04;
+
+const value=55+Math.sin(glow)*18;
+
+app.style.filter=
+
+`drop-shadow(0 0 ${value}px rgba(255,0,60,.22))`;
+
+},40);
+
+/* Floating animation */
+
+document.querySelectorAll(".btn").forEach((btn,index)=>{
+
+btn.animate([
+
+{
+
+transform:"translateY(0px)"
+
+},
+
+{
+
+transform:"translateY(-2px)"
+
+},
+
+{
+
+transform:"translateY(0px)"
+
+}
+
+],{
+
+duration:2400+(index*170),
+
+iterations:Infinity,
+
+easing:"ease-in-out"
+
+});
+
+});
+
+/* Banner breathing */
+
+const bannerCard=document.querySelector(".banner");
+
+bannerCard.animate([
+
+{
+
+transform:"scale(1)"
+
+},
+
+{
+
+transform:"scale(1.01)"
+
+},
+
+{
+
+transform:"scale(1)"
+
+}
+
+],{
+
+duration:5200,
+
+iterations:Infinity,
+
+easing:"ease-in-out"
+
+});
+
+/* Random sparkle */
+
+setInterval(()=>{
+
+const star=document.createElement("div");
+
+star.style.position="fixed";
+
+star.style.left=Math.random()*innerWidth+"px";
+
+star.style.top="-20px";
+
+star.style.width=(Math.random()*3+2)+"px";
+
+star.style.height=star.style.width;
+
+star.style.borderRadius="50%";
+
+star.style.background="rgba(255,255,255,.9)";
+
+star.style.boxShadow="0 0 15px rgba(255,255,255,.9)";
+
+star.style.pointerEvents="none";
+
+star.style.zIndex="1";
+
+document.body.appendChild(star);
+
+let y=-20;
+
+const speed=2+Math.random()*3;
+
+function fall(){
+
+y+=speed;
+
+star.style.top=y+"px";
+
+if(y<innerHeight+30){
+
+requestAnimationFrame(fall);
+
+}else{
+
+star.remove();
+
+}
+
+}
+
+fall();
+
+},180);
+
+/* Keyboard shortcut */
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+tabs[0].click();
+
+}
+
+});
+
+/* Console */
+
+console.clear();
+
+console.log("%cCYBER GLASS V10","color:#ff2645;font-size:26px;font-weight:bold;");
+
+console.log("%cSTATUS : ONLINE","color:white;font-size:14px;");
+
+console.log("%cENGINE : READY","color:#ff2645;font-size:14px;");
+
+console.log("%cRENDER : ULTRA GLASS","color:white;font-size:14px;");
+
+console.log("%cPARTICLES : 420","color:#ff2645;font-size:14px;");
+
+console.log("%cFPS MODE : MOBILE","color:white;font-size:14px;");
