@@ -4,31 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Ворк-Панель</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
-
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        * {
+            margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;
+            -webkit-tap-highlight-color: transparent; outline: none !important;
+        }
 
         body {
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            overflow:hidden;
-            background:#020000;
-            color:#fff;
+            height:100vh; display:flex; justify-content:center; align-items:center;
+            overflow:hidden; background:#020000; color:#fff;
         }
 
         /* BACKGROUND GLOW */
-        body::before{
+        body::before {
             content:""; position:absolute; inset:-300px;
             background: radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
                         radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
                         radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
             filter:blur(90px); animation:bg 18s ease-in-out infinite alternate;
         }
-        @keyframes bg{ to{transform:translate(140px,100px) scale(1.15);} }
+        @keyframes bg { to{transform:translate(140px,100px) scale(1.15);} }
 
         /* PARTICLES */
         canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
@@ -42,232 +39,145 @@
             display:flex; flex-direction:column; overflow:hidden;
         }
 
-        /* TABS */
-        .tabs-container { padding: 14px 14px 0 14px; display: flex; gap: 8px; }
-        .tab-btn {
-            flex: 1; padding: 12px; border-radius: 18px; border: 1px solid rgba(255,80,80,.25);
-            background: rgba(255,255,255,.04); backdrop-filter: blur(20px);
-            color: rgba(255,255,255,.5); font-size: 12px; font-weight: 700;
-            cursor: pointer; transition: 0.3s; text-align: center;
-        }
-        .tab-btn.active {
-            background: rgba(255,255,255,.12); color: #fff;
-            box-shadow: 0 0 15px rgba(255,0,60,.4); border-color: rgba(255,80,80,.5);
-        }
-
-        /* CONTENT WRAPPER */
-        .content-area { flex: 1; overflow-y: auto; padding: 14px; }
-        .content-area::-webkit-scrollbar { display: none; }
-
-        /* HEADER */
+        /* TOP IMAGE */
         .top-wrap { padding:14px; }
-        .main-img { width: 100%; border-radius: 20px; box-shadow: 0 0 15px rgba(255,0,60,0.3); }
+        .top-image { width:100%; height:120px; object-fit:cover; border-radius:18px; }
 
-        /* TITLE */
-        .title-box { margin:0 14px; padding:18px; border-radius:26px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(30px); text-align: center; }
-        .title { font-size:20px; font-weight:900; letter-spacing:2px; margin-bottom: 10px; }
+        /* ЗАГОЛОВОК */
+        .title-box { margin:0 14px; padding:18px; border-radius:26px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); backdrop-filter:blur(30px); }
+        .title { font-size:24px; font-weight:900; letter-spacing:2px; }
         .title span { color:#ff2b3d; }
-        .desc { font-size:12px; line-height:1.6; color:rgba(255,255,255,.75); }
-        .red-glow { color:#ff2b3d; text-shadow: 0 0 8px #ff2b3d; }
+        .desc { margin-top:8px; font-size:12px; line-height:1.6; color:rgba(255,255,255,.75); }
+        .red-text { color:#ff2b3d; text-shadow:0 0 8px #ff2b3d; }
+
+        /* TABS */
+        .tabs { margin:12px 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); }
+        .tab { flex:1; text-align:center; padding:10px; border-radius:14px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
+        .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
+
+        /* PAGE CONTENT */
+        .content { flex:1; overflow-y:auto; padding:14px; }
+        .page { display:none; }
+        .page.active { display:block; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* BUTTONS */
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
         .btn {
             padding:16px; border-radius:22px; background:rgba(255,255,255,.06);
-            border:1px solid rgba(255,80,80,.25); backdrop-filter:blur(25px);
-            color:#fff; font-size:12px; font-weight:900; letter-spacing:1.2px;
-            cursor:pointer; transition:transform 0.2s; box-shadow: 0 0 10px rgba(255,0,60,.15);
-            text-shadow: 0 0 6px rgba(255,0,60,.6); width:100%; outline: none;
+            border:1px solid rgba(255,80,80,.25); color:#fff; font-size:12px; font-weight:900; 
+            letter-spacing:1.2px; cursor:pointer; transition:all 0.2s ease;
+            box-shadow:0 0 10px rgba(255,0,60,.15); text-shadow:0 0 6px rgba(255,0,60,.6);
         }
-        .btn:active { transform: scale(0.95); }
-        .btn:focus { outline: none; }
+        .btn:active { transform:scale(0.95); }
 
-        /* SECTIONS */
-        .page { display: none; }
-        .page.active { display: block; }
-        .card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin-bottom: 10px; border: 1px solid rgba(255,80,80,0.2); }
-        
-        /* INFO PAGE STYLES */
-        .glass-card { background:rgba(255,255,255,.05); border:1px solid rgba(255,80,80,.2); padding:20px; border-radius:20px; backdrop-filter:blur(10px); text-align: center; margin-bottom: 15px; }
-        .divider { height: 1px; background: rgba(255,255,255,0.1); margin: 15px 0; }
-        .link-text { color: #ff2b3d; text-decoration: underline; cursor: pointer; font-weight: 900; }
+        /* INFO CARD */
+        .card { background:rgba(255,255,255,.05); padding:15px; border-radius:20px; border:1px solid rgba(255,80,80,.2); font-size:12px; margin-bottom: 10px; }
+        .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
 
         /* FOOTER */
-        .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); border-top:1px solid rgba(255,80,80,.15); }
-        a { color: #ff2b3d; text-decoration: none; }
+        .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); border-top:1px solid rgba(255,80,80,.15); cursor:pointer; }
     </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
 
     <div class="app">
-        <div class="tabs-container">
-            <div id="tab-menu" class="tab-btn active" onclick="switchMainTab('menu')">МЕНЮ</div>
-            <div id="tab-info" class="tab-btn" onclick="switchMainTab('info')">ИНФО</div>
+        <div class="top-wrap">
+            <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="top-image">
         </div>
 
-        <div id="view-menu" class="page active">
-            <div class="content-area" id="menu-content-wrapper">
-                <div id="page-main" class="page active">
-                    <div class="top-wrap">
-                        <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="main-img">
-                    </div>
-                    <div class="title-box">
-                        <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
-                        <div class="desc">
-                            <span class="red-glow">Новичок</span>?<br>
-                            Не знаешь с чего <span class="red-glow">Начать</span>?<br>
-                            <span class="red-glow">Специально</span> для <span class="red-glow">Тебя</span>, и для Наёмников нашей Команды —<br>
-                            <span class="red-glow">Мы</span> создали <span class="red-glow">Собственного Бота</span>!
-                        </div>
-                    </div>
-                    <div class="content-area" style="padding-top:14px">
-                        <div class="grid">
-                            <button class="btn" onclick="openPage('page-profile')">ПРОФИЛЬ</button>
-                            <button class="btn" onclick="openPage('page-mentor')">НАСТАВНИК</button>
-                            <button class="btn" onclick="openPage('page-manual')">МАНУАЛ</button>
-                            <button class="btn" onclick="openPage('page-packs')">ПАКИ</button>
-                            <button class="btn" onclick="openPage('page-voice')">ГОЛОСОВЫЕ</button>
-                            <button class="btn" onclick="openPage('page-bots')">БОТЫ</button>
-                            <button class="btn" onclick="openPage('page-pastes')">ПАСТЫ</button>
-                            <button class="btn" onclick="openPage('page-probiv')">ПРОБИВ</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="page-profile" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div class="card" id="user-data" style="margin-top:10px">Загрузка...</div>
-                </div>
-
-                <div id="page-mentor" class="page">
-                    <button class="btn" onclick="openPage('page-main')" style="margin-bottom:10px">← Назад</button>
-                    <div class="card"><h3>Kodi</h3><p>НАСТАВНИК №1 (универсал)</p><button class="btn">Написать</button></div>
-                    <div class="card"><h3>Relax</h3><p>НАСТАВНИК №2 (универсал)</p><button class="btn">Написать</button></div>
-                </div>
-
-                <div id="page-manual" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div class="card" style="margin-top:10px"><h3>Мануал (Письменный)</h3><p>Направление: Шантаж</p><button class="btn">Открыть</button></div>
-                    <div class="card"><h3>Мануал (Видео)</h3><p>Направление: Шантаж</p><button class="btn">Смотреть</button></div>
-                </div>
-
-                <div id="page-packs" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div class="grid" style="margin-top:10px">
-                        <div class="card"><h3>Пак 1</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>Пак 2</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>Пак 3</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>Пак 4</h3><button class="btn">Открыть</button></div>
-                    </div>
-                </div>
-
-                <div id="page-voice" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div class="card" style="margin-top:10px"><h3>Голосовые</h3><p>Описание пака</p><button class="btn">Открыть</button></div>
-                </div>
-
-                <div id="page-pastes" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div class="card" style="margin-top:10px"><h3>Паста 1</h3><p id="paste1">Текст пасты 1</p><button class="btn" onclick="copy('paste1')">📋 Скопировать</button></div>
-                    <div class="card"><h3>Паста 2</h3><p id="paste2">Текст пасты 2</p><button class="btn" onclick="copy('paste2')">📋 Скопировать</button></div>
-                    <div class="card"><h3>Паста 3</h3><p id="paste3">Текст пасты 3</p><button class="btn" onclick="copy('paste3')">📋 Скопировать</button></div>
-                </div>
-
-                <div id="page-bots" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div style="margin-top:10px">
-                        <script>for(let i=1; i<=20; i++) document.write(`<div class="card"><h3>Бот №${i}</h3><p>Описание бота</p><button class="btn">Открыть</button></div>`);</script>
-                    </div>
-                </div>
-
-                <div id="page-probiv" class="page">
-                    <button class="btn" onclick="openPage('page-main')">← Назад</button>
-                    <div style="margin-top:10px">
-                        <div class="card"><h3>Глаз Бога</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>QuickOSINT</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>Solaris</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>LeakCheck</h3><button class="btn">Открыть</button></div>
-                        <div class="card"><h3>InfoBaza</h3><button class="btn">Открыть</button></div>
-                    </div>
-                </div>
+        <div class="title-box">
+            <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
+            <div class="desc">
+                <span class="red-text">Новичок</span>? Не знаешь с чего <span class="red-text">Начать</span>? <br>
+                <span class="red-text">Специально</span> для <span class="red-text">Тебя</span>, и для <span class="red-text">Наёмников</span> нашей Команды — <br>
+                <span class="red-text">Мы</span> создали <span class="red-text">Собственного Бота</span>!
             </div>
         </div>
 
-        <div id="view-info" class="page">
-            <div class="content-area">
-                <div class="glass-card">
-                    <div style="font-weight: 900; font-size: 18px; margin-bottom: 10px;">ИНФОРМАЦИЯ</div>
-                    <p style="font-size: 12px; line-height: 1.6;">@RetroWork_Bot — это не просто бот, а объединение лучших материалов в одном месте.<br><br>
-                    Бот создан специально для удобства новичков и воркеров команды Retro Company.</p>
-                    <div class="divider"></div>
-                    <p style="font-size: 12px;">Дата создания:<br>26.06.2026</p>
-                    <div class="divider"></div>
-                    <p style="font-size: 12px;">Наш канал:<br><span class="link-text" onclick="window.open('https://t.me/retronews7')">ТЫК</span></p>
-                    <div class="divider"></div>
-                    <p style="font-size: 12px;">Наш чат:<br><span class="link-text" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span></p>
+        <div class="tabs">
+            <div class="tab active" id="tab-menu" onclick="switchTab('menu')">МЕНЮ</div>
+            <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
+        </div>
+
+        <div class="content" id="content">
+            <div id="page-menu" class="page active">
+                <div class="grid">
+                    <button class="btn" onclick="showPage('page-content')">ПРОФИЛЬ</button>
+                    <button class="btn" onclick="showPage('page-content')">НАСТАВНИК</button>
+                    <button class="btn" onclick="showPage('page-content')">МАНУАЛ</button>
+                    <button class="btn" onclick="showPage('page-content')">ПАКИ</button>
+                    <button class="btn" onclick="showPage('page-content')">ГОЛОСОВЫЕ</button>
+                    <button class="btn" onclick="showPage('page-content')">БОТЫ</button>
+                    <button class="btn" onclick="showPage('page-content')">ПАСТЫ</button>
+                    <button class="btn" onclick="showPage('page-content')">ПРОБИВ</button>
                 </div>
-                <button class="btn" onclick="switchMainTab('menu')">← Назад</button>
+            </div>
+
+            <div id="page-info" class="page">
+                <div class="card">
+                    <b>ИНФОРМАЦИЯ</b><br><br>
+                    @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
+                    Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
+                    Дата создания: 26.06.2026<br><br>
+                    Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
+                    Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
+                </div>
+                <button class="btn" style="width:100%" onclick="switchTab('menu')">← Назад</button>
+            </div>
+
+            <div id="page-content" class="page">
+                <button class="btn" onclick="switchTab('menu')">← Назад</button>
             </div>
         </div>
 
-        <div class="footer">
-            <a href="http://t.me/send?start=IV1dLorNmNQV">Поддержать Команду</a>
-        </div>
+        <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
     </div>
 
     <script>
-        function switchMainTab(tab) {
-            // Управление вкладками
-            document.getElementById('tab-menu').classList.toggle('active', tab === 'menu');
-            document.getElementById('tab-info').classList.toggle('active', tab === 'info');
+        function switchTab(type) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             
-            // Управление страницами
-            document.getElementById('view-menu').classList.toggle('active', tab === 'menu');
-            document.getElementById('view-info').classList.toggle('active', tab === 'info');
-
-            // Если вернулись в меню, всегда сбрасываем на главный экран
-            if(tab === 'menu') openPage('page-main');
+            if(type === 'menu') {
+                document.getElementById('tab-menu').classList.add('active');
+                document.getElementById('page-menu').classList.add('active');
+            } else {
+                document.getElementById('tab-info').classList.add('active');
+                document.getElementById('page-info').classList.add('active');
+            }
         }
 
-        function openPage(pageId) {
-            document.querySelectorAll('#menu-content-wrapper .page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        // Telegram Logic
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        const user = tg.initDataUnsafe.user;
-        const userData = document.getElementById('user-data');
-        if(user) {
-            userData.innerHTML = `Имя пользователя: ${user.first_name}<br>Username: @${user.username || 'скрыт'}<br>Telegram ID: ${user.id}`;
-        } else {
-            userData.innerHTML = "Зайдите через Telegram для просмотра профиля.";
-        }
-
-        function copy(id) {
-            const text = document.getElementById(id).innerText;
-            navigator.clipboard.writeText(text);
-            alert('Скопировано!');
+        function showPage(id) {
+            document.getElementById('page-menu').classList.remove('active');
+            const page = document.getElementById(id);
+            page.classList.add('active');
         }
 
         /* PARTICLES */
         const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const colors = ["rgba(255,0,60,.85)", "rgba(255,255,255,.85)", "rgba(0,0,0,.6)"];
-        const particles = [];
-        for(let i=0;i<200;i++){
-            particles.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, size:Math.random()*4.8+1.5, speed:Math.random()*3+1.5, color:colors[Math.floor(Math.random()*colors.length)], drift:Math.random()*1.4-0.7});
-        }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const particles = Array.from({length: 100}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 3 + 1,
+            speed: Math.random() * 2 + 0.5,
+            color: ["#ff003c", "#fff", "#000"][Math.floor(Math.random()*3)]
+        }));
+
         function animate(){
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            for(let p of particles){
-                p.y += p.speed; p.x += p.drift;
-                if(p.y > canvas.height){ p.y = -10; p.x = Math.random()*canvas.width; }
-                ctx.beginPath(); ctx.fillStyle = p.color; ctx.shadowBlur = 18; ctx.shadowColor = p.color; ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fill();
-            }
+            particles.forEach(p => {
+                p.y += p.speed;
+                if(p.y > canvas.height) p.y = 0;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                ctx.fill();
+            });
             requestAnimationFrame(animate);
         }
         animate();
