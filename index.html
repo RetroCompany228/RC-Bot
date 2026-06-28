@@ -14,7 +14,6 @@
 
         body { 
             margin: 0; padding: 0;
-            /* Приглушенный фон */
             background: radial-gradient(circle at 50% 0%, #1a0000 0%, transparent 60%),
                         radial-gradient(circle at 50% 100%, #1a0000 0%, transparent 60%),
                         radial-gradient(circle at 50% 50%, #080505 0%, #050505 70%);
@@ -25,18 +24,26 @@
             user-select: none;
         }
 
-        /* --- ШТОРКИ (ПРЕЛОАДЕР) --- */
+        /* --- ШТОРКИ С ТЕКСТОМ И НЕОНОМ --- */
         .curtain {
             position: fixed; top: 0; bottom: 0; width: 50%;
             background: #050505; z-index: 999;
-            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1);
         }
-        .curtain-left { left: 0; }
-        .curtain-right { right: 0; }
+        .curtain-left { left: 0; border-right: 1px solid #330000; }
+        .curtain-right { right: 0; border-left: 1px solid #330000; }
+        
+        .curtain-text {
+            font-size: 20px; font-weight: 900; color: #ff0000;
+            text-transform: uppercase; letter-spacing: 4px;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        }
+
         .curtain-left.open { transform: translateX(-100%); }
         .curtain-right.open { transform: translateX(100%); }
 
-        /* --- СТИЛИ --- */
+        /* --- ОСТАЛЬНОЙ СТИЛЬ --- */
         button, a, .btn, .video-btn {
             outline: none !important; box-shadow: none !important;
             -webkit-tap-highlight-color: transparent !important;
@@ -56,11 +63,13 @@
         }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex-grow: 1; }
+        
         .btn { 
             padding: 8px; border-radius: 14px; border: var(--border); 
             background: rgba(255,255,255,0.03); color: #fff; font-weight: 900; font-size: 13px;
             cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
+        
         .btn img { 
             width: 26px; height: 26px; border-radius: 6px; border: 1px solid #000; 
             filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.7)); 
@@ -70,13 +79,8 @@
         .title { font-weight: 900; font-size: 22px; margin: 0; }
         .nav-title { font-size: 16px; margin: 10px 0; }
         
-        /* Четкая обводка фото */
         .photo-container { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-        .photo { 
-            width: 48%; height: 100px; object-fit: cover; border-radius: 14px; 
-            border: 2px solid #550000; 
-            box-shadow: 0 0 8px rgba(255,0,0,0.3);
-        }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: 2px solid #550000; box-shadow: 0 0 8px rgba(255,0,0,0.3); }
         
         .screen { display: none; height: 100%; }
         .screen.active { display: flex; flex-direction: column; }
@@ -85,8 +89,8 @@
 </head>
 <body>
 
-    <div class="curtain curtain-left" id="cLeft"></div>
-    <div class="curtain curtain-right" id="cRight"></div>
+    <div class="curtain curtain-left" id="cLeft"><span class="curtain-text">ДОБРО</span></div>
+    <div class="curtain curtain-right" id="cRight"><span class="curtain-text">ПОЖАЛОВАТЬ</span></div>
 
     <div id="home" class="screen active container">
         <div class="photo-container">
@@ -121,7 +125,7 @@
             setTimeout(() => {
                 document.getElementById('cLeft').classList.add('open');
                 document.getElementById('cRight').classList.add('open');
-            }, 800);
+            }, 1500); // 1.5 секунды ожидания
         };
 
         function loadScreen(id) {
