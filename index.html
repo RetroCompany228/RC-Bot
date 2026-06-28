@@ -8,32 +8,29 @@
         :root {
             --bg-dark: #050505;
             --red: #ff0000;
-            --border: 1px solid rgba(255, 0, 0, 0.3); /* Общая красная рамка */
+            --border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         body { 
             margin: 0; padding: 0;
-            background: #050505;
+            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 80%);
             color: #fff; font-family: sans-serif; 
             height: 100vh; overflow-y: auto;
+            user-select: none;
             display: flex; justify-content: center;
         }
 
-        /* Обертка для "бортиков" (эффект рамки) */
-        .page-wrapper {
+        /* Статичная закругленная рамка */
+        .page-frame {
             width: 100%; max-width: 500px;
-            border-left: 2px solid rgba(255, 0, 0, 0.2);
-            border-right: 2px solid rgba(255, 0, 0, 0.2);
-            border-top: 2px solid rgba(255, 0, 0, 0.2);
-            border-bottom: 2px solid rgba(255, 0, 0, 0.2);
-            margin: 10px;
+            border: var(--border);
             border-radius: 30px;
+            margin: 10px;
             padding: 20px;
             box-sizing: border-box;
-            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 100%);
         }
 
-        /* Шторки без центральной линии */
+        /* Шторки (без линий) */
         .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
         .curtain-left { left: 0; }
         .curtain-right { right: 0; }
@@ -47,23 +44,25 @@
 
         .header-box { 
             border: var(--border); border-radius: 25px; padding: 20px; 
-            background: rgba(255,0,0,0.03); text-align: center;
+            background: rgba(255,255,255,0.02); text-align: center;
+            box-shadow: 0 0 15px rgba(255,0,0,0.1);
         }
         .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; color: #fff; text-shadow: 0 0 10px var(--red); }
-        .desc { color: rgba(255,255,255,0.6); font-size: 13px; line-height: 1.5; margin: 0; }
+        .desc { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin: 0; }
 
-        .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,0,0,0.02); }
-        .nav-title { text-align: center; font-size: 14px; color: #fff; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .arrow-down { text-align: center; color: var(--red); font-size: 18px; margin-bottom: 15px; }
+        .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,255,255,0.01); }
+        .nav-title { text-align: center; font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 15px; }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { 
             padding: 15px; border-radius: 12px; border: var(--border);
-            background: rgba(255,0,0,0.05); color: #fff; font-weight: 800; font-size: 12px;
-            cursor: pointer; text-transform: uppercase;
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 800; font-size: 12px;
+            cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
+        .btn:active { background: rgba(255,0,0,0.2); border-color: var(--red); }
 
-        .support-link { color: rgba(255,255,255,0.3); font-size: 12px; text-align: center; margin-top: 10px; text-decoration: underline; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-top: 10px; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -71,7 +70,7 @@
     <div class="curtain curtain-left" id="cLeft"></div>
     <div class="curtain curtain-right" id="cRight"></div>
 
-    <div class="page-wrapper">
+    <div class="page-frame">
         <div class="container">
             <div class="photo-container">
                 <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
