@@ -19,25 +19,37 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
-background:#050000;
+background:#020000;
 color:#fff;
 }
 
-/* 🔥 DARK RED PREMIUM BACKGROUND */
+/* 🌑 ULTRA DARK RED DEPTH BACKGROUND */
 body::before{
 content:"";
 position:absolute;
-inset:-200px;
+inset:-300px;
 background:
-radial-gradient(circle at 20% 20%, rgba(255,30,60,.28), transparent 45%),
-radial-gradient(circle at 70% 30%, rgba(120,0,0,.25), transparent 50%),
-radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
-filter:blur(80px);
-animation:bg 16s ease-in-out infinite alternate;
+radial-gradient(circle at 20% 20%, rgba(255,0,60,.22), transparent 50%),
+radial-gradient(circle at 70% 30%, rgba(120,0,20,.35), transparent 55%),
+radial-gradient(circle at 50% 80%, rgba(255,0,0,.10), transparent 60%);
+filter:blur(90px);
+animation:bg 18s ease-in-out infinite alternate;
 }
 
 @keyframes bg{
-to{transform:translate(120px,90px) scale(1.1);}
+to{
+transform:translate(140px,100px) scale(1.15);
+}
+}
+
+/* subtle grain overlay */
+body::after{
+content:"";
+position:absolute;
+inset:0;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+opacity:.25;
+pointer-events:none;
 }
 
 /* 📱 APP */
@@ -45,20 +57,30 @@ to{transform:translate(120px,90px) scale(1.1);}
 width:95%;
 max-width:460px;
 height:92vh;
-border-radius:34px;
+border-radius:36px;
 
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(28px);
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(32px);
 
-border:1px solid rgba(255,255,255,.10);
-box-shadow:0 30px 90px rgba(0,0,0,.75);
+border:1px solid rgba(255,80,80,.12);
+
+box-shadow:
+0 40px 120px rgba(0,0,0,.8),
+inset 0 0 60px rgba(255,0,0,.05);
 
 display:flex;
 flex-direction:column;
 overflow:hidden;
+
+animation:open .6s ease;
 }
 
-/* 🖼 TOP IMAGE FRAME (NEW PREMIUM BORDER) */
+@keyframes open{
+from{transform:scale(.93);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+/* 🖼 TOP FRAME */
 .top-wrap{
 padding:14px;
 }
@@ -68,37 +90,36 @@ display:grid;
 grid-template-columns:1fr 1fr;
 gap:10px;
 
-padding:10px;
-border-radius:22px;
+padding:12px;
+border-radius:24px;
 
-background:rgba(255,255,255,.05);
-border:1px solid rgba(255,60,80,.25);
-box-shadow:0 0 30px rgba(255,0,0,.08);
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,80,80,.18);
+box-shadow:0 0 40px rgba(255,0,0,.06);
 }
 
 .top-frame img{
 width:100%;
 height:120px;
 object-fit:cover;
-border-radius:16px;
-transition:.25s;
+border-radius:18px;
+transition:.3s ease;
 }
 
 .top-frame img:hover{
-transform:scale(1.02);
+transform:scale(1.03);
 filter:brightness(1.1);
 }
 
 /* 🧊 TITLE */
 .title-box{
 margin:0 14px;
-padding:16px;
-border-radius:24px;
+padding:18px;
+border-radius:26px;
 
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(22px);
-
+background:rgba(255,255,255,.05);
 border:1px solid rgba(255,255,255,.10);
+backdrop-filter:blur(26px);
 }
 
 .title{
@@ -114,8 +135,8 @@ color:#ff2b3d;
 .desc{
 margin-top:8px;
 font-size:12px;
-line-height:1.5;
-color:rgba(255,255,255,.70);
+line-height:1.55;
+color:rgba(255,255,255,.72);
 }
 
 /* 🧭 NAV */
@@ -123,27 +144,27 @@ color:rgba(255,255,255,.70);
 margin:12px 14px;
 display:flex;
 gap:6px;
-padding:4px;
 
-background:rgba(255,255,255,.05);
-border-radius:16px;
-border:1px solid rgba(255,255,255,.08);
+background:rgba(255,255,255,.04);
+border-radius:18px;
+padding:5px;
+border:1px solid rgba(255,80,80,.10);
 }
 
 .tab{
 flex:1;
 text-align:center;
 padding:10px;
-border-radius:12px;
+border-radius:14px;
 font-size:12px;
 font-weight:600;
-color:rgba(255,255,255,.6);
+color:rgba(255,255,255,.55);
 cursor:pointer;
-transition:.2s;
+transition:.25s;
 }
 
 .tab.active{
-background:rgba(255,255,255,.12);
+background:rgba(255,255,255,.10);
 color:#fff;
 }
 
@@ -158,7 +179,7 @@ display:none;
 display:block;
 }
 
-/* 🔘 BUTTONS */
+/* 🔘 BUTTONS (SOFT PREMIUM) */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -167,38 +188,39 @@ gap:10px;
 
 .btn{
 padding:15px;
-border-radius:18px;
+border-radius:20px;
 
-background:rgba(255,255,255,.06);
-border:1px solid rgba(255,255,255,.10);
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,80,80,.12);
 
-color:#fff;
+color:rgba(255,255,255,.92);
 font-size:12px;
 font-weight:700;
 
 cursor:pointer;
-transition:.2s;
+transition:.25s;
 
 -webkit-tap-highlight-color:transparent;
 outline:none;
+}
+
+.btn:hover{
+background:rgba(255,255,255,.07);
+border-color:rgba(255,60,60,.25);
+transform:translateY(-2px);
 }
 
 .btn:active{
 transform:scale(.96);
 }
 
-.btn:hover{
-border-color:rgba(255,40,60,.35);
-background:rgba(255,255,255,.09);
-}
-
-/* 🧾 FOOTER */
+/* footer */
 .footer{
 text-align:center;
 padding:12px;
 font-size:11px;
-color:rgba(255,255,255,.45);
-border-top:1px solid rgba(255,255,255,.08);
+color:rgba(255,255,255,.40);
+border-top:1px solid rgba(255,80,80,.10);
 }
 </style>
 </head>
@@ -207,7 +229,6 @@ border-top:1px solid rgba(255,255,255,.08);
 
 <div class="app">
 
-<!-- TOP -->
 <div class="top-wrap">
 <div class="top-frame">
 <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
@@ -215,22 +236,19 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 </div>
 
-<!-- TITLE -->
 <div class="title-box">
 <div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
 <div class="desc">
 Новичок? Не знаешь с чего начать?  
-Специально для тебя и нашей команды — мы сделали собственного бота!
+Специально для тебя и нашей команды — мы сделали собственного бота.
 </div>
 </div>
 
-<!-- NAV -->
 <div class="tabs">
 <div class="tab active" onclick="go(0)">МЕНЮ</div>
 <div class="tab" onclick="go(1)">ИНФО</div>
 </div>
 
-<!-- PAGE 1 -->
 <div class="page active">
 <div class="grid">
 <button class="btn">ПРОФИЛЬ</button>
@@ -244,17 +262,16 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 </div>
 
-<!-- PAGE 2 -->
 <div class="page">
-<div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.65);padding:4px">
-Система: Premium Glass UI<br>
-Версия: v6.1 Final Red Build<br><br>
-Интерфейс полностью адаптирован под быстрый доступ к инструментам команды.<br><br>
-Статус: стабильный ✔
+<div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.70)">
+Версия: v6.2 ULTRA DARK<br>
+UI: Glass premium system<br>
+Engine: deep red render layer<br><br>
+
+Интерфейс сделан как мини-приложение с акцентом на скорость и стиль.
 </div>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">CYBER GLASS SYSTEM</div>
 
 </div>
