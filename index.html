@@ -3,39 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Retro Terminal</title>
     <style>
         body { 
-            margin: 0; padding: 0;
-            background: #050505; 
-            color: #fff; font-family: sans-serif; 
-            height: 100vh; overflow: hidden; /* Запрет прокрутки */
+            margin: 0; padding: 0; background: #050505; color: #fff; font-family: sans-serif; 
+            height: 100vh; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
         
-        /* Основной блок на весь экран */
+        /* Рамка по всему периметру, полупрозрачный красный */
         .main-frame {
-            width: 100%; height: 100%;
-            border: 3px solid rgba(255, 0, 0, 0.25); /* Полупрозрачная красная рамка */
-            padding: 15px;
+            width: 95%; height: 95vh;
+            border: 2px solid rgba(255, 0, 0, 0.4);
+            border-radius: 30px;
+            padding: 20px;
             box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .img-row { display: flex; gap: 10px; width: 100%; }
+        .img-row { display: flex; gap: 15px; }
         .img-row img { width: 48%; height: 80px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,0,0,0.3); }
 
-        .work-panel { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 15px; text-align: center; }
-        .title { color: #ff0000; font-size: 22px; text-transform: uppercase; margin: 0 0 10px 0; text-shadow: 0 0 10px #ff0000; }
-        .desc { font-size: 13px; color: #ccc; }
+        .work-panel { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 20px; text-align: center; }
+        .title { color: #ff0000; font-size: 22px; text-transform: uppercase; margin: 0 0 10px 0; }
+        .desc { font-size: 13px; color: #ccc; line-height: 1.4; }
 
-        .nav-section { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 15px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
-        .nav-title { text-align: center; font-size: 13px; text-transform: uppercase; margin-bottom: 12px; }
+        .nav-section { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
+        .nav-title { text-align: center; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; color: #fff; }
         
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { padding: 14px; border: 1px solid rgba(255,0,0,0.3); background: rgba(255,0,0,0.05); color: #fff; border-radius: 10px; font-size: 11px; text-transform: uppercase; cursor: pointer; }
 
-        .footer { text-align: center; font-size: 11px; color: #666; margin-top: 10px; }
+        .footer { text-align: center; font-size: 11px; color: #666; margin-top: 15px; text-decoration: underline; }
     </style>
 </head>
 <body>
