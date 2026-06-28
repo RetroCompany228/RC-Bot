@@ -6,109 +6,82 @@
     <title>Retro Terminal</title>
     <style>
         :root {
-            --bg-dark: #050505;
             --red: #ff0000;
-            --border: 1px solid rgba(255, 255, 255, 0.15);
+            --neon: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
         body { 
             margin: 0; padding: 0;
-            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 80%);
+            background: #050505;
             color: #fff; font-family: sans-serif; 
-            height: 100vh; overflow-y: auto;
-            user-select: none;
-            display: flex; justify-content: center;
+            height: 100vh; overflow: hidden; /* Запрет прокрутки */
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* Статичная закругленная рамка */
+        /* Статичная красная неоновая рамка */
         .page-frame {
-            width: 100%; max-width: 500px;
-            border: var(--border);
+            width: 95%; max-width: 450px; height: 95vh;
+            border: 2px solid var(--red);
             border-radius: 30px;
-            margin: 10px;
             padding: 20px;
             box-sizing: border-box;
+            box-shadow: var(--neon);
+            display: flex; flex-direction: column; gap: 15px;
+            background: rgba(10, 0, 0, 0.5);
         }
-
-        /* Шторки (без линий) */
-        .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
-        .curtain-left { left: 0; }
-        .curtain-right { right: 0; }
-        .curtain-left.open { transform: translateX(-100%); }
-        .curtain-right.open { transform: translateX(100%); }
-
-        .container { display: flex; flex-direction: column; gap: 20px; }
 
         .photo-container { display: flex; justify-content: space-between; gap: 10px; }
-        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
+        .photo { width: 48%; height: 80px; object-fit: cover; border-radius: 10px; border: 1px solid var(--red); box-shadow: 0 0 5px var(--red); }
 
         .header-box { 
-            border: var(--border); border-radius: 25px; padding: 20px; 
-            background: rgba(255,255,255,0.02); text-align: center;
-            box-shadow: 0 0 15px rgba(255,0,0,0.1);
+            border: 1px solid var(--red); border-radius: 20px; padding: 15px; 
+            text-align: center; box-shadow: 0 0 10px rgba(255,0,0,0.2);
         }
-        .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; color: #fff; text-shadow: 0 0 10px var(--red); }
-        .desc { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin: 0; }
+        .title { text-transform: uppercase; letter-spacing: 3px; font-weight: 900; font-size: 20px; margin: 0 0 10px 0; text-shadow: 0 0 10px var(--red); }
+        .desc { color: #ccc; font-size: 12px; line-height: 1.4; margin: 0; }
 
-        .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,255,255,0.01); }
-        .nav-title { text-align: center; font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 15px; }
-
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .nav-wrapper { border: 1px solid var(--red); border-radius: 20px; padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .nav-title { text-align: center; font-size: 13px; color: #fff; margin-bottom: 5px; text-transform: uppercase; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .btn { 
-            padding: 15px; border-radius: 12px; border: var(--border);
-            background: rgba(255,255,255,0.03); color: #fff; font-weight: 800; font-size: 12px;
-            cursor: pointer; text-transform: uppercase; transition: 0.3s;
+            padding: 12px; border-radius: 10px; border: 1px solid var(--red);
+            background: rgba(255,0,0,0.1); color: #fff; font-weight: 700; font-size: 11px;
+            cursor: pointer; text-transform: uppercase;
         }
-        .btn:active { background: rgba(255,0,0,0.2); border-color: var(--red); }
 
-        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; margin-top: 10px; text-decoration: underline; }
+        .support-link { color: #888; font-size: 11px; text-align: center; margin-top: auto; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="curtain curtain-left" id="cLeft"></div>
-    <div class="curtain curtain-right" id="cRight"></div>
-
     <div class="page-frame">
-        <div class="container">
-            <div class="photo-container">
-                <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-                <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
-            </div>
-
-            <div class="header-box">
-                <h1 class="title">ВОРК ПАНЕЛЬ</h1>
-                <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя, и для нашей Команды - Мы сделали Собственного Бота!</p>
-            </div>
-
-            <div class="nav-wrapper">
-                <h3 class="nav-title">НАВИГАЦИЯ</h3>
-                <div class="arrow-down">▼</div>
-                <div class="grid">
-                    <button class="btn">ПРОФИЛЬ</button>
-                    <button class="btn">НАСТАВНИК</button>
-                    <button class="btn">МАНУАЛ</button>
-                    <button class="btn">ПАКИ</button>
-                    <button class="btn">ГОЛОСОВЫЕ</button>
-                    <button class="btn">ПАСТЫ</button>
-                    <button class="btn">БОТЫ</button>
-                    <button class="btn">ПРОБИВ</button>
-                </div>
-            </div>
-
-            <a href="#" class="support-link">Поддержать Команду</a>
+        <div class="photo-container">
+            <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
+            <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
         </div>
+
+        <div class="header-box">
+            <h1 class="title">ВОРК ПАНЕЛЬ</h1>
+            <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя - Мы сделали Собственного Бота!</p>
+        </div>
+
+        <div class="nav-wrapper">
+            <h3 class="nav-title">НАВИГАЦИЯ</h3>
+            <div class="grid">
+                <button class="btn">ПРОФИЛЬ</button>
+                <button class="btn">НАСТАВНИК</button>
+                <button class="btn">МАНУАЛ</button>
+                <button class="btn">ПАКИ</button>
+                <button class="btn">ГОЛОСОВЫЕ</button>
+                <button class="btn">ПАСТЫ</button>
+                <button class="btn">БОТЫ</button>
+                <button class="btn">ПРОБИВ</button>
+            </div>
+        </div>
+
+        <a href="#" class="support-link">Поддержать Команду</a>
     </div>
 
-    <script>
-        window.onload = () => {
-            setTimeout(() => {
-                document.getElementById('cLeft').classList.add('open');
-                document.getElementById('cRight').classList.add('open');
-            }, 1000);
-        };
-    </script>
 </body>
 </html>
-
