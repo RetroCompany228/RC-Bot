@@ -48,10 +48,18 @@
 
         .nav-wrapper { border: var(--border); border-radius: 20px; padding: 15px; background: rgba(255,255,255,0.01); display: flex; flex-direction: column; flex-grow: 1; justify-content: start; min-height: 0; }
         
-        /* Изменен только размер шрифта здесь, больше ничего */
-        .nav-title { text-align: center; font-size: 20px; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; font-weight: bold; }
+        /* Увеличенный шрифт и анимация стрелки */
+        .nav-title { text-align: center; font-size: 32px; color: rgba(255,255,255,0.8); margin-bottom: 5px; text-transform: uppercase; font-weight: 900; }
         
-        .arrow-down { text-align: center; color: var(--red); font-size: 22px; margin-bottom: 12px; }
+        .arrow-down { 
+            text-align: center; color: var(--red); font-size: 28px; margin-bottom: 10px; 
+            animation: pulse 1.5s infinite ease-in-out; 
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translateY(0); }
+            50% { opacity: 0.5; transform: translateY(5px); }
+        }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { 
