@@ -3,64 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Retro Terminal</title>
     <style>
+        :root {
+            --red: #ff0000;
+            --border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
         body { 
-            margin: 0; padding: 0; background: #050505; color: #fff; font-family: sans-serif; 
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at 50% 50%, #150505 0%, #050505 80%);
+            color: #fff; font-family: sans-serif; 
             height: 100vh; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
-        
-        /* Рамка по всему периметру, полупрозрачный красный */
-        .main-frame {
-            width: 95%; height: 95vh;
-            border: 2px solid rgba(255, 0, 0, 0.4);
-            border-radius: 30px;
+
+        /* Растянутая рамка на весь экран */
+        .page-frame {
+            width: 100%; height: 100vh;
+            border: 2px solid var(--red);
             padding: 20px;
             box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: space-between;
         }
 
-        .img-row { display: flex; gap: 15px; }
-        .img-row img { width: 48%; height: 80px; object-fit: cover; border-radius: 12px; border: 1px solid rgba(255,0,0,0.3); }
+        .curtain { position: fixed; top: 0; bottom: 0; width: 50%; background: #050505; z-index: 999; transition: transform 1s cubic-bezier(0.7, 0, 0.3, 1); }
+        .curtain-left { left: 0; }
+        .curtain-right { right: 0; }
+        .curtain-left.open { transform: translateX(-100%); }
+        .curtain-right.open { transform: translateX(100%); }
 
-        .work-panel { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 20px; text-align: center; }
-        .title { color: #ff0000; font-size: 22px; text-transform: uppercase; margin: 0 0 10px 0; }
-        .desc { font-size: 13px; color: #ccc; line-height: 1.4; }
+        .container { display: flex; flex-direction: column; gap: 20px; height: 100%; justify-content: center; }
 
-        .nav-section { border: 1px solid rgba(255,0,0,0.3); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: center; }
-        .nav-title { text-align: center; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; color: #fff; }
-        
+        .photo-container { display: flex; justify-content: space-between; gap: 10px; }
+        .photo { width: 48%; height: 100px; object-fit: cover; border-radius: 14px; border: var(--border); }
+
+        .header-box { 
+            border: var(--border); border-radius: 25px; padding: 20px; 
+            background: rgba(255,255,255,0.02); text-align: center;
+        }
+        .title { text-transform: uppercase; letter-spacing: 4px; font-weight: 900; font-size: 24px; margin: 0 0 15px 0; color: #fff; text-shadow: 0 0 10px var(--red); }
+        .desc { color: rgba(255,255,255,0.5); font-size: 13px; line-height: 1.5; margin: 0; }
+
+        .nav-wrapper { border: var(--border); border-radius: 25px; padding: 20px; background: rgba(255,255,255,0.01); }
+        .nav-title { text-align: center; font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .arrow-down { text-align: center; color: var(--red); font-size: 20px; margin-bottom: 15px; }
+
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding: 14px; border: 1px solid rgba(255,0,0,0.3); background: rgba(255,0,0,0.05); color: #fff; border-radius: 10px; font-size: 11px; text-transform: uppercase; cursor: pointer; }
+        .btn { 
+            padding: 15px; border-radius: 12px; border: var(--border);
+            background: rgba(255,255,255,0.03); color: #fff; font-weight: 800; font-size: 12px;
+            cursor: pointer; text-transform: uppercase;
+        }
 
-        .footer { text-align: center; font-size: 11px; color: #666; margin-top: 15px; text-decoration: underline; }
+        .support-link { color: rgba(255,255,255,0.2); font-size: 12px; text-align: center; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <div class="main-frame">
-        <div class="img-row">
-            <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
-            <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
-        </div>
+    <div class="curtain curtain-left" id="cLeft"></div>
+    <div class="curtain curtain-right" id="cRight"></div>
 
-        <div class="work-panel">
-            <div class="title">ВОРК ПАНЕЛЬ</div>
-            <div class="desc">Новичок? Не знаешь с чего начать? Специально для тебя — Мы сделали Собственного Бота!</div>
-        </div>
-
-        <div class="nav-section">
-            <div class="nav-title">НАВИГАЦИЯ</div>
-            <div class="grid">
-                <button class="btn">ПРОФИЛЬ</button><button class="btn">НАСТАВНИК</button>
-                <button class="btn">МАНУАЛ</button><button class="btn">ПАКИ</button>
-                <button class="btn">ГОЛОСОВЫЕ</button><button class="btn">ПАСТЫ</button>
-                <button class="btn">БОТЫ</button><button class="btn">ПРОБИВ</button>
+    <div class="page-frame">
+        <div class="container">
+            <div class="photo-container">
+                <img class="photo" src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
+                <img class="photo" src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
             </div>
-        </div>
 
-        <div class="footer">Поддержать Команду</div>
+            <div class="header-box">
+                <h1 class="title">ВОРК ПАНЕЛЬ</h1>
+                <p class="desc">Новичок?<br>Не знаешь с чего начать?<br>Специально для тебя, и для нашей Команды - Мы сделали Собственного Бота!</p>
+            </div>
+
+            <div class="nav-wrapper">
+                <h3 class="nav-title">НАВИГАЦИЯ</h3>
+                <div class="arrow-down">▼</div>
+                <div class="grid">
+                    <button class="btn">ПРОФИЛЬ</button>
+                    <button class="btn">НАСТАВНИК</button>
+                    <button class="btn">МАНУАЛ</button>
+                    <button class="btn">ПАКИ</button>
+                    <button class="btn">ГОЛОСОВЫЕ</button>
+                    <button class="btn">ПАСТЫ</button>
+                    <button class="btn">БОТЫ</button>
+                    <button class="btn">ПРОБИВ</button>
+                </div>
+            </div>
+
+            <a href="#" class="support-link">Поддержать Команду</a>
+        </div>
     </div>
 
+    <script>
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('cLeft').classList.add('open');
+                document.getElementById('cRight').classList.add('open');
+            }, 1000);
+        };
+    </script>
 </body>
 </html>
