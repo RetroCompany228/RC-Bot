@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work Panel v6 Final</title>
+<title>Ворк-Панель</title>
 
 <style>
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:-apple-system,BlinkMacSystemFont,Arial;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
 }
 
 body{
@@ -19,124 +19,127 @@ display:flex;
 justify-content:center;
 align-items:center;
 overflow:hidden;
+background:#050000;
 color:#fff;
-background:#0a0a0a;
 }
 
-/* 🔴 PREMIUM RED iOS BACKGROUND */
+/* 🔥 DARK RED PREMIUM BACKGROUND */
 body::before{
 content:"";
 position:absolute;
 inset:-200px;
 background:
-radial-gradient(circle at 20% 20%, rgba(255,40,60,.35), transparent 45%),
-radial-gradient(circle at 80% 30%, rgba(140,0,40,.25), transparent 50%),
-radial-gradient(circle at 50% 80%, rgba(255,0,0,.15), transparent 55%);
-filter:blur(70px);
-animation:bg 14s ease-in-out infinite alternate;
+radial-gradient(circle at 20% 20%, rgba(255,30,60,.28), transparent 45%),
+radial-gradient(circle at 70% 30%, rgba(120,0,0,.25), transparent 50%),
+radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
+filter:blur(80px);
+animation:bg 16s ease-in-out infinite alternate;
 }
 
 @keyframes bg{
-to{transform:translate(120px,90px) scale(1.08);}
+to{transform:translate(120px,90px) scale(1.1);}
 }
 
-/* 📱 MAIN GLASS APP */
+/* 📱 APP */
 .app{
 width:95%;
 max-width:460px;
 height:92vh;
 border-radius:34px;
-overflow:hidden;
 
 background:rgba(255,255,255,.06);
 backdrop-filter:blur(28px);
 
 border:1px solid rgba(255,255,255,.10);
-box-shadow:0 30px 80px rgba(0,0,0,.6);
+box-shadow:0 30px 90px rgba(0,0,0,.75);
 
 display:flex;
 flex-direction:column;
-
-animation:open .6s ease;
+overflow:hidden;
 }
 
-@keyframes open{
-from{transform:scale(.94);opacity:0}
-to{transform:scale(1);opacity:1}
-}
-
-/* 🖼 TOP IMAGES */
-.top{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+/* 🖼 TOP IMAGE FRAME (NEW PREMIUM BORDER) */
+.top-wrap{
 padding:14px;
 }
 
-.top img{
+.top-frame{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+
+padding:10px;
+border-radius:22px;
+
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,60,80,.25);
+box-shadow:0 0 30px rgba(255,0,0,.08);
+}
+
+.top-frame img{
 width:100%;
 height:120px;
-border-radius:18px;
 object-fit:cover;
+border-radius:16px;
 transition:.25s;
 }
 
-.top img:hover{
+.top-frame img:hover{
 transform:scale(1.02);
+filter:brightness(1.1);
 }
 
-/* 🧊 GLASS CARD */
-.card{
+/* 🧊 TITLE */
+.title-box{
 margin:0 14px;
 padding:16px;
 border-radius:24px;
 
-background:rgba(255,255,255,.07);
-backdrop-filter:blur(20px);
+background:rgba(255,255,255,.06);
+backdrop-filter:blur(22px);
 
-border:1px solid rgba(255,255,255,.12);
+border:1px solid rgba(255,255,255,.10);
 }
 
 .title{
 font-size:22px;
-font-weight:800;
+font-weight:900;
 letter-spacing:2px;
 }
 
 .title span{
-color:#ff3b4d;
+color:#ff2b3d;
 }
 
 .desc{
+margin-top:8px;
 font-size:12px;
-color:rgba(255,255,255,.65);
-margin-top:6px;
-line-height:1.4;
+line-height:1.5;
+color:rgba(255,255,255,.70);
 }
 
-/* 🧭 TABS */
+/* 🧭 NAV */
 .tabs{
 margin:12px 14px;
 display:flex;
-
-background:rgba(255,255,255,.06);
-border-radius:16px;
+gap:6px;
 padding:4px;
+
+background:rgba(255,255,255,.05);
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
 }
 
 .tab{
 flex:1;
 text-align:center;
-padding:9px;
-font-size:11px;
-color:rgba(255,255,255,.55);
-cursor:pointer;
-
+padding:10px;
 border-radius:12px;
-transition:.25s;
-
--webkit-tap-highlight-color:transparent;
-user-select:none;
+font-size:12px;
+font-weight:600;
+color:rgba(255,255,255,.6);
+cursor:pointer;
+transition:.2s;
 }
 
 .tab.active{
@@ -149,19 +152,13 @@ color:#fff;
 flex:1;
 padding:14px;
 display:none;
-animation:fade .35s ease;
 }
 
 .page.active{
 display:block;
 }
 
-@keyframes fade{
-from{opacity:0;transform:translateY(8px)}
-to{opacity:1;transform:translateY(0)}
-}
-
-/* 🔘 BUTTON GRID */
+/* 🔘 BUTTONS */
 .grid{
 display:grid;
 grid-template-columns:1fr 1fr;
@@ -169,26 +166,21 @@ gap:10px;
 }
 
 .btn{
-padding:14px;
+padding:15px;
 border-radius:18px;
 
 background:rgba(255,255,255,.06);
 border:1px solid rgba(255,255,255,.10);
 
 color:#fff;
-font-size:11px;
+font-size:12px;
 font-weight:700;
 
 cursor:pointer;
 transition:.2s;
 
 -webkit-tap-highlight-color:transparent;
-outline:none; /* ❗ убирает синий фокус */
-}
-
-.btn:focus{
 outline:none;
-box-shadow:none;
 }
 
 .btn:active{
@@ -196,16 +188,16 @@ transform:scale(.96);
 }
 
 .btn:hover{
-background:rgba(255,255,255,.10);
-border-color:rgba(255,60,80,.35);
+border-color:rgba(255,40,60,.35);
+background:rgba(255,255,255,.09);
 }
 
-/* footer */
+/* 🧾 FOOTER */
 .footer{
 text-align:center;
 padding:12px;
 font-size:11px;
-color:rgba(255,255,255,.4);
+color:rgba(255,255,255,.45);
 border-top:1px solid rgba(255,255,255,.08);
 }
 </style>
@@ -215,21 +207,30 @@ border-top:1px solid rgba(255,255,255,.08);
 
 <div class="app">
 
-<div class="top">
+<!-- TOP -->
+<div class="top-wrap">
+<div class="top-frame">
 <img src="https://i.postimg.cc/VNZ5bFpK/file-000000005e0c71f4a49a7f49860f470b.png">
 <img src="https://i.postimg.cc/bJvb7rf8/file-00000000141471f4830c3f69348be825.png">
 </div>
-
-<div class="card">
-<div class="title">WORK <span>PANEL</span></div>
-<div class="desc">Premium glass interface system. Smooth iOS-level UI experience.</div>
 </div>
 
+<!-- TITLE -->
+<div class="title-box">
+<div class="title">ВОРК - <span>ПАНЕЛЬ</span></div>
+<div class="desc">
+Новичок? Не знаешь с чего начать?  
+Специально для тебя и нашей команды — мы сделали собственного бота!
+</div>
+</div>
+
+<!-- NAV -->
 <div class="tabs">
-<div class="tab active" onclick="go(0)">MENU</div>
-<div class="tab" onclick="go(1)">INFO</div>
+<div class="tab active" onclick="go(0)">МЕНЮ</div>
+<div class="tab" onclick="go(1)">ИНФО</div>
 </div>
 
+<!-- PAGE 1 -->
 <div class="page active">
 <div class="grid">
 <button class="btn">ПРОФИЛЬ</button>
@@ -243,18 +244,18 @@ border-top:1px solid rgba(255,255,255,.08);
 </div>
 </div>
 
+<!-- PAGE 2 -->
 <div class="page">
-<div style="font-size:12px;color:rgba(255,255,255,.65);line-height:1.6">
-WORK PANEL v6 FINAL<br><br>
-✔ Glass UI optimized<br>
-✔ Red gradient background<br>
-✔ iOS-style interactions<br>
-✔ Smooth animations engine<br><br>
-Status: PREMIUM BUILD
+<div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.65);padding:4px">
+Система: Premium Glass UI<br>
+Версия: v6.1 Final Red Build<br><br>
+Интерфейс полностью адаптирован под быстрый доступ к инструментам команды.<br><br>
+Статус: стабильный ✔
 </div>
 </div>
 
-<div class="footer">Cyber Glass System</div>
+<!-- FOOTER -->
+<div class="footer">CYBER GLASS SYSTEM</div>
 
 </div>
 
@@ -269,16 +270,6 @@ pages.forEach(p=>p.classList.remove("active"));
 tabs[i].classList.add("active");
 pages[i].classList.add("active");
 }
-
-/* click feel */
-document.querySelectorAll(".btn").forEach(b=>{
-b.addEventListener("click",()=>{
-b.animate(
-[{transform:"scale(.95)"},{transform:"scale(1)"}],
-{duration:120}
-);
-});
-});
 </script>
 
 </body>
