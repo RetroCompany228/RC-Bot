@@ -110,7 +110,13 @@
         
         /* PACKS GRID */
         .packs-grid { display:grid; grid-template-columns:1fr 1fr; gap: 15px; overflow-y: auto; padding-bottom: 10px; }
-        .pack-item { display:flex; flex-direction:column; gap:8px; }
+        .pack-item { 
+            display:flex; flex-direction:column; gap:8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            border-radius: 20px;
+            padding: 10px;
+        }
         .pack-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
         .pack-btn {
             background: rgba(255, 255, 255, 0.08);
@@ -381,5 +387,5 @@
         animate();
     </script>
 </body>
-                        </html>
-                
+                    </html>
+                                                                                                                                                                                                                             
