@@ -51,17 +51,17 @@
             background: rgba(255, 255, 255, 0.05);
         }
         .top-image { 
-            width:100%; height:120px; object-fit:cover; border-radius:18px;
+            width:100%; height:120px; object-fit:contain; border-radius:18px;
             border: 2px solid #555;
             box-shadow: none;
         }
 
         /* ЗАГОЛОВОК */
         .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); }
-        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; }
+        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(25px); }
         .title { font-size:22px; font-weight:900; letter-spacing:2px; }
         .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
-        .desc { margin-top:8px; font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
+        .desc { font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
         .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
 
         /* TABS */
@@ -101,7 +101,7 @@
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
 
         /* FOOTER */
-        .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; }
+        .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
 
         /* MANUAL PAGE STYLES */
         #manual-page { 
@@ -136,7 +136,6 @@
             <div class="divider"></div>
             <div class="title-box">
                 <div class="inner-frame">
-                    <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
                     <div class="desc">
                         <span class="red-text">Новичок ?</span><br>
                         Не знаешь с чего <span class="red-text">Начать ?</span><br>
@@ -148,7 +147,7 @@
             </div>
             <div class="divider"></div>
             <div class="tabs">
-                <div class="tab active" id="tab-menu" onclick="switchTab('menu')">МЕНЮ</div>
+                <div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
                 <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
             </div>
 
@@ -270,5 +269,4 @@
         animate();
     </script>
 </body>
-    </html>
-    
+</html>
