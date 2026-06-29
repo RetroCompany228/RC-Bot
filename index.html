@@ -40,14 +40,14 @@
         }
 
         /* DIVIDER */
-        .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 10px auto; }
+        .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 8px auto; }
 
         /* TOP IMAGE */
         .top-wrap { padding:14px 14px 0 14px; }
         .top-image { 
             width:100%; height:120px; object-fit:cover; border-radius:18px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            border: 2px solid #555;
+            box-shadow: none;
         }
 
         /* ЗАГОЛОВОК */
@@ -97,14 +97,14 @@
         .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; }
 
         /* MANUAL PAGE STYLES */
-        #manual-page { padding: 25px; height: 100%; display: flex; flex-direction: column; overflow-y: auto; }
+        #manual-page { padding: 15px; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
         .m-btn {
-            padding:15px 10px; border-radius:18px; 
+            padding:12px 5px; border-radius:18px; 
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
-            color:#fff; font-size:12px; font-weight:900; 
+            color:#fff; font-size:11px; font-weight:900; 
             letter-spacing:1px; cursor:pointer; transition:all 0.1s ease;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
             text-shadow:0 0 4px rgba(255,255,255,0.3);
@@ -118,7 +118,7 @@
     <div class="app">
         <div id="main-view">
             <div class="top-wrap">
-                <img src="https://i.postimg.cc/d0K9XvVM/file-00000000d4a871f5a43889a3f203401b.png" class="top-image">
+                <img src="https://i.postimg.cc/kGDBJjyL/file-00000000fb54722fae9cee78dad4e85b.png" class="top-image">
             </div>
             <div class="divider"></div>
             <div class="title-box">
@@ -167,13 +167,15 @@
         </div>
 
         <div id="manual-page" style="display:none;">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div style="font-size: 26px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 10px;">Раздел Мануал</div>
-                <div style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5;">здесь вы сможете взять всю необходимую информацию !</div>
+            <div style="text-align: center; margin-bottom: 10px;">
+                <div style="font-size: 22px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходимую <span style="color:#ff2b3d;">информацию !</span></div>
             </div>
 
-            <div style="margin-bottom: 30px;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:15px; text-align: center; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;">Письменный мануал</div>
+            <div class="divider" style="width: 100%;"></div>
+
+            <div style="margin: 5px 0;">
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px; text-transform: uppercase;">Письменный мануал</div>
                 <div class="manual-grid">
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
@@ -181,22 +183,15 @@
                 </div>
             </div>
 
-            <div class="divider" style="margin: 20px auto; width: 100%;"></div>
+            <div class="divider" style="width: 100%;"></div>
 
-            <div style="margin-bottom: 30px;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:15px; text-align: center; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;">Видео Мануал</div>
-                <button class="m-btn" style="width:100%; padding: 20px; font-size: 14px;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
-                
-                <div style="margin-top: 20px; text-align: center;">
-                    <img src="https://i.postimg.cc/bNQm03Pn/file-00000000be50720cad10c6a07bc4102a.png" 
-                         style="width: 100%; max-width: 300px; border-radius: 20px; border: 2px solid rgba(255, 80, 80, 0.3); box-shadow: 0 0 15px rgba(255, 80, 80, 0.2);">
-                </div>
+            <div style="margin: 5px 0;">
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px; text-transform: uppercase;">Видео Мануал</div>
+                <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
             </div>
 
-            <div style="margin-top: auto; padding-top: 20px;">
-                <div class="divider" style="margin: 0 auto 20px auto; width: 100%;"></div>
-                <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
-            </div>
+            <div class="divider" style="width: 100%; margin-top: auto;"></div>
+            <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
         </div>
     </div>
 
@@ -253,4 +248,5 @@
         animate();
     </script>
 </body>
-</html>
+                                                                                                        </html>
+    
