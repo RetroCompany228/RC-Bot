@@ -105,7 +105,7 @@
 
         /* PAGES STYLES */
         #manual-page, #mentor-page { 
-            padding: 15px; height: 100%; display: none; flex-direction: column; overflow-y: hidden;
+            padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden;
         }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
         .m-btn {
@@ -204,44 +204,42 @@
             <div class="glass-frame" style="margin: 5px 0;">
                 <img src="https://i.postimg.cc/jdMQs94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
             </div>
-            <div style="width: 100%;">
+            <div style="width: 100%; margin-top: auto;">
                 <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
 
         <div id="mentor-page">
-            <div style="text-align: center; margin-bottom: 10px;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
-                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 8px; margin-top: 10px;">
-                    <div style="font-size: 10px; color: #fff; line-height: 1.3; text-align: center;">
-                        Выбрать можно <span class="red-text">только одного</span>. После выбора вы <span class="red-text">закрепляетеся</span> за ним.
-                    </div>
+            <div style="text-align: center;">
+                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
+                <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); line-height: 1.3; padding: 0 10px;">
+                    Выбрать можно <span style="color:#ff2b3d;">одного</span>. Вы автоматически <span style="color:#ff2b3d;">закрепляетеся</span> за ним.
                 </div>
             </div>
             
-            <div class="divider" style="width: 100%; margin: 5px 0;"></div>
+            <div class="divider" style="width: 100%; margin: 10px auto;"></div>
 
-            <div style="display: flex; align-items: center; gap: 10px; padding: 5px;">
-                <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 2px;">
-                    <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 70px; height: 70px; border-radius: 10px; display: block; object-fit: cover;">
+            <div style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 2px;">
+                    <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 85px; height: 85px; border-radius: 12px; display: block; object-fit: cover;">
                 </div>
                 <div style="flex: 1;">
-                    <div style="font-weight: 700; font-size: 11px; margin-bottom: 2px;">Наставник <span style="color: #ff2b3d;">№1</span> - Kodi</div>
-                    <div style="font-size: 9px; margin-bottom: 5px; color: #ff2b3d;">( Направление Шантаж - Универсал )</div>
-                    <button class="m-btn" style="width: 100%; padding: 5px;" onclick="window.open('https://t.me/bicuze')">Написать Kodi</button>
+                    <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Наставник <span style="color: #ff2b3d;">№1</span> - Kodi</div>
+                    <div style="font-size: 10px; margin-bottom: 8px; color: #ff2b3d;"><span style="color:#ff2b3d;">(</span> Направление Шантаж - Универсал <span style="color:#ff2b3d;">)</span></div>
+                    <button class="m-btn" style="width: 100%; padding: 6px;" onclick="window.open('https://t.me/bicuze')">Написать Kodi</button>
                 </div>
             </div>
 
-            <div class="divider" style="width: 100%; margin: 8px 0;"></div>
+            <div style="margin: 10px 0;"></div>
 
-            <div style="display: flex; align-items: center; gap: 10px; padding: 5px;">
-                <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 2px;">
-                    <img src="https://i.postimg.cc/sxxgCsdC/file-00000000b860720aa3ee358794aca807.png" style="width: 70px; height: 70px; border-radius: 10px; display: block; object-fit: cover;">
+            <div style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.03); padding: 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05);">
+                <div style="border: 1px solid rgba(255,255,255,0.2); border-radius: 14px; padding: 2px;">
+                    <img src="https://i.postimg.cc/sxxgCsdC/file-00000000b860720aa3ee358794aca807.png" style="width: 85px; height: 85px; border-radius: 12px; display: block; object-fit: cover;">
                 </div>
                 <div style="flex: 1;">
-                    <div style="font-weight: 700; font-size: 11px; margin-bottom: 2px;">Наставник <span style="color: #ff2b3d;">№2</span> - Relax</div>
-                    <div style="font-size: 9px; margin-bottom: 5px; color: #ff2b3d;">( Направление Шантаж - Универсал )</div>
-                    <button class="m-btn" style="width: 100%; padding: 5px;" onclick="window.open('https://t.me/coxiko')">Написать Relax</button>
+                    <div style="font-weight: 700; font-size: 13px; margin-bottom: 4px;">Наставник <span style="color: #ff2b3d;">№2</span> - Relax</div>
+                    <div style="font-size: 10px; margin-bottom: 8px; color: #ff2b3d;"><span style="color:#ff2b3d;">(</span> Направление Шантаж - Универсал <span style="color:#ff2b3d;">)</span></div>
+                    <button class="m-btn" style="width: 100%; padding: 6px;" onclick="window.open('https://t.me/coxiko')">Написать Relax</button>
                 </div>
             </div>
 
@@ -311,4 +309,5 @@
         animate();
     </script>
 </body>
-</html>
+                    </html>
+                    
