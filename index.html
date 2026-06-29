@@ -88,8 +88,7 @@
             text-shadow:0 0 4px rgba(255,255,255,0.3);
         }
         .btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
-
-        /* INFO CARD */
+                /* INFO CARD */
         .card { 
             background:rgba(255,255,255,.05); 
             padding: 10px 14px; 
@@ -104,7 +103,7 @@
         .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
 
         /* PAGES STYLES */
-        #manual-page, #mentor-page, #packs-page, #bots-page { 
+        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page { 
             padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden;
         }
         
@@ -208,7 +207,7 @@
                         <button class="btn" onclick="openMentor()">НАСТАВНИК</button>
                         <button class="btn" onclick="openManual()">МАНУАЛ</button>
                         <button class="btn" onclick="openPacks()">ПАКИ</button>
-                        <button class="btn">ГОЛОСОВЫЕ</button>
+                        <button class="btn" onclick="openVoice()">ГОЛОСОВЫЕ</button>
                         <button class="btn" onclick="openBots()">БОТЫ</button>
                         <button class="btn">ПАСТЫ</button>
                         <button class="btn">ПРОБИВ</button>
@@ -230,7 +229,23 @@
             <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
         </div>
 
-        <div id="bots-page">
+        <div id="voice-page">
+            <div style="text-align: center; margin-bottom: 5px;">
+                <div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ГОЛОСОВЫЕ</span></div>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">
+                    <span style="color:#ff2b3d;">Здесь</span> Вы можете <span style="color:#ff2b3d;">взять</span> <span style="color:#ff2b3d;">Голосовые</span>.
+                </div>
+            </div>
+            <div class="divider" style="width: 100%; margin: 10px auto;"></div>
+            <div class="glass-frame" style="padding: 10px; margin: 0 auto; width: 100%;">
+                <img src="https://i.postimg.cc/gctmkhG2/file-000000003b847243b27834df50ac9a16.png" style="width: 100%; border-radius: 15px; display: block;">
+            </div>
+            <button class="m-btn" onclick="window.open('https://t.me/RetroGolos1')" style="width: 100%; margin-top: 15px; background: rgba(255, 80, 80, 0.2);">Перейти</button>
+            <div style="margin-top: auto; padding-top: 15px;">
+                <button class="m-btn" onclick="closeVoice()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
+            </div>
+        </div>
+                            <div id="bots-page">
             <div style="text-align: center; margin-bottom: 5px;">
                 <div style="font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">БОТЫ</span></div>
                 <div style="font-size: 11px; color: rgba(255,255,255,0.7);">Здесь <span style="color:#ff2b3d;">Боты</span> для поиска <span style="color:#ff2b3d;">мамонтов</span></div>
@@ -387,6 +402,8 @@
         function closePacks() { document.getElementById('packs-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
         function openBots() { document.getElementById('main-view').style.display = 'none'; document.getElementById('bots-page').style.display = 'flex'; }
         function closeBots() { document.getElementById('bots-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
+        function openVoice() { document.getElementById('main-view').style.display = 'none'; document.getElementById('voice-page').style.display = 'flex'; }
+        function closeVoice() { document.getElementById('voice-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
 
         const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
@@ -414,5 +431,4 @@
         animate();
     </script>
 </body>
-                                      </html>
-                        
+</html>
