@@ -97,14 +97,17 @@
         .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; }
 
         /* MANUAL PAGE STYLES */
-        #manual-page { padding: 15px; height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+        #manual-page { 
+            padding: 20px; height: 100%; display: flex; flex-direction: column; 
+            justify-content: space-between; /* ЭТО РАСТЯГИВАЕТ ЭЛЕМЕНТЫ */
+        }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
         .m-btn {
-            padding:12px 5px; border-radius:18px; 
+            padding:15px 5px; border-radius:18px; 
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
-            color:#fff; font-size:11px; font-weight:900; 
+            color:#fff; font-size:12px; font-weight:900; 
             letter-spacing:1px; cursor:pointer; transition:all 0.1s ease;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
             text-shadow:0 0 4px rgba(255,255,255,0.3);
@@ -167,15 +170,15 @@
         </div>
 
         <div id="manual-page" style="display:none;">
-            <div style="text-align: center; margin-bottom: 10px;">
-                <div style="font-size: 22px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходимую <span style="color:#ff2b3d;">информацию !</span></div>
+            <div style="text-align: center;">
+                <div style="font-size: 24px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
+                <div style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходимую <span style="color:#ff2b3d;">информацию !</span></div>
             </div>
 
             <div class="divider" style="width: 100%;"></div>
 
-            <div style="margin: 5px 0;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px; text-transform: uppercase;">Письменный мануал</div>
+            <div style="width: 100%;">
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:12px; text-align: center; font-size: 14px; text-transform: uppercase;">Письменный мануал</div>
                 <div class="manual-grid">
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
@@ -185,13 +188,15 @@
 
             <div class="divider" style="width: 100%;"></div>
 
-            <div style="margin: 5px 0;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px; text-transform: uppercase;">Видео Мануал</div>
+            <div style="width: 100%;">
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:12px; text-align: center; font-size: 14px; text-transform: uppercase;">Видео Мануал</div>
                 <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
             </div>
 
-            <div class="divider" style="width: 100%; margin-top: auto;"></div>
-            <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
+            <div style="width: 100%;">
+                <div class="divider" style="width: 100%; margin-bottom: 15px;"></div>
+                <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
+            </div>
         </div>
     </div>
 
@@ -248,5 +253,4 @@
         animate();
     </script>
 </body>
-                                                                                                        </html>
-    
+</html>
