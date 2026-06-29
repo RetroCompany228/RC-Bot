@@ -121,18 +121,20 @@
         .m-btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
         .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
         
-        /* Glass button for mentor */
+        /* Стеклянная кнопка для ментора */
         .glass-write-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 50px;
             color: #fff;
-            padding: 12px;
+            padding: 10px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
             transition: 0.3s;
+            text-align: center;
+            font-size: 13px;
         }
         .glass-write-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.15); }
     </style>
@@ -240,9 +242,7 @@
                     </div>
                 </div>
                 <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <div style="margin-top: 10px;">
-                    <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
-                </div>
+                <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
             </div>
 
             <div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; margin-top: 5px; padding: 15px;">
@@ -254,9 +254,7 @@
                     </div>
                 </div>
                 <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <div style="margin-top: 10px;">
-                    <button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Написать</button>
-                </div>
+                <button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Написать</button>
             </div>
             
             <div class="divider" style="width: 100%; margin: 6px auto;"></div>
@@ -324,5 +322,4 @@
         animate();
     </script>
 </body>
-                </html>
-                
+</html>
