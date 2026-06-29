@@ -6,174 +6,52 @@
     <title>Ворк-Панель</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
-        
-        * {
-            margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;
-            -webkit-tap-highlight-color: transparent; outline: none !important;
-        }
-
-        body {
-            height:100vh; display:flex; justify-content:center; align-items:center;
-            overflow:hidden; background:#020000; color:#fff;
-        }
-
-        /* BACKGROUND GLOW */
-        body::before {
-            content:""; position:absolute; inset:-300px;
-            background: radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
-                        radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
-                        radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
-            filter:blur(90px); animation:bg 18s ease-in-out infinite alternate;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; outline: none !important; }
+        body { height:100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#020000; color:#fff; }
+        body::before { content:""; position:absolute; inset:-300px; background: radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%), radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%), radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%); filter:blur(90px); animation:bg 18s ease-in-out infinite alternate; }
         @keyframes bg { to{transform:translate(140px,100px) scale(1.15);} }
-
-        /* PARTICLES */
         canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
-
-        /* APP */
-        .app {
-            position:relative; z-index:2; width:95%; max-width:460px; height:92vh;
-            border-radius:36px; background:rgba(255,255,255,.06);
-            backdrop-filter:blur(35px); border:1px solid rgba(255,80,80,.15);
-            box-shadow: 0 40px 120px rgba(0,0,0,.85), inset 0 0 80px rgba(255,0,0,.08);
-            display:flex; flex-direction:column; overflow:hidden;
-        }
-
-        /* DIVIDER */
+        .app { position:relative; z-index:2; width:95%; max-width:460px; height:92vh; border-radius:36px; background:rgba(255,255,255,.06); backdrop-filter:blur(35px); border:1px solid rgba(255,80,80,.15); box-shadow: 0 40px 120px rgba(0,0,0,.85), inset 0 0 80px rgba(255,0,0,.08); display:flex; flex-direction:column; overflow:hidden; }
         .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 6px auto; flex-shrink: 0; }
-
-        /* TOP IMAGE */
         .top-wrap { padding:14px 14px 0 14px; flex-shrink: 0; }
-        .glass-frame { 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            border-radius: 20px; 
-            padding: 4px; 
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .top-image { 
-            width:100%; height:120px; object-fit:cover; border-radius:18px;
-            border: 2px solid #555;
-            box-shadow: 0 0 25px rgba(255, 43, 61, 0.8);
-        }
-
-        /* ЗАГОЛОВОК */
+        .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
+        .top-image { width:100%; height:120px; object-fit:cover; border-radius:18px; border: 2px solid #555; box-shadow: 0 0 25px rgba(255, 43, 61, 0.8); }
         .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
         .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(25px); margin-top: 10px; }
         .title { font-size:22px; font-weight:900; letter-spacing:2px; text-align: center;}
         .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
         .desc { font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
         .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
-
-        /* TABS */
         .tabs { margin:0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:10px; border-radius:14px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
         .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
-
-        /* PAGE CONTENT */
         .content { flex:1; overflow-y:auto; padding:14px; }
         .page { display:none; height: 100%; }
         .page.active { display:block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* GLASS BUTTONS */
         .grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-        .btn {
-            padding:10px 5px; border-radius:14px; 
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            color:#fff; font-size:10px; font-weight:900; 
-            letter-spacing:0.5px; cursor:pointer; transition:all 0.1s ease;
-            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
-            text-shadow:0 0 4px rgba(255,255,255,0.3);
-        }
+        .btn { padding:10px 5px; border-radius:14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color:#fff; font-size:10px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1); text-shadow:0 0 4px rgba(255,255,255,0.3); }
         .btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
-                /* INFO CARD */
-        .card { 
-            background:rgba(255,255,255,.05); 
-            padding: 10px 14px; 
-            border-radius:20px; 
-            border:1px solid rgba(255,80,80,.2); 
-            font-size:11px; 
-            margin: 5px 0; 
-        }
+        .card { background:rgba(255,255,255,.05); padding: 10px 14px; border-radius:20px; border:1px solid rgba(255,80,80,.2); font-size:11px; margin: 5px 0; }
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
-
-        /* FOOTER */
         .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
-
-        /* PAGES STYLES */
-        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page { 
-            padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden;
-        }
-        
-        /* BOTS GRID - КОМПАКТНОЕ ОФОРМЛЕНИЕ */
+        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page { padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
         .bots-grid { display:grid; grid-template-columns:1fr 1fr; gap: 4px; padding: 5px 0; }
-        .bot-item { 
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 80, 80, 0.2);
-            padding: 6px 4px; border-radius: 8px; text-align: center; font-size: 9.5px; 
-            font-weight: 700; color: #fff; cursor: pointer; text-decoration: underline;
-        }
-
-        /* PACKS GRID */
+        .bot-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.2); padding: 6px 4px; border-radius: 8px; text-align: center; font-size: 9.5px; font-weight: 700; color: #fff; cursor: pointer; text-decoration: underline; }
         .packs-grid { display:grid; grid-template-columns:1fr 1fr; gap: 15px; overflow-y: auto; padding-bottom: 10px; }
-        .pack-item { 
-            display:flex; flex-direction:column; gap:8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 80, 80, 0.4);
-            border-radius: 20px;
-            padding: 10px;
-        }
+        .pack-item { display:flex; flex-direction:column; gap:8px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.4); border-radius: 20px; padding: 10px; }
         .pack-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
-        .pack-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: #fff;
-            padding: 10px;
-            font-weight: 900;
-            width: 100%;
-            cursor: pointer;
-            text-align: center;
-            font-size: 12px;
-        }
-
+        .pack-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: #fff; padding: 10px; font-weight: 900; width: 100%; cursor: pointer; text-align: center; font-size: 12px; }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-        .m-btn {
-            padding:10px 5px; border-radius:18px; 
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            color:#fff; font-size:11px; font-weight:900; 
-            letter-spacing:1px; cursor:pointer; transition:all 0.1s ease;
-            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
-            text-shadow:0 0 4px rgba(255,255,255,0.3);
-        }
+        .m-btn { padding:10px 5px; border-radius:18px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color:#fff; font-size:11px; font-weight:900; letter-spacing:1px; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1); text-shadow:0 0 4px rgba(255,255,255,0.3); }
         .m-btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
         .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
-        
-        .glass-write-btn {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            color: #fff;
-            padding: 10px;
-            font-weight: 900;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
-            text-align: center;
-            font-size: 13px;
-        }
+        .glass-write-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; color: #fff; padding: 10px; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; text-align: center; font-size: 13px; }
         .glass-write-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.15); }
     </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
-
     <div class="app">
         <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
             <div class="top-wrap">
@@ -199,11 +77,10 @@
                 <div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
                 <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
             </div>
-
             <div class="content" id="content">
                 <div id="page-menu" class="page active">
                     <div class="grid">
-                        <button class="btn">ПРОФИЛЬ</button>
+                        <button class="btn" onclick="openCards()">КАРТЫ</button>
                         <button class="btn" onclick="openMentor()">НАСТАВНИК</button>
                         <button class="btn" onclick="openManual()">МАНУАЛ</button>
                         <button class="btn" onclick="openPacks()">ПАКИ</button>
@@ -213,8 +90,7 @@
                         <button class="btn">ПРОБИВ</button>
                     </div>
                 </div>
-
-                <div id="page-info" class="page">
+                                <div id="page-info" class="page">
                     <div class="card">
                         <b>ИНФОРМАЦИЯ</b><br><br>
                         @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
@@ -227,6 +103,23 @@
             </div>
             <div class="divider"></div>
             <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
+        </div>
+
+        <div id="cards-page">
+            <div style="text-align: center; margin-bottom: 5px;">
+                <div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">Раздел <span style="color:#ff2b3d;">Карты</span></div>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px; line-height: 1.5;">
+                    <span style="color:#ff2b3d;">Здесь</span> Вы найдете <span style="color:#ff2b3d;">актуальные</span> <span style="color:#ff2b3d;">карты</span> для приема <span style="color:#ff2b3d;">денег !</span>
+                </div>
+            </div>
+            <div class="divider" style="width: 100%; margin: 10px auto;"></div>
+            <div class="glass-frame" style="padding: 10px; margin: 0 auto; width: 100%;">
+                <img src="https://i.postimg.cc/zXdskYyR/file-000000008ea8724683275e9da6f4ef30.png" style="width: 100%; border-radius: 15px; display: block;">
+                <button class="m-btn" onclick="window.open('https://t.me/RetroCarty')" style="width: 100%; margin-top: 15px; background: rgba(255, 80, 80, 0.2);">Перейти</button>
+            </div>
+            <div style="margin-top: auto; padding-top: 15px;">
+                <button class="m-btn" onclick="closeCards()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
+            </div>
         </div>
 
         <div id="voice-page">
@@ -245,7 +138,7 @@
                 <button class="m-btn" onclick="closeVoice()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
-                            <div id="bots-page">
+        <div id="bots-page">
             <div style="text-align: center; margin-bottom: 5px;">
                 <div style="font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">БОТЫ</span></div>
                 <div style="font-size: 11px; color: rgba(255,255,255,0.7);">Здесь <span style="color:#ff2b3d;">Боты</span> для поиска <span style="color:#ff2b3d;">мамонтов</span></div>
@@ -287,9 +180,8 @@
                 <div class="divider" style="width: 100%; margin: 6px auto;"></div>
                 <button class="m-btn" onclick="closeBots()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 6px;">← Назад</button>
             </div>
-        </div>
-
-        <div id="manual-page">
+                    </div>
+            <div id="manual-page">
             <div style="text-align: center;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
                 <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходиную <span style="color:#ff2b3d;">информацию !</span></div>
@@ -317,7 +209,6 @@
                 <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
-
         <div id="mentor-page">
             <div style="text-align: center; margin-bottom: 5px;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
@@ -349,7 +240,6 @@
             <div class="divider" style="width: 100%; margin: 6px auto;"></div>
             <button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
         </div>
-
         <div id="packs-page">
             <div style="text-align: center; margin-bottom: 15px;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ПАКИ</span></div>
@@ -380,12 +270,10 @@
             </div>
         </div>
     </div>
-
     <script>
         function switchTab(type) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            
             if(type === 'menu') {
                 document.getElementById('tab-menu').classList.add('active');
                 document.getElementById('page-menu').classList.add('active');
@@ -404,7 +292,8 @@
         function closeBots() { document.getElementById('bots-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
         function openVoice() { document.getElementById('main-view').style.display = 'none'; document.getElementById('voice-page').style.display = 'flex'; }
         function closeVoice() { document.getElementById('voice-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-
+        function openCards() { document.getElementById('main-view').style.display = 'none'; document.getElementById('cards-page').style.display = 'flex'; }
+        function closeCards() { document.getElementById('cards-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
         const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
@@ -431,4 +320,5 @@
         animate();
     </script>
 </body>
-</html>
+    </html>
+    
