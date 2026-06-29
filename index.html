@@ -103,10 +103,9 @@
         /* FOOTER */
         .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
 
-        /* MANUAL PAGE STYLES */
-        #manual-page { 
-            padding: 10px; height: 100%; display: flex; flex-direction: column; 
-            justify-content: space-between;
+        /* PAGES STYLES */
+        #manual-page, #mentor-page { 
+            padding: 10px; height: 100%; display: none; flex-direction: column; overflow-y: auto;
         }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
         .m-btn {
@@ -156,7 +155,7 @@
                 <div id="page-menu" class="page active">
                     <div class="grid">
                         <button class="btn">ПРОФИЛЬ</button>
-                        <button class="btn">НАСТАВНИК</button>
+                        <button class="btn" onclick="openMentor()">НАСТАВНИК</button>
                         <button class="btn" onclick="openManual()">МАНУАЛ</button>
                         <button class="btn">ПАКИ</button>
                         <button class="btn">ГОЛОСОВЫЕ</button>
@@ -181,14 +180,12 @@
             <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
         </div>
 
-        <div id="manual-page" style="display:none;">
+        <div id="manual-page">
             <div style="text-align: center;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
                 <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходиную <span style="color:#ff2b3d;">информацию !</span></div>
             </div>
-
             <div class="divider" style="width: 100%;"></div>
-
             <div style="width: 100%;">
                 <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Письменный мануал</div>
                 <div class="manual-grid">
@@ -197,22 +194,49 @@
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
                 </div>
             </div>
-
             <div class="glass-frame" style="margin: 5px 0;">
                 <img src="https://i.postimg.cc/bwFTRMZn/file-00000000261471f5872248747e85e93d.png" class="manual-img">
             </div>
-
             <div style="width: 100%;">
                 <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Видео Мануал</div>
                 <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
             </div>
-
             <div class="glass-frame" style="margin: 5px 0;">
                 <img src="https://i.postimg.cc/jdMQs94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
             </div>
-
             <div style="width: 100%;">
                 <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
+            </div>
+        </div>
+
+        <div id="mentor-page">
+            <div style="text-align: center;">
+                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 10px;">РАЗДЕЛ НАСТАВНИК</div>
+                <div style="font-size: 12px; color: #fff; line-height: 1.4; text-align: center;">
+                    Здесь <span class="red-text">Вы</span> сможете Взять себе <span class="red-text">наставника</span>. <span class="red-text">( Выбрать можно только одного )</span> - после того как напишете <span class="red-text">наставнику</span> вы автоматически закрепляетесь за ним. Всю подробную <span class="red-text">информацию</span> Он вам <span class="red-text">Напишет</span>.
+                </div>
+            </div>
+
+            <div class="divider" style="width: 100%; margin: 15px 0;"></div>
+
+            <div style="text-align: center;">
+                <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 100%; display: block;">
+                <div style="margin: 10px 0; font-weight: 700; font-size: 13px;">Наставник №1 - Kodi ( Направление Шантаж - Универсал )</div>
+                <button class="m-btn" style="width: 100%;" onclick="window.open('https://t.me/bicuze')">Написать Kodi</button>
+            </div>
+
+            <div class="divider" style="width: 100%; margin: 15px 0;"></div>
+
+            <div style="text-align: center;">
+                <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 100%; display: block;">
+                <div style="margin: 10px 0; font-weight: 700; font-size: 13px;">Наставник №2 - Coxiko ( Направление Шантаж - Универсал )</div>
+                <button class="m-btn" style="width: 100%;" onclick="window.open('https://t.me/coxiko')">Написать Coxiko</button>
+            </div>
+
+            <div class="divider" style="width: 100%; margin: 15px 0;"></div>
+
+            <div style="width: 100%;">
+                <button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
     </div>
@@ -231,15 +255,24 @@
             }
         }
 
+        // Логика Мануала
         function openManual() {
             document.getElementById('main-view').style.display = 'none';
             document.getElementById('manual-page').style.display = 'flex';
         }
-
         function closeManual() {
             document.getElementById('manual-page').style.display = 'none';
             document.getElementById('main-view').style.display = 'flex';
-            document.getElementById('main-view').style.flexDirection = 'column';
+        }
+
+        // Логика Наставника
+        function openMentor() {
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('mentor-page').style.display = 'flex';
+        }
+        function closeMentor() {
+            document.getElementById('mentor-page').style.display = 'none';
+            document.getElementById('main-view').style.display = 'flex';
         }
 
         /* PARTICLES */
