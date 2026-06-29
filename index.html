@@ -243,7 +243,8 @@
                 <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
-                <div id="mentor-page">
+
+        <div id="mentor-page">
             <div style="text-align: center; margin-bottom: 5px;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
                 <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); line-height: 1.2;">Выбрать можно <span style="color:#ff2b3d;">одного</span>. Автоматически закрепляетеся.</div>
@@ -367,18 +368,4 @@
 
         function animate(){
             ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach(p => {
-                p.y += p.speed;
-                if(p.y > canvas.height) p.y = 0;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
-</body>
-    </html>
-                    
+            pa
