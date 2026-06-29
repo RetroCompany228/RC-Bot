@@ -126,12 +126,28 @@
                 <div class="grid">
                     <button class="btn">ПРОФИЛЬ</button>
                     <button class="btn">НАСТАВНИК</button>
-                    <button class="btn">МАНУАЛ</button>
+                    <button class="btn" onclick="showSubPage('page-manual')">МАНУАЛ</button>
                     <button class="btn">ПАКИ</button>
                     <button class="btn">ГОЛОСОВЫЕ</button>
                     <button class="btn">БОТЫ</button>
                     <button class="btn">ПАСТЫ</button>
                     <button class="btn">ПРОБИВ</button>
+                </div>
+            </div>
+
+            <div id="page-manual" class="page">
+                <button class="btn" onclick="showSubPage('page-menu')" style="width: 100%; margin-bottom: 10px;">← Назад</button>
+                <div class="card" style="margin-bottom: 10px;">
+                    <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px;">📚 Письменный</div>
+                    <div class="grid">
+                        <button class="btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
+                        <button class="btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
+                        <button class="btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px;">🎥 Видео</div>
+                    <button class="btn" style="width:100%;">Видео</button>
                 </div>
             </div>
 
@@ -161,6 +177,17 @@
             } else {
                 document.getElementById('tab-info').classList.add('active');
                 document.getElementById('page-info').classList.add('active');
+            }
+        }
+
+        function showSubPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            
+            // Если переходим на меню, подсвечиваем вкладку МЕНЮ
+            if(id === 'page-menu') {
+                document.getElementById('tab-menu').classList.add('active');
+                document.getElementById('tab-info').classList.remove('active');
             }
         }
 
