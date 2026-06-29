@@ -63,7 +63,7 @@
         .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
 
         /* PAGE CONTENT */
-        .content { flex:1; overflow-y: auto; padding:14px; }
+        .content { flex:1; overflow:hidden; padding:14px; }
         .page { display:none; height: 100%; }
         .page.active { display:block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -95,80 +95,87 @@
 
         /* FOOTER */
         .footer { text-align:center; padding:12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; }
+
+        /* MANUAL PAGE STYLES */
+        #manual-page { padding: 20px; height: 100%; display: flex; flex-direction: column; justify-content: center; }
     </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
 
     <div class="app">
-        <div class="top-wrap">
-            <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="top-image">
-        </div>
-        <div class="divider"></div>
-        <div class="title-box">
-            <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
-            <div class="desc">
-                <span class="red-text">Новичок ?</span><br>
-                Не знаешь с чего <span class="red-text">Начать ?</span><br>
-                <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
-                и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
-                Мы создали <span class="red-text">Собственного Бота !</span>
+        <!-- ГЛАВНЫЙ ВИД -->
+        <div id="main-view">
+            <div class="top-wrap">
+                <img src="https://i.postimg.cc/6qFBTTmC/Screenshot-2026-06-28-17-05-20-070-com-openai-chatgpt-edit.jpg" class="top-image">
             </div>
-        </div>
-        <div class="divider"></div>
-        <div class="tabs">
-            <div class="tab active" id="tab-menu" onclick="switchTab('menu')">МЕНЮ</div>
-            <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
-        </div>
-
-        <div class="content" id="content">
-            <div id="page-menu" class="page active">
-                <div class="grid">
-                    <button class="btn">ПРОФИЛЬ</button>
-                    <button class="btn">НАСТАВНИК</button>
-                    <button class="btn" onclick="showPage('page-manual')">МАНУАЛ</button>
-                    <button class="btn">ПАКИ</button>
-                    <button class="btn">ГОЛОСОВЫЕ</button>
-                    <button class="btn">БОТЫ</button>
-                    <button class="btn">ПАСТЫ</button>
-                    <button class="btn">ПРОБИВ</button>
+            <div class="divider"></div>
+            <div class="title-box">
+                <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
+                <div class="desc">
+                    <span class="red-text">Новичок ?</span><br>
+                    Не знаешь с чего <span class="red-text">Начать ?</span><br>
+                    <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+                    и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+                    Мы создали <span class="red-text">Собственного Бота !</span>
                 </div>
             </div>
-
-            <div id="page-manual" class="page">
-                <button class="btn" onclick="showPage('page-menu')" style="width: 100%; margin-bottom: 20px;">← Назад</button>
-                
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">Раздел Мануал</div>
-                    <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 5px;">здесь вы сможете взять всю необходимую информацию !</div>
-                </div>
-
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px;">Письменный мануал</div>
-                <div class="grid" style="margin-bottom: 20px;">
-                    <button class="btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
-                    <button class="btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
-                    <button class="btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
-                </div>
-
-                <div class="divider" style="margin: 20px auto;"></div>
-
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px;">Видео Мануал</div>
-                <button class="btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Видео</button>
+            <div class="divider"></div>
+            <div class="tabs">
+                <div class="tab active" id="tab-menu" onclick="switchTab('menu')">МЕНЮ</div>
+                <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
             </div>
 
-            <div id="page-info" class="page">
-                <div class="card">
-                    <b>ИНФОРМАЦИЯ</b><br><br>
-                    @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
-                    Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
-                    Дата создания: 26.06.2026<br><br>
-                    Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
-                    Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
+            <div class="content" id="content">
+                <div id="page-menu" class="page active">
+                    <div class="grid">
+                        <button class="btn">ПРОФИЛЬ</button>
+                        <button class="btn">НАСТАВНИК</button>
+                        <button class="btn" onclick="openManual()">МАНУАЛ</button>
+                        <button class="btn">ПАКИ</button>
+                        <button class="btn">ГОЛОСОВЫЕ</button>
+                        <button class="btn">БОТЫ</button>
+                        <button class="btn">ПАСТЫ</button>
+                        <button class="btn">ПРОБИВ</button>
+                    </div>
+                </div>
+
+                <div id="page-info" class="page">
+                    <div class="card">
+                        <b>ИНФОРМАЦИЯ</b><br><br>
+                        @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
+                        Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
+                        Дата создания: 26.06.2026<br><br>
+                        Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
+                        Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
+                    </div>
                 </div>
             </div>
+            <div class="divider"></div>
+            <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
         </div>
-        <div class="divider"></div>
-        <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
+
+        <!-- ОТДЕЛЬНАЯ СТРАНИЦА МАНУАЛА -->
+        <div id="manual-page" style="display:none;">
+            <button class="btn" onclick="closeManual()" style="width: 100%; margin-bottom: 20px;">← Назад</button>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">Раздел Мануал</div>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 5px;">здесь вы сможете взять всю необходимую информацию !</div>
+            </div>
+
+            <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px;">Письменный мануал</div>
+            <div class="grid" style="margin-bottom: 20px;">
+                <button class="btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
+                <button class="btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
+                <button class="btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
+            </div>
+
+            <div class="divider" style="margin: 20px auto; width: 100%;"></div>
+
+            <div style="font-weight:900; color:#ff2b3d; margin-bottom:10px; text-align: center; font-size: 14px;">Видео Мануал</div>
+            <button class="btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Видео</button>
+        </div>
     </div>
 
     <script>
@@ -185,14 +192,15 @@
             }
         }
 
-        function showPage(id) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            
-            // Сбрасываем активную вкладку при переходе на Мануал
-            if(id === 'page-manual') {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            }
+        function openManual() {
+            document.getElementById('main-view').style.display = 'none';
+            document.getElementById('manual-page').style.display = 'flex';
+        }
+
+        function closeManual() {
+            document.getElementById('manual-page').style.display = 'none';
+            document.getElementById('main-view').style.display = 'flex';
+            document.getElementById('main-view').style.flexDirection = 'column';
         }
 
         /* PARTICLES */
