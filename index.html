@@ -8,89 +8,80 @@
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
         
         * {
-            margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif;
+            margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif;
             -webkit-tap-highlight-color: transparent; outline: none !important;
         }
 
         body {
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-            overflow: hidden; background: #020000; color: #fff;
+            height:100vh; display:flex; justify-content:center; align-items:center;
+            overflow:hidden; background:#020000; color:#fff;
         }
 
         /* BACKGROUND GLOW */
         body::before {
-            content: ""; position: absolute; inset: -300px;
+            content:""; position:absolute; inset:-300px;
             background: radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%),
                         radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%),
                         radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%);
-            filter: blur(90px); animation: bg 18s ease-in-out infinite alternate;
+            filter:blur(90px); animation:bg 18s ease-in-out infinite alternate;
         }
         @keyframes bg { to{transform:translate(140px,100px) scale(1.15);} }
 
         /* PARTICLES */
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 
         /* APP */
         .app {
-            position: relative; z-index: 2; width: 95%; max-width: 460px; height: 92vh;
-            border-radius: 36px; background: rgba(255, 255, 255, .06);
-            backdrop-filter: blur(35px); border: 1px solid rgba(255, 80, 80, .15);
+            position:relative; z-index:2; width:95%; max-width:460px; height:92vh;
+            border-radius:36px; background:rgba(255,255,255,.06);
+            backdrop-filter:blur(35px); border:1px solid rgba(255,80,80,.15);
             box-shadow: 0 40px 120px rgba(0,0,0,.85), inset 0 0 80px rgba(255,0,0,.08);
-            display: flex; flex-direction: column; overflow: hidden;
+            display:flex; flex-direction:column; overflow:hidden;
         }
 
         .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 6px auto; flex-shrink: 0; }
 
-        /* TOP IMAGE */
-        .top-wrap { padding: 14px 14px 0 14px; flex-shrink: 0; }
+        .top-wrap { padding:14px 14px 0 14px; flex-shrink: 0; }
         .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
-        .top-image { width: 100%; height: 120px; object-fit: cover; border-radius: 18px; border: 2px solid #555; box-shadow: 0 0 25px rgba(255, 43, 61, 0.8); }
+        .top-image { width:100%; height:120px; object-fit:cover; border-radius:18px; border: 2px solid #555; box-shadow: 0 0 25px rgba(255, 43, 61, 0.8); }
 
-        /* TITLE */
-        .title-box { margin: 0 14px; padding: 15px; border-radius: 26px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.05); backdrop-filter: blur(10px); flex-shrink: 0; }
+        .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
         .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(25px); margin-top: 10px; }
-        .title { font-size: 22px; font-weight: 900; letter-spacing: 2px; text-align: center; }
-        .neon-panel { color: #ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
-        .desc { font-size: 11px; line-height: 1.4; color: rgba(255,255,255,.75); }
-        .red-text { color: #ff2b3d; text-shadow: 0 0 3px #ff2b3d; }
+        .title { font-size:22px; font-weight:900; letter-spacing:2px; text-align: center;}
+        .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
+        .desc { font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
+        .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
 
-        /* TABS */
-        .tabs { margin: 0 14px; display: flex; gap: 6px; padding: 5px; border-radius: 18px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,80,80,.15); backdrop-filter: blur(20px); flex-shrink: 0; }
-        .tab { flex: 1; text-align: center; padding: 10px; border-radius: 14px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.6); cursor: pointer; transition: .25s; }
-        .tab.active { background: rgba(255,255,255,.12); color: #fff; box-shadow: 0 0 20px rgba(255,0,60,.25); }
+        .tabs { margin:0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
+        .tab { flex:1; text-align:center; padding:10px; border-radius:14px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
+        .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
 
-        /* PAGE CONTENT */
-        .content { flex: 1; overflow-y: auto; padding: 14px; }
-        .page { display: none; height: 100%; }
-        .page.active { display: block; animation: fadeIn 0.3s; }
+        .content { flex:1; overflow-y:auto; padding:14px; }
+        .page { display:none; height: 100%; }
+        .page.active { display:block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BUTTONS */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .btn { padding: 10px 5px; border-radius: 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(5px); color: #fff; font-size: 10px; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; transition: all 0.1s ease; box-shadow: 0 3px 0 rgba(0,0,0,.2), inset 0 1px 1px rgba(255,255,255,.1); text-shadow: 0 0 4px rgba(255,255,255,.3); }
-        .btn:active { transform: scale(0.95); box-shadow: 0 1px 0 rgba(0,0,0,.2); }
+        .grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+        .btn { padding:10px 5px; border-radius:14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color:#fff; font-size:10px; font-weight:900; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2); }
+        .btn:active { transform:scale(0.95); }
 
-        /* CARDS */
-        .card { background: rgba(255,255,255,.05); padding: 10px 14px; border-radius: 20px; border: 1px solid rgba(255,80,80,.2); font-size: 11px; margin: 5px 0; }
-        .link { color: #ff2b3d; text-decoration: underline; cursor: pointer; }
-        .footer { text-align: center; padding: 12px; font-size: 11px; color: rgba(255,255,255,.4); cursor: pointer; flex-shrink: 0; }
+        .card { background:rgba(255,255,255,.05); padding: 10px 14px; border-radius:20px; border:1px solid rgba(255,80,80,.2); font-size:11px; margin: 5px 0; }
+        .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
+        .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
 
-        /* SECTIONS STYLES */
         #manual-page, #mentor-page, #packs-page { padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
         
-        /* PACKS GRID */
-        .packs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; overflow-y: auto; padding-bottom: 10px; }
-        .pack-item { display: flex; flex-direction: column; gap: 8px; }
+        .packs-grid { display:grid; grid-template-columns:1fr 1fr; gap: 15px; overflow-y: auto; padding-bottom: 10px; }
+        .pack-item { display:flex; flex-direction:column; gap:8px; }
         .pack-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
-        .pack-btn { background: rgba(255,255,255,.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; color: #fff; padding: 10px; font-weight: 900; width: 100%; cursor: pointer; text-align: center; font-size: 12px; }
+        .pack-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: #fff; padding: 10px; font-weight: 900; width: 100%; cursor: pointer; text-align: center; font-size: 12px; }
 
-        /* MANUAL & MENTOR BUTTONS */
-        .manual-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-        .m-btn { padding: 10px 5px; border-radius: 18px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(5px); color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 1px; cursor: pointer; transition: all 0.1s ease; box-shadow: 0 4px 0 rgba(0,0,0,.2), inset 0 1px 1px rgba(255,255,255,.1); text-shadow: 0 0 4px rgba(255,255,255,.3); }
-        .m-btn:active { transform: scale(0.95); box-shadow: 0 1px 0 rgba(0,0,0,.2); }
+        .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+        .m-btn { padding:10px 5px; border-radius:18px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color:#fff; font-size:11px; font-weight:900; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2); }
+        .m-btn:active { transform:scale(0.95); }
         .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
-        .glass-write-btn { background: rgba(255,255,255,.08); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; color: #fff; padding: 10px; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; text-align: center; font-size: 13px; }
-        .glass-write-btn:active { transform: scale(0.98); background: rgba(255,255,255,.15); }
+        
+        .glass-write-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; color: #fff; padding: 10px; font-weight: 900; cursor: pointer; width: 100%; text-align: center; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -98,52 +89,28 @@
 
     <div class="app">
         <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
-            <div class="top-wrap">
-                <div class="glass-frame">
-                    <img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image">
-                </div>
-            </div>
+            <div class="top-wrap"><div class="glass-frame"><img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image"></div></div>
             <div class="divider"></div>
             <div class="title-box">
                 <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
-                <div class="inner-frame">
-                    <div class="desc">
-                        <span class="red-text">Новичок ?</span><br>
-                        Не знаешь с чего <span class="red-text">Начать ?</span><br>
-                        <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
-                        и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
-                        Мы создали <span class="red-text">Собственного Бота !</span>
-                    </div>
-                </div>
+                <div class="inner-frame"><div class="desc"><span class="red-text">Новичок ?</span><br>Не знаешь с чего <span class="red-text">Начать ?</span><br><span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>Мы создали <span class="red-text">Собственного Бота !</span></div></div>
             </div>
             <div class="divider"></div>
             <div class="tabs">
                 <div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
                 <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
             </div>
-
             <div class="content" id="content">
                 <div id="page-menu" class="page active">
                     <div class="grid">
-                        <button class="btn">ПРОФИЛЬ</button>
-                        <button class="btn" onclick="openMentor()">НАСТАВНИК</button>
-                        <button class="btn" onclick="openManual()">МАНУАЛ</button>
-                        <button class="btn" onclick="openPacks()">ПАКИ</button>
-                        <button class="btn">ГОЛОСОВЫЕ</button>
-                        <button class="btn">БОТЫ</button>
-                        <button class="btn">ПАСТЫ</button>
-                        <button class="btn">ПРОБИВ</button>
+                        <button class="btn">ПРОФИЛЬ</button><button class="btn" onclick="openMentor()">НАСТАВНИК</button>
+                        <button class="btn" onclick="openManual()">МАНУАЛ</button><button class="btn" onclick="openPacks()">ПАКИ</button>
+                        <button class="btn">ГОЛОСОВЫЕ</button><button class="btn">БОТЫ</button>
+                        <button class="btn">ПАСТЫ</button><button class="btn">ПРОБИВ</button>
                     </div>
                 </div>
                 <div id="page-info" class="page">
-                    <div class="card">
-                        <b>ИНФОРМАЦИЯ</b><br><br>
-                        @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
-                        Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
-                        Дата создания: 26.06.2026<br><br>
-                        Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
-                        Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
-                    </div>
+                    <div class="card"><b>ИНФОРМАЦИЯ</b><br><br>@RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span></div>
                 </div>
             </div>
             <div class="divider"></div>
@@ -151,110 +118,42 @@
         </div>
 
         <div id="manual-page">
-            <div style="text-align: center;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходиную <span style="color:#ff2b3d;">информацию !</span></div>
-            </div>
+            <div style="text-align: center;"><div style="font-size: 20px; font-weight: 900; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div></div>
             <div class="divider" style="width: 100%;"></div>
-            <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Письменный мануал</div>
-                <div class="manual-grid">
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
-                </div>
+            <div class="manual-grid">
+                <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
+                <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
+                <button class="m-btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
             </div>
-            <div class="glass-frame" style="margin: 5px 0;">
-                <img src="https://i.postimg.cc/bwFTRMZn/file-00000000261471f5872248747e85e93d.png" class="manual-img">
-            </div>
-            <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Видео Мануал</div>
-                <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
-            </div>
-            <div class="glass-frame" style="margin: 5px 0;">
-                <img src="https://i.postimg.cc/jdMQs94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
-            </div>
-            <div style="width: 100%; margin-top: auto;">
-                <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
-            </div>
+            <button class="m-btn" onclick="closeManual()" style="width: 100%; margin-top:10px; background: rgba(255, 80, 80, 0.1);">← Назад</button>
         </div>
 
         <div id="mentor-page">
-            <div style="text-align: center; margin-bottom: 5px;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
-                <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); line-height: 1.2;">Выбрать можно <span style="color:#ff2b3d;">одного</span>. Автоматически закрепляетеся.</div>
-            </div>
-            <div class="divider" style="width: 100%; margin: 5px auto;"></div>
-            <div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; margin-bottom: 10px; padding: 15px;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                    <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 80px; height: 80px; border-radius: 15px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник <span style="color: #ff2b3d;">№1</span> - Kodi</div>
-                        <div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Шантаж - Универсал</div>
-                    </div>
-                </div>
-                <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; margin-top: 5px; padding: 15px;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                    <img src="https://i.postimg.cc/sxxgCsdC/file-00000000b860720aa3ee358794aca807.png" style="width: 80px; height: 80px; border-radius: 15px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник <span style="color: #ff2b3d;">№2</span> - Relax</div>
-                        <div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Шантаж - Универсал</div>
-                    </div>
-                </div>
-                <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Написать</button>
-            </div>
-            <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-            <button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
+            <div style="text-align: center;"><div style="font-size: 20px; font-weight: 900; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div></div>
+            <div class="divider" style="width: 100%;"></div>
+            <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')" style="margin-bottom:10px;">Наставник Kodi</button>
+            <button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Наставник Relax</button>
+            <button class="m-btn" onclick="closeMentor()" style="width: 100%; margin-top:10px; background: rgba(255, 80, 80, 0.1);">← Назад</button>
         </div>
 
         <div id="packs-page">
-            <div style="text-align: center; margin-bottom: 15px;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ПАКИ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">В этом разделе вы можете брать Паки девушек.</div>
-            </div>
-            <div class="divider" style="width: 100%; margin-bottom: 15px;"></div>
+            <div style="text-align: center;"><div style="font-size: 20px; font-weight: 900; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ПАКИ</span></div></div>
+            <div class="divider" style="width: 100%;"></div>
             <div class="packs-grid">
-                <div class="pack-item">
-                    <img src="https://via.placeholder.com/150" class="pack-img">
-                    <button class="pack-btn">ПАК 1</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://via.placeholder.com/150" class="pack-img">
-                    <button class="pack-btn">ПАК 2</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://via.placeholder.com/150" class="pack-img">
-                    <button class="pack-btn">ПАК 3</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://via.placeholder.com/150" class="pack-img">
-                    <button class="pack-btn">ПАК 4</button>
-                </div>
+                <div class="pack-item"><img src="https://via.placeholder.com/150" class="pack-img"><button class="pack-btn">ПАК 1</button></div>
+                <div class="pack-item"><img src="https://via.placeholder.com/150" class="pack-img"><button class="pack-btn">ПАК 2</button></div>
             </div>
-            <div style="margin-top: auto; padding-top: 15px;">
-                <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-                <button class="m-btn" onclick="closePacks()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
-            </div>
+            <button class="m-btn" onclick="closePacks()" style="width: 100%; margin-top:10px; background: rgba(255, 80, 80, 0.1);">← Назад</button>
         </div>
     </div>
 
     <script>
-        function switchTab(type) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            if(type === 'menu') {
-                document.getElementById('tab-menu').classList.add('active');
-                document.getElementById('page-menu').classList.add('active');
-            } else {
-                document.getElementById('tab-info').classList.add('active');
-                document.getElementById('page-info').classList.add('active');
-            }
+        function switchTab(t) {
+            document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+            if(t === 'menu') { document.getElementById('tab-menu').classList.add('active'); document.getElementById('page-menu').classList.add('active'); } 
+            else { document.getElementById('tab-info').classList.add('active'); document.getElementById('page-info').classList.add('active'); }
         }
-
         function openManual() { document.getElementById('main-view').style.display = 'none'; document.getElementById('manual-page').style.display = 'flex'; }
         function closeManual() { document.getElementById('manual-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
         function openMentor() { document.getElementById('main-view').style.display = 'none'; document.getElementById('mentor-page').style.display = 'flex'; }
@@ -262,16 +161,12 @@
         function openPacks() { document.getElementById('main-view').style.display = 'none'; document.getElementById('packs-page').style.display = 'flex'; }
         function closePacks() { document.getElementById('packs-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
 
-        /* PARTICLES */
         const canvas = document.getElementById("particles");
         const ctx = canvas.getContext("2d");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        const particles = Array.from({length: 100}, () => ({
-            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-            size: Math.random() * 3 + 1, speed: Math.random() * 2 + 0.5,
-            color: ["#ff003c", "#fff", "#000"][Math.floor(Math.random()*3)]
-        }));
+        const particles = Array.from({length: 80}, () => ({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*2+1, speed: Math.random()*1+0.5, color: "#fff" }));
+
         function animate(){
             ctx.clearRect(0,0,canvas.width,canvas.height);
             particles.forEach(p => {
@@ -287,4 +182,5 @@
         animate();
     </script>
 </body>
-    </html>
+                </html>
+    
