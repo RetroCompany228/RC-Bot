@@ -44,6 +44,12 @@
 
         /* TOP IMAGE */
         .top-wrap { padding:14px 14px 0 14px; }
+        .glass-frame { 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            border-radius: 20px; 
+            padding: 4px; 
+            background: rgba(255, 255, 255, 0.05);
+        }
         .top-image { 
             width:100%; height:120px; object-fit:cover; border-radius:18px;
             border: 2px solid #555;
@@ -52,6 +58,7 @@
 
         /* ЗАГОЛОВОК */
         .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); }
+        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; }
         .title { font-size:22px; font-weight:900; letter-spacing:2px; }
         .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
         .desc { margin-top:8px; font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
@@ -98,21 +105,22 @@
 
         /* MANUAL PAGE STYLES */
         #manual-page { 
-            padding: 20px; height: 100%; display: flex; flex-direction: column; 
-            justify-content: space-between; /* ЭТО РАСТЯГИВАЕТ ЭЛЕМЕНТЫ */
+            padding: 10px; height: 100%; display: flex; flex-direction: column; 
+            justify-content: space-between;
         }
         .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
         .m-btn {
-            padding:15px 5px; border-radius:18px; 
+            padding:10px 5px; border-radius:18px; 
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
-            color:#fff; font-size:12px; font-weight:900; 
+            color:#fff; font-size:11px; font-weight:900; 
             letter-spacing:1px; cursor:pointer; transition:all 0.1s ease;
             box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1);
             text-shadow:0 0 4px rgba(255,255,255,0.3);
         }
         .m-btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
+        .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
     </style>
 </head>
 <body>
@@ -121,17 +129,21 @@
     <div class="app">
         <div id="main-view">
             <div class="top-wrap">
-                <img src="https://i.postimg.cc/kGDBJjyL/file-00000000fb54722fae9cee78dad4e85b.png" class="top-image">
+                <div class="glass-frame">
+                    <img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image">
+                </div>
             </div>
             <div class="divider"></div>
             <div class="title-box">
-                <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
-                <div class="desc">
-                    <span class="red-text">Новичок ?</span><br>
-                    Не знаешь с чего <span class="red-text">Начать ?</span><br>
-                    <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
-                    и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
-                    Мы создали <span class="red-text">Собственного Бота !</span>
+                <div class="inner-frame">
+                    <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
+                    <div class="desc">
+                        <span class="red-text">Новичок ?</span><br>
+                        Не знаешь с чего <span class="red-text">Начать ?</span><br>
+                        <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+                        и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+                        Мы создали <span class="red-text">Собственного Бота !</span>
+                    </div>
                 </div>
             </div>
             <div class="divider"></div>
@@ -171,14 +183,14 @@
 
         <div id="manual-page" style="display:none;">
             <div style="text-align: center;">
-                <div style="font-size: 24px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
-                <div style="font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходимую <span style="color:#ff2b3d;">информацию !</span></div>
+                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
+                <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходимую <span style="color:#ff2b3d;">информацию !</span></div>
             </div>
 
             <div class="divider" style="width: 100%;"></div>
 
             <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:12px; text-align: center; font-size: 14px; text-transform: uppercase;">Письменный мануал</div>
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Письменный мануал</div>
                 <div class="manual-grid">
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
                     <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
@@ -186,15 +198,20 @@
                 </div>
             </div>
 
-            <div class="divider" style="width: 100%;"></div>
-
-            <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:12px; text-align: center; font-size: 14px; text-transform: uppercase;">Видео Мануал</div>
-                <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
+            <div class="glass-frame" style="margin: 5px 0;">
+                <img src="https://i.postimg.cc/bwFTRMZn/file-00000000261471f5872248747e85e93d.png" class="manual-img">
             </div>
 
             <div style="width: 100%;">
-                <div class="divider" style="width: 100%; margin-bottom: 15px;"></div>
+                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Видео Мануал</div>
+                <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
+            </div>
+
+            <div class="glass-frame" style="margin: 5px 0;">
+                <img src="https://i.postimg.cc/jdMQs94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
+            </div>
+
+            <div style="width: 100%;">
                 <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
             </div>
         </div>
@@ -253,4 +270,5 @@
         animate();
     </script>
 </body>
-</html>
+    </html>
+    
