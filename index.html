@@ -40,10 +40,10 @@
         }
 
         /* DIVIDER */
-        .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 8px auto; }
+        .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 8px auto; flex-shrink: 0; }
 
         /* TOP IMAGE */
-        .top-wrap { padding:14px 14px 0 14px; }
+        .top-wrap { padding:14px 14px 0 14px; flex-shrink: 0; }
         .glass-frame { 
             border: 1px solid rgba(255, 255, 255, 0.2); 
             border-radius: 20px; 
@@ -57,7 +57,7 @@
         }
 
         /* ЗАГОЛОВОК */
-        .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); }
+        .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
         .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(25px); margin-top: 10px; }
         .title { font-size:22px; font-weight:900; letter-spacing:2px; text-align: center;}
         .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
@@ -65,12 +65,12 @@
         .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
 
         /* TABS */
-        .tabs { margin:0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); }
+        .tabs { margin:0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:10px; border-radius:14px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
         .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
 
         /* PAGE CONTENT */
-        .content { flex:1; overflow:hidden; padding:14px; }
+        .content { flex:1; overflow-y:auto; padding:14px; }
         .page { display:none; height: 100%; }
         .page.active { display:block; animation: fadeIn 0.3s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -101,7 +101,7 @@
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
 
         /* FOOTER */
-        .footer { text-align:center; padding: 10px 10px 15px 10px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
+        .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
 
         /* MANUAL PAGE STYLES */
         #manual-page { 
@@ -127,7 +127,7 @@
     <canvas id="particles"></canvas>
 
     <div class="app">
-        <div id="main-view">
+        <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
             <div class="top-wrap">
                 <div class="glass-frame">
                     <img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image">
@@ -270,4 +270,5 @@
         animate();
     </script>
 </body>
-</html>
+                </html>
+    
