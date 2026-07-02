@@ -1,324 +1,316 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Ворк-Панель</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; outline: none !important; }
-        body { height:100vh; display:flex; justify-content:center; align-items:center; overflow:hidden; background:#020000; color:#fff; }
-        body::before { content:""; position:absolute; inset:-300px; background: radial-gradient(circle at 20% 20%, rgba(255,0,60,.25), transparent 50%), radial-gradient(circle at 70% 30%, rgba(120,0,20,.45), transparent 55%), radial-gradient(circle at 50% 80%, rgba(255,0,0,.12), transparent 60%); filter:blur(90px); animation:bg 18s ease-in-out infinite alternate; }
-        @keyframes bg { to{transform:translate(140px,100px) scale(1.15);} }
-        canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
-        .app { position:relative; z-index:2; width:95%; max-width:460px; height:92vh; border-radius:36px; background:rgba(255,255,255,.06); backdrop-filter:blur(35px); border:1px solid rgba(255,80,80,.15); box-shadow: 0 40px 120px rgba(0,0,0,.85), inset 0 0 80px rgba(255,0,0,.08); display:flex; flex-direction:column; overflow:hidden; }
-        .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 6px auto; flex-shrink: 0; }
-        .top-wrap { padding:14px 14px 0 14px; flex-shrink: 0; }
-        .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
-        .top-image { width:100%; height:120px; object-fit:cover; border-radius:18px; border: 2px solid #555; box-shadow: 0 0 25px rgba(255, 43, 61, 0.8); }
-        .title-box { margin:0 14px; padding:15px; border-radius:26px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
-        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(25px); margin-top: 10px; }
-        .title { font-size:22px; font-weight:900; letter-spacing:2px; text-align: center;}
-        .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
-        .desc { font-size:11px; line-height:1.4; color:rgba(255,255,255,.75); }
-        .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
-        .tabs { margin:0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
-        .tab { flex:1; text-align:center; padding:10px; border-radius:14px; font-size:12px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
-        .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
-        .content { flex:1; overflow-y:auto; padding:14px; }
-        .page { display:none; height: 100%; }
-        .page.active { display:block; animation: fadeIn 0.3s; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-        .btn { padding:10px 5px; border-radius:14px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color:#fff; font-size:10px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1); text-shadow:0 0 4px rgba(255,255,255,0.3); }
-        .btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
-        .card { background:rgba(255,255,255,.05); padding: 10px 14px; border-radius:20px; border:1px solid rgba(255,80,80,.2); font-size:11px; margin: 5px 0; }
-        .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
-        .footer { text-align:center; padding: 12px; font-size:11px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
-        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page { padding: 15px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
-        .bots-grid { display:grid; grid-template-columns:1fr 1fr; gap: 4px; padding: 5px 0; }
-        .bot-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.2); padding: 6px 4px; border-radius: 8px; text-align: center; font-size: 9.5px; font-weight: 700; color: #fff; cursor: pointer; text-decoration: underline; }
-        .packs-grid { display:grid; grid-template-columns:1fr 1fr; gap: 15px; overflow-y: auto; padding-bottom: 10px; }
-        .pack-item { display:flex; flex-direction:column; gap:8px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.4); border-radius: 20px; padding: 10px; }
-        .pack-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2); }
-        .pack-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px; color: #fff; padding: 10px; font-weight: 900; width: 100%; cursor: pointer; text-align: center; font-size: 12px; }
-        .manual-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
-        .m-btn { padding:10px 5px; border-radius:18px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); color:#fff; font-size:11px; font-weight:900; letter-spacing:1px; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255,255,255,0.1); text-shadow:0 0 4px rgba(255,255,255,0.3); }
-        .m-btn:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
-        .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
-        .glass-write-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; color: #fff; padding: 10px; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; text-align: center; font-size: 13px; }
-        .glass-write-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.15); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ворк-Панель</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;900&display=swap');
+* { margin: 0; padding: 0; box-sizing:border-box; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
+body { height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; background: #020000; }
+body:before { content: ""; position: absolute; inset: -300px; background: radial-gradient(circle at 20% 20%, rgba(255, 80, 80, 0.2), #020000 70%); z-index: -1; }
+@keyframes bg { to {transform:translate(140px, 100px) scale(1.15); } }
+canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+.app { position: relative; z-index:2; width:95%; max-width:400px; height:92vh; border-radius:30px; background:rgba(255, 80, 80, 0.2); margin: 0 auto; flex-shrink: 0; }
+.top-wrap { padding: 14px 0 14px 0; flex-shrink: 0; }
+.glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
+.top-image { width: 100%; height:120px; object-fit:cover; border-radius: 18px; border: 2px solid #555; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+.title-box { margin: 0 14px; padding: 15px; background:rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; }
+.inner-frame { border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 10px; backdrop-filter: blur(10px); }
+.title { font-weight: 900; letter-spacing: 2px; text-align: center; }
+.neon-panel { color: #ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
+.desc { font-size: 11px; line-height:1.4; color:rgba(255, 255, 255, .75); }
+.red-text { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
+.tabs { margin: 0 14px; display:flex; gap:6px; padding:5px; border-radius:18px; background:rgba(255, 255, 255, .04); }
+.tab { flex: 1; text-align:center; padding:10px 14px; font-size:12px; font-weight:700; color:rgba(255, 255, 255, .5); }
+.tab.active { background:rgba(255, 255, 255, .12); color:#fff; box-shadow: 0 0 20px rgba(255, 0, 0, .25); }
+.content { flex: 1; overflow-y:auto; padding:14px; }
+.page { display:none; height: 100%; }
+.page.active { display:block; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap:6px; }
+.bts { padding: 10px 5px; background:rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; cursor: pointer; transition: 0.2s; font-size: 13px; font-weight: 700; color: #fff; text-align: center; }
+.bts:active { transform:scale(0.95); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2); }
+.card { background:rgba(255, 255, 255, 0.05); border-radius:14px; padding: 10px 14px; border: 1px solid rgba(255, 80, 80, 0.1); }
+.link { color: #ff2b3d; text-decoration: underline; cursor: pointer; }
+.footer { text-align:center; padding: 12px; font-size: 11px; color:rgba(255, 255, 255, .4); cursor: pointer; flex-shrink:0; }
+#manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page { display:none; }
+.bots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 5px 0; }
+.bot-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.2); padding: 6px 4px; border-radius: 10px; cursor: pointer; text-align: center; font-size: 12px; color: #fff; }
+.packs-grid { display: grid; grid-template-columns: 1fr 1fr; overflow-y: auto; padding: 5px 0; }
+.pack-item { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+.pack-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+.pack-btn { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; width: 100%; border-radius: 10px; margin-top: 5px; padding: 8px; cursor: pointer; }
+.manual-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; }
+.m-btn { padding: 10px 5px; border-radius:10px; border: 1px solid rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 80, 80, 0.1); color:#fff; cursor:pointer; font-weight:700; transition:0.2s; }
+.m-btn:active { transform:scale(0.95); box-shadow: 0 0 1px rgba(0, 0, 0, 0.2); }
+.manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
+.glass-write-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 15px; cursor: pointer; padding: 10px; }
+.glass-write-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.15); }
+</style>
 </head>
 <body>
-    <canvas id="particles"></canvas>
-    <div class="app">
-        <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
-            <div class="top-wrap">
-                <div class="glass-frame">
-                    <img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image">
-                </div>
-            </div>
-            <div class="divider"></div>
-            <div class="title-box">
-                <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
-                <div class="inner-frame">
-                    <div class="desc">
-                        <span class="red-text">Новичок ?</span><br>
-                        Не знаешь с чего <span class="red-text">Начать ?</span><br>
-                        <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
-                        и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
-                        Мы создали <span class="red-text">Собственного Бота !</span>
-                    </div>
-                </div>
-            </div>
-            <div class="divider"></div>
-            <div class="tabs">
-                <div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
-                <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
-            </div>
-            <div class="content" id="content">
-                <div id="page-menu" class="page active">
-                    <div class="grid">
-                        <button class="btn" onclick="openCards()">КАРТЫ</button>
-                        <button class="btn" onclick="openMentor()">НАСТАВНИК</button>
-                        <button class="btn" onclick="openManual()">МАНУАЛ</button>
-                        <button class="btn" onclick="openPacks()">ПАКИ</button>
-                        <button class="btn" onclick="openVoice()">ГОЛОСОВЫЕ</button>
-                        <button class="btn" onclick="openBots()">БОТЫ</button>
-                        <button class="btn">ПАСТЫ</button>
-                        <button class="btn">ПРОБИВ</button>
-                    </div>
-                </div>
-                                <div id="page-info" class="page">
-                    <div class="card">
-                        <b>ИНФОРМАЦИЯ</b><br><br>
-                        @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
-                        Бот создан для удобства воркеров и новичков команды Retro Company.<br><br>
-                        Дата создания: 26.06.2026<br><br>
-                        Наш канал — <span class="link" onclick="window.open('https://t.me/retronews7')">ТЫК</span><br>
-                        Наш чат — <span class="link" onclick="window.open('https://t.me/+ezuVC0NmIKFjNThh')">ТЫК</span>
-                    </div>
-                </div>
-            </div>
-            <div class="divider"></div>
-            <div class="footer" onclick="window.location.href='http://t.me/send?start=IV1dLorNmNQV'">Поддержать Команду</div>
-        </div>
+<canvas id="particles"></canvas>
+<div class="app">
+<div id="main-view" style="display:flex; flex-direction:column; height:100%;">
+<div class="top-wrap">
+<div class="glass-frame">
+<img src="https://i.postimg.cc/YCy5mdkR/file-00000000926c720c8186f20e1dcb974f.png" class="top-image">
+</div>
+<div class="divider"></div>
+<div class="title-box">
+<div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
+<div class="inner-frame">
+<div class="desc">
+<span class="red-text">Новичок ?</span><br>
+Не знаешь с чего <span class="red-text">Начать ?</span><br>
+<span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+Мы создали <span class="red-text">Собственного Бота !</span>
+</div>
+</div>
+</div>
+<div class="divider"></div>
+<div class="tabs">
+<div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
+<div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
+</div>
+<div class="content" id="content">
+<div id="page-menu" class="page active">
+<div class="grid">
+<button class="bts" onclick="openCards()">КАРТЫ</button>
+<button class="bts" onclick="openMentor()">НАСТАВНИК</button>
+<button class="bts" onclick="openManual()">МАНУАЛ</button>
+<button class="bts" onclick="openPacks()">ПАКИ</button>
+<button class="bts" onclick="openVoice()">ГОЛОСОВЫЕ</button>
+<button class="bts" onclick="openBots()">БОТЫ</button>
+<button class="bts" onclick="openCards()">ПАСТЫ</button>
+<button class="bts" onclick="openVoice()">ПРОБИВ</button>
+</div>
+</div>
+<div id="page-info" class="page">
+<div class="card">
+<div class="ИНФОРМАЦИЯ"><b>ИНФОРМАЦИЯ</b><br>
+@RetroWork_Bot - Это не просто бот, а объединение всех лучших материалов в одно!<br>
+Бот создан для удобства воркеров и новичков команды Retro Company.<br>
+Дата создания: 28.06.2026<br>
+Наш канал - <span class="link" onclick="window.open('https://t.me/retronews')">ТЫК</span><br>
+Наш чат - <span class="link" onclick="window.open('https://t.me/ezuV0ONhIKFjNTNh')">ТЫК</span></span>
+</div>
+</div>
+<div class="divider"></div>
+<div class="footer" onclick="window.location.href='http://t.me/send?start=IV1DLorNlNQV'">Поддержать Команду</div>
+</div>
+<div id="cards-page">
+<div style="text-align: center; margin-bottom: 5px;">
+<div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color: #ff2b3d;">КАРТЫ</span></div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px; line-height: 1.5;">
+<span style="color: #ff2b3d;">Здесь</span> Вы найдете <span style="color: #ff2b3d;">актуальные</span> карты для работы!</div>
+</div>
+<div class="divider" style="width: 100%; margin: 10px auto;"></div>
+<div class="glass-frame">
+<img src="https://i.postimg.cc/zXdsKYpR/file-000000008e87246e3275e9da6f4ef30.png" style="width: 100%; border-radius: 15px;">
+<button class="m-btn" onclick="window.open('https://t.me/RetroCarty')" style="width: 100%; margin-top: 5px;">Смотреть Карты</button>
+</div>
+</div>
 
-        <div id="cards-page">
-            <div style="text-align: center; margin-bottom: 5px;">
-                <div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">Раздел <span style="color:#ff2b3d;">Карты</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px; line-height: 1.5;">
-                    <span style="color:#ff2b3d;">Здесь</span> Вы найдете <span style="color:#ff2b3d;">актуальные</span> <span style="color:#ff2b3d;">карты</span> для приема <span style="color:#ff2b3d;">денег !</span>
-                </div>
-            </div>
-            <div class="divider" style="width: 100%; margin: 10px auto;"></div>
-            <div class="glass-frame" style="padding: 10px; margin: 0 auto; width: 100%;">
-                <img src="https://i.postimg.cc/zXdskYyR/file-000000008ea8724683275e9da6f4ef30.png" style="width: 100%; border-radius: 15px; display: block;">
-                <button class="m-btn" onclick="window.open('https://t.me/RetroCarty')" style="width: 100%; margin-top: 15px; background: rgba(255, 80, 80, 0.2);">Перейти</button>
-            </div>
-            <div style="margin-top: auto; padding-top: 15px;">
-                <button class="m-btn" onclick="closeCards()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
-            </div>
-        </div>
+<div id="voice-page">
+<div style="text-align: center; margin-bottom: 5px;">
+<div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color: #ff2b3d;">ГОЛОСОВЫЕ</span></div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">
+<span style="color: #ff2b3d;">Здесь</span> Вы можете <span style="color: #ff2b3d;">взять</span> <span style="color: #ff2b3d;">голосовые</span> для общения!</div>
+</div>
+<div class="divider" style="width: 100%; margin: 10px auto;"></div>
+<div class="glass-frame">
+<img src="https://i.postimg.cc/gctnkh62/file-000000003b847243b27834df50ac9a16.png" style="width: 100%; border-radius: 15px;">
+<button class="m-btn" onclick="window.open('https://t.me/RetroBoles')" style="width: 100%; margin-top: 5px;">Смотреть Голосовые</button>
+</div>
+<div style="margin-top: auto; padding-top: 15px;">
+<button class="m-btn" onclick="closeVoice()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.2);">Назад</button>
+</div>
+</div>
 
-        <div id="voice-page">
-            <div style="text-align: center; margin-bottom: 5px;">
-                <div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ГОЛОСОВЫЕ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">
-                    <span style="color:#ff2b3d;">Здесь</span> Вы можете <span style="color:#ff2b3d;">взять</span> <span style="color:#ff2b3d;">Голосовые</span>.
-                </div>
-            </div>
-            <div class="divider" style="width: 100%; margin: 10px auto;"></div>
-            <div class="glass-frame" style="padding: 10px; margin: 0 auto; width: 100%;">
-                <img src="https://i.postimg.cc/gctmkhG2/file-000000003b847243b27834df50ac9a16.png" style="width: 100%; border-radius: 15px; display: block;">
-            </div>
-            <button class="m-btn" onclick="window.open('https://t.me/RetroGolos1')" style="width: 100%; margin-top: 15px; background: rgba(255, 80, 80, 0.2);">Перейти</button>
-            <div style="margin-top: auto; padding-top: 15px;">
-                <button class="m-btn" onclick="closeVoice()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
-            </div>
-        </div>
-        <div id="bots-page">
-            <div style="text-align: center; margin-bottom: 5px;">
-                <div style="font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">БОТЫ</span></div>
-                <div style="font-size: 11px; color: rgba(255,255,255,0.7);">Здесь <span style="color:#ff2b3d;">Боты</span> для поиска <span style="color:#ff2b3d;">мамонтов</span></div>
-            </div>
-            <div class="divider" style="width: 100%; margin: 5px auto;"></div>
-            <div class="bots-grid">
-                <div class="bot-item" onclick="window.open('https://t.me/RuAnon_bot')">@RuAnon_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/DuoChatick_bot')">@DuoChatick_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonrubot')">@anonrubot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonimnyychatbot')">@anonimnyychatbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/AnonyXChatBot')">@AnonyXChatBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/RomanticDatesBot')">@RomanticDatesBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/znakomstva_anon_bot')">@znakomstva_anon_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anon2323_bot')">@anon2323_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Intim_virt_chatbot')">@Intim_virt_chatbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anon4bot_bot')">@anon4bot_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Tindermeets_bot')">@Tindermeets_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonymmeet_bot')">@anonymmeet_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/poznakomstvu_bot')">@poznakomstvu_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Go_Vchat_bot')">@Go_Vchat_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Likeme_rubot')">@Likeme_rubot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/gruppadbbot')">@gruppadbbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/FindAnonymBot')">@FindAnonymBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Ruschatikbot')">@Ruschatikbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anon_chatik18Bot')">@anon_chatik18Bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/FairyTellBot')">@FairyTellBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/chatruIetkabot')">@chatruIetkabot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/chatbunnybot')">@chatbunnybot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonchat_telega_bot')">@anonchat_telega_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonim_chat_dating_bot')">@anonim_chat_dating_bot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/BoyoChatBot')">@BoyoChatBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/AnonimniyRobot')">@AnonimniyRobot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/anonkarusbot')">@anonkarusbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/ShriftTopRuBot')">@ShriftTopRuBot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/waspchatbot')">@waspchatbot</div>
-                <div class="bot-item" onclick="window.open('https://t.me/Twin4uBot')">@Twin4uBot</div>
-            </div>
-            <div style="margin-top: auto; padding-top: 5px;">
-                <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-                <button class="m-btn" onclick="closeBots()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 6px;">← Назад</button>
-            </div>
-                    </div>
-            <div id="manual-page">
-            <div style="text-align: center;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходиную <span style="color:#ff2b3d;">информацию !</span></div>
-            </div>
-            <div class="divider" style="width: 100%;"></div>
-            <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Письменный мануал</div>
-                <div class="manual-grid">
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Vtoraya-chast-priklyuchenij-02-09')">Часть 2</button>
-                    <button class="m-btn" onclick="window.open('https://telegra.ph/Bystro-i-prosto-02-18')">Часть 3</button>
-                </div>
-            </div>
-            <div class="glass-frame" style="margin: 5px 0;">
-                <img src="https://i.postimg.cc/bwFTRMZn/file-00000000261471f5872248747e85e93d.png" class="manual-img">
-            </div>
-            <div style="width: 100%;">
-                <div style="font-weight:900; color:#ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Видео Мануал</div>
-                <button class="m-btn" style="width:100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
-            </div>
-            <div class="glass-frame" style="margin: 5px 0;">
-                <img src="https://i.postimg.cc/jdMQs94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
-            </div>
-            <div style="width: 100%; margin-top: auto;">
-                <button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3);">← Назад</button>
-            </div>
-        </div>
-        <div id="mentor-page">
-            <div style="text-align: center; margin-bottom: 5px;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">НАСТАВНИК</span></div>
-                <div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); line-height: 1.2;">Выбрать можно <span style="color:#ff2b3d;">одного</span>. Автоматически закрепляетеся.</div>
-            </div>
-            <div class="divider" style="width: 100%; margin: 5px auto;"></div>
-            <div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; margin-bottom: 10px; padding: 15px;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                    <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 80px; height: 80px; border-radius: 15px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник <span style="color: #ff2b3d;">№1</span> - Kodi</div>
-                        <div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Шантаж - Универсал</div>
-                    </div>
-                </div>
-                <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; margin-top: 5px; padding: 15px;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                    <img src="https://i.postimg.cc/sxxgCsdC/file-00000000b860720aa3ee358794aca807.png" style="width: 80px; height: 80px; border-radius: 15px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);">
-                    <div style="flex: 1;">
-                        <div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник <span style="color: #ff2b3d;">№2</span> - Relax</div>
-                        <div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Шантаж - Универсал</div>
-                    </div>
-                </div>
-                <div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
-                <button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Написать</button>
-            </div>
-            <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-            <button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
-        </div>
-        <div id="packs-page">
-            <div style="text-align: center; margin-bottom: 15px;">
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ПАКИ</span></div>
-                <div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">В этом разделе вы можете брать Паки девушек.</div>
-            </div>
-            <div class="divider" style="width: 100%; margin-bottom: 15px;"></div>
-            <div class="packs-grid">
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/y6gfFT6K/IMG-20260629-184516-833.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPak1')">ПАК 1</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/x1YtVDvF/IMG-20260629-184614-108.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPak2')">ПАК 2</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/5yLqDnjn/IMG-20260629-184628-210.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPac3')">ПАК 3</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/tCdN5SK6/IMG-20260629-184640-991.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPac4')">ПАК 4</button>
-                </div>
-            </div>
-            <div style="margin-top: auto; padding-top: 15px;">
-                <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-                <button class="m-btn" onclick="closePacks()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        function switchTab(type) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            if(type === 'menu') {
-                document.getElementById('tab-menu').classList.add('active');
-                document.getElementById('page-menu').classList.add('active');
-            } else {
-                document.getElementById('tab-info').classList.add('active');
-                document.getElementById('page-info').classList.add('active');
-            }
-        }
-        function openManual() { document.getElementById('main-view').style.display = 'none'; document.getElementById('manual-page').style.display = 'flex'; }
-        function closeManual() { document.getElementById('manual-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        function openMentor() { document.getElementById('main-view').style.display = 'none'; document.getElementById('mentor-page').style.display = 'flex'; }
-        function closeMentor() { document.getElementById('mentor-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        function openPacks() { document.getElementById('main-view').style.display = 'none'; document.getElementById('packs-page').style.display = 'flex'; }
-        function closePacks() { document.getElementById('packs-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        function openBots() { document.getElementById('main-view').style.display = 'none'; document.getElementById('bots-page').style.display = 'flex'; }
-        function closeBots() { document.getElementById('bots-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        function openVoice() { document.getElementById('main-view').style.display = 'none'; document.getElementById('voice-page').style.display = 'flex'; }
-        function closeVoice() { document.getElementById('voice-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        function openCards() { document.getElementById('main-view').style.display = 'none'; document.getElementById('cards-page').style.display = 'flex'; }
-        function closeCards() { document.getElementById('cards-page').style.display = 'none'; document.getElementById('main-view').style.display = 'flex'; }
-        const canvas = document.getElementById("particles");
-        const ctx = canvas.getContext("2d");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const particles = Array.from({length: 100}, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 3 + 1,
-            speed: Math.random() * 2 + 0.5,
-            color: ["#ff003c", "#fff", "#000"][Math.floor(Math.random()*3)]
-        }));
-        function animate(){
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            particles.forEach(p => {
-                p.y += p.speed;
-                if(p.y > canvas.height) p.y = 0;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
-</body>
-    </html>
-    
+<div id="bots-page">
+<div style="text-align: center; margin-bottom: 5px;">
+<div style="font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color: #ff2b3d;">БОТЫ</span></div>
+<div style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 5px;">
+<span style="color: #ff2b3d;">Здесь</span> Вы найдете лучших ботов!</div>
+</div>
+<div class="divider" style="width: 100%; margin: 5px auto;"></div>
+<div class="bots-grid">
+<div class="bot-item" onclick="window.open('https://t.me/KuAnon_bot')">@KuAnon_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/DuoChatick_bot')">@DuoChatick_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonrubot')">@anonrubot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonimmychatbot')">@anonimmychatbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/AnonyXChatBot')">@AnonyXChatBot</div>
+<div class="bot-item" onclick="window.open('https://t.me/RomanticDatesBot')">@RomanticDatesBot</div>
+<div class="bot-item" onclick="window.open('https://t.me/znakomstva_anon_bot')">@znakomstva_anon_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anon2323_bot')">@anon2323_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Intim_virt_chatbot')">@Intim_virt_chatbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonymbet_bot')">@anonymbet_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Tindermeets_bot')">@Tindermeets_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonymeets_bot')">@anonymeets_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/poznakomstvu_bot')">@poznakomstvu_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Go_vchat_bot')">@Go_vchat_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Likeme_rubot')">@Likeme_rubot</div>
+<div class="bot-item" onclick="window.open('https://t.me/gruppadbbot')">@gruppadbbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/FindAnonymbot')">@FindAnonymbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Ruschatikbot')">@Ruschatikbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anon_chatik18Bot')">@anon_chatik18Bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/FairyTellBot')">@FairyTellBot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Chatruletkabot')">@Chatruletkabot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonchat_telega_bot')">@anonchat_telega_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonim_chat_dating_bot')">@anonim_chat_dating_bot</div>
+<div class="bot-item" onclick="window.open('https://t.me/BoyoChatBot')">@BoyoChatBot</div>
+    <div class="bot-item" onclick="window.open('https://t.me/AnonimmiyRobot')">@AnonimmiyRobot</div>
+<div class="bot-item" onclick="window.open('https://t.me/anonkarusbot')">@anonkarusbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/ShriftTopRuBot')">@ShriftTopRuBot</div>
+<div class="bot-item" onclick="window.open('https://t.me/waspchatbot')">@waspchatbot</div>
+<div class="bot-item" onclick="window.open('https://t.me/Twin4ubot')">@Twin4ubot</div>
+</div>
+<div style="margin-top: auto; padding-top: 5px;">
+<div class="divider" style="width: 100%; margin: 6px auto;"></div>
+<button class="m-btn" onclick="closeBots()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.2);">Назад</button>
+</div>
+</div>
+
+<div id="manual-page">
+<div style="text-align: center;">
+<div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color: #ff2b3d;">МАНУАЛЫ</span></div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">Здесь <span style="color: #ff2b3d;">обучающие материалы</span> для работы</div>
+</div>
+<div class="divider" style="width: 100%;"></div>
+<div style="width: 100%;">
+<div style="font-weight:900; color: #ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Основные уроки</div>
+<button class="m-btn" onclick="window.open('https://telegra.ph/Manual-shantazh-10-04-2')">Часть 1</button>
+<button class="m-btn" onclick="window.open('https://telegra.ph/vtorya-chast-priklyuchenij-02-09')">Часть 2</button>
+<button class="m-btn" onclick="window.open('https://telegra.ph/Bystro-i-proste-02-18')">Часть 3</button>
+</div>
+<div class="glass-frame" style="margin: 5px 0;">
+<img src="https://i.postimg.cc/bwFTRM2n/file-00000000261471f5872248747e85e03d.png" class="manual-img">
+</div>
+<div style="width: 100%;">
+<div style="font-weight:900; color: #ff2b3d; margin-bottom:8px; text-align: center; font-size: 13px; text-transform: uppercase;">Видео инструкции</div>
+<button class="m-btn" style="width: 100%;" onclick="window.open('https://t.me/RetroManual')">Смотреть Видео</button>
+</div>
+<div class="glass-frame" style="margin: 5px 0;">
+<img src="https://i.postimg.cc/jdMQn94Y/file-00000000311471f58e2f562010069e91.png" class="manual-img">
+</div>
+<div style="margin-top: auto;">
+<button class="m-btn" onclick="closeManual()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.2);">Назад</button>
+</div>
+</div>
+
+<div id="mentor-page">
+<div style="text-align: center; margin-bottom: 5px;">
+<div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color: #ff2b3d;">НАСТАВНИКИ</span></div>
+<div style="font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 5px; line-height: 1.2;">Выбрать можно <span style="color: #ff2b3d;">своего наставника</span></div>
+</div>
+<div class="glass-frame" style="margin: 5px auto;">
+<div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+<img src="https://i.postimg.cc/tgvgrKPF/file-0000000062471f4abcd57f082e88de9.png" style="width: 80px;">
+<div style="flex: 1;">
+<div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник</div>
+<div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Вактак - Универсал</div>
+</div>
+</div>
+<div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
+<button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
+</div>
+</div>
+<div style="background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+<img src="https://i.postimg.cc/sxxgCsdC/file-00000000b869720aa3ee358794aca807.png" style="width: 80px;">
+<div style="flex: 1;">
+<div style="font-weight: 900; font-size: 16px; margin-bottom: 5px;">Наставник</div>
+<div style="font-weight: 900; font-size: 13px; color: #ff2b3d;">Направление: Вактак - Универсал</div>
+</div>
+</div>
+<div style="height: 1px; background: rgba(255,255,255,0.1); width: 100%; margin: 5px 0;"></div>
+<button class="glass-write-btn" onclick="window.open('https://t.me/coxiko')">Написать</button>
+</div>
+<div style="margin-top: 6px auto;">
+<button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.2);">Назад</button>
+</div>
+</div>
+
+<div id="packs-page">
+<div style="text-align: center; margin-bottom: 15px;">
+<div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color: #ff2b3d;">ПАКИ</span></div>
+<div style="font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 5px;">В этом разделе вы можете брать паки!</div>
+</div>
+<div class="divider" style="width: 100%; margin-bottom: 15px;"></div>
+<div class="packs-grid">
+<div class="pack-item">
+<img src="https://i.postimg.cc/y6gFFT6K/IMG-20260629-184516-833.jpg" class="pack-img">
+<button class="pack-btn" onclick="window.open('https://t.me/RetroPak1')">ПАК 1</button>
+</div>
+<div class="pack-item">
+<img src="https://i.postimg.cc/x1ytVDvF/IMG-20260629-184514-108.jpg" class="pack-img">
+<button class="pack-btn" onclick="window.open('https://t.me/RetroPak2')">ПАК 2</button>
+</div>
+<div class="pack-item">
+<img src="https://i.postimg.cc/5ylqDnjn/IMG-20260629-184628-210.jpg" class="pack-img">
+<button class="pack-btn" onclick="window.open('https://t.me/RetroPak3')">ПАК 3</button>
+</div>
+<div class="pack-item">
+<img src="https://i.postimg.cc/tCdN55K6/IMG-20260629-184640-991.jpg" class="pack-img">
+<button class="pack-btn" onclick="window.open('https://t.me/RetroPak4')">ПАК 4</button>
+</div>
+</div>
+<div style="margin-top: auto; padding-top: 15px;">
+<div class="divider" style="width: 100%; margin: 6px auto;"></div>
+<button class="m-btn" onclick="closePacks()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border: 1px solid rgba(255, 80, 80, 0.2);">Назад</button>
+</div>
+</div>
+</div>
+<script>
+function switchTab(type) {
+document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+if(type === 'menu') {
+document.getElementById('tab-menu').classList.add('active');
+document.getElementById('page-menu').classList.add('active');
+} else {
+document.getElementById('tab-info').classList.add('active');
+document.getElementById('page-info').classList.add('active');
+}
+}
+function openManual() { document.getElementById('main-view').style.display = 'none'; document.getElementById('manual-page').style.display = 'block'; }
+function closeManual() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('manual-page').style.display = 'none'; }
+function openMentor() { document.getElementById('main-view').style.display = 'none'; document.getElementById('mentor-page').style.display = 'block'; }
+function closeMentor() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('mentor-page').style.display = 'none'; }
+function openPacks() { document.getElementById('main-view').style.display = 'none'; document.getElementById('packs-page').style.display = 'block'; }
+function closePacks() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('packs-page').style.display = 'none'; }
+function openBots() { document.getElementById('main-view').style.display = 'none'; document.getElementById('bots-page').style.display = 'block'; }
+function closeBots() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('bots-page').style.display = 'none'; }
+function openVoice() { document.getElementById('main-view').style.display = 'none'; document.getElementById('voice-page').style.display = 'block'; }
+function closeVoice() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('voice-page').style.display = 'none'; }
+function openCards() { document.getElementById('main-view').style.display = 'none'; document.getElementById('cards-page').style.display = 'block'; }
+function closeCards() { document.getElementById('main-view').style.display = 'flex'; document.getElementById('cards-page').style.display = 'none'; }
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const particles = Array.from({length: 100}, () => ({
+x: Math.random() * canvas.width,
+y: Math.random() * canvas.height,
+size: Math.random() * 3 + 1,
+speed: Math.random() * 2 + 0.5,
+color: ['#ff003c', '#fff', '#e00'][Math.floor(Math.random()*3)]
+}));
+function animate() {
+ctx.clearRect(0,0,canvas.width,canvas.height);
+particles.forEach(p => {
+p.y += p.speed;
+if(p.y > canvas.height) p.y = 0;
+ctx.fillStyle = p.color;
+ctx.beginPath();
+ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+ctx.fill();
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
