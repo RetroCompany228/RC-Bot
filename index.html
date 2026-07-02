@@ -48,8 +48,8 @@
         .manual-img { width: 100%; height: auto; border-radius: 15px; display: block; }
         .glass-write-btn { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 50px; color: #fff; padding: 10px; font-weight: 900; cursor: pointer; width: 100%; transition: 0.3s; text-align: center; font-size: 13px; }
         .glass-write-btn:active { transform: scale(0.98); background: rgba(255, 255, 255, 0.15); }
-    </style>
-</head>
+                   </style>
+    </head>
 <body>
     <canvas id="particles"></canvas>
     <div class="app">
@@ -62,13 +62,18 @@
             <div class="divider"></div>
             <div class="title-box">
                 <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
-                <div class="inner-frame" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 43, 61, 0.4); box-shadow: 0 0 15px rgba(255, 43, 61, 0.1);">
-                    <div style="font-size: 32px; font-weight: 900; color: #ff2b3d; text-align: center; text-shadow: 0 0 8px rgba(255, 43, 61, 0.5);">0.00 ₽</div>
+                <div class="inner-frame">
+                    <div class="desc">
+                        <span class="red-text">Новичок ?</span><br>
+                        Не знаешь с чего <span class="red-text">Начать ?</span><br>
+                        <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+                        и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+                        Мы создали <span class="red-text">Собственного Бота !</span>
+                    </div>
                 </div>
-                <button style="margin-top: 10px; width: 100%; padding: 12px; border-radius: 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; border-color: rgba(255, 80, 80, 0.3);">Открыть Кассу</button>
             </div>
             <div class="divider"></div>
-                        <div class="tabs">
+            <div class="tabs">
                 <div class="tab active" id="tab-menu" onclick="switchTab('menu')">НАВИГАЦИЯ</div>
                 <div class="tab" id="tab-info" onclick="switchTab('info')">ИНФО</div>
             </div>
@@ -175,8 +180,8 @@
                 <div class="divider" style="width: 100%; margin: 6px auto;"></div>
                 <button class="m-btn" onclick="closeBots()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 6px;">← Назад</button>
             </div>
-        </div>
-                <div id="manual-page">
+    </div>
+            <div id="manual-page">
             <div style="text-align: center;">
                 <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 5px;">РАЗДЕЛ <span style="color:#ff2b3d;">МАНУАЛ</span></div>
                 <div style="font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4;">здесь <span style="color:#ff2b3d;">вы</span> сможете взять всю необходиную <span style="color:#ff2b3d;">информацию !</span></div>
