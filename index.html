@@ -17,10 +17,10 @@
         .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
         .top-image { width:100%; height:110px; object-fit:cover; border-radius:18px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .title-box { margin:0 12px; padding:12px; border-radius:24px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
-        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 8px 12px; backdrop-filter: blur(5px); margin-top: 8px; background: rgba(255, 255, 255, 0.02); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 8px; backdrop-filter: blur(5px); margin-top: 8px; background: rgba(255, 255, 255, 0.02); }
         .title { font-size:20px; font-weight:900; letter-spacing:2px; text-align: center;}
         .neon-panel { color:#ff2b3d; text-shadow: 0 0 4px #ff2b3d; }
-        .desc { font-size:10px; line-height:1.4; color:rgba(255,255,255,.75); flex: 1; }
+        .desc { font-size:10px; line-height:1.4; color:rgba(255,255,255,.75); }
         .red-text { color:#ff2b3d; text-shadow:0 0 3px #ff2b3d; }
         .tabs { margin:0 12px; display:flex; gap:6px; padding:4px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:8px; border-radius:12px; font-size:11px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
@@ -74,9 +74,6 @@
                         <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
                         и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
                         Мы создали <span class="red-text">Собственного Бота !</span>
-                    </div>
-                    <div style="flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
-                        <img src="https://i.postimg.cc/zB589N26/file-00000000cc6471f4a324132f679b30bf.png" style="width: 85px; height: auto; mix-blend-mode: screen; display: block;">
                     </div>
                 </div>
             </div>
@@ -257,7 +254,7 @@
             <span>Профиль</span>
         </div>
     </div>
-        <script>
+            <script>
         function switchTab(type) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
