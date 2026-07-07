@@ -22,12 +22,7 @@
         .neon-panel { color:#ff3355; text-shadow:0 0 10px rgba(255, 0, 60, 0.6); }
         .desc { font-size:10px; line-height:1.4; color:rgba(255,255,255,.75); flex: 1; }
         .red-text { color:#ff3355; text-shadow:0 0 10px rgba(255, 0, 60, 0.6); }
-        .flag-icon { width: 68px; height: 68px; flex-shrink: 0; fill: #080808; stroke: #ff3355; stroke-width: 1.2; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.8)); animation: waveBanner 2.2s ease-in-out infinite alternate; transform-origin: left top; }
-        @keyframes waveBanner {
-            0% { transform: rotate(0deg) skewX(0deg); }
-            50% { transform: rotate(-5deg) skewX(6deg) scaleX(0.96); }
-            100% { transform: rotate(5deg) skewX(-4deg) scaleX(1.04); }
-        }
+        .flag-icon { width: 56px; height: 56px; flex-shrink: 0; fill: none; stroke: rgba(140, 145, 150, 0.65); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 6px rgba(0,0,0,0.8)); }
         .tabs { margin:0 12px; display:flex; gap:6px; padding:4px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:8px; border-radius:12px; font-size:11px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
         .tab.active { background:rgba(255,255,255,.12); color:#fff; box-shadow:0 0 20px rgba(255,0,60,.25); }
@@ -82,9 +77,12 @@
                         Мы создали <span class="red-text">Собственного Бота !</span>
                     </div>
                     <svg class="flag-icon" viewBox="0 0 24 24">
-                        <circle cx="3" cy="5" r="1.5"/>
-                        <path d="M3 4.5H19L22 5.5L19 6.5H3V4.5Z"/>
-                        <path d="M5 7H17V17L11 21L5 17V7Z"/>
+                        <path d="M12 3 C8 3, 5 6, 5 10 C5 14, 8 19, 12 21 C16 19, 19 14, 19 10 C19 6, 16 3, 12 3 Z"/>
+                        <circle cx="9" cy="9" r="1.2"/>
+                        <circle cx="15" cy="9" r="1.2"/>
+                        <path d="M12 9 L11 13 L12 16 L13 13 Z"/>
+                        <path d="M8.5 7.5 L10 8.2"/>
+                        <path d="M15.5 7.5 L14 8.2"/>
                     </svg>
                 </div>
             </div>
