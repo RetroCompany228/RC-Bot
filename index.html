@@ -22,11 +22,11 @@
         .neon-panel { color:#ff3355; text-shadow:0 0 10px rgba(255, 0, 60, 0.6); }
         .desc { font-size:10px; line-height:1.4; color:rgba(255,255,255,.75); flex: 1; }
         .red-text { color:#ff3355; text-shadow:0 0 10px rgba(255, 0, 60, 0.6); }
-        .flag-icon { width: 56px; height: 56px; flex-shrink: 0; fill: #080808; stroke: #ff3355; stroke-width: 1.2; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.8)); animation: waveFlag 2.2s ease-in-out infinite alternate; transform-origin: left bottom; }
-        @keyframes waveFlag {
+        .flag-icon { width: 68px; height: 68px; flex-shrink: 0; fill: #080808; stroke: #ff3355; stroke-width: 1.2; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.8)); animation: waveBanner 2.2s ease-in-out infinite alternate; transform-origin: left top; }
+        @keyframes waveBanner {
             0% { transform: rotate(0deg) skewX(0deg); }
-            50% { transform: rotate(-7deg) skewX(6deg) scaleX(0.95); }
-            100% { transform: rotate(6deg) skewX(-5deg) scaleX(1.05); }
+            50% { transform: rotate(-5deg) skewX(6deg) scaleX(0.96); }
+            100% { transform: rotate(5deg) skewX(-4deg) scaleX(1.04); }
         }
         .tabs { margin:0 12px; display:flex; gap:6px; padding:4px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:8px; border-radius:12px; font-size:11px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
@@ -60,7 +60,7 @@
         .nav-item svg { width: 18px; height: 18px; stroke-width: 2; }
     </style>
 </head>
-<body>
+    <body>
     <canvas id="particles"></canvas>
     <div class="app">
         <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
@@ -82,7 +82,9 @@
                         Мы создали <span class="red-text">Собственного Бота !</span>
                     </div>
                     <svg class="flag-icon" viewBox="0 0 24 24">
-                        <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6h-5.6z"/>
+                        <circle cx="3" cy="5" r="1.5"/>
+                        <path d="M3 4.5H19L22 5.5L19 6.5H3V4.5Z"/>
+                        <path d="M5 7H17V17L11 21L5 17V7Z"/>
                     </svg>
                 </div>
             </div>
@@ -326,3 +328,4 @@
     </script>
 </body>
 </html>
+
