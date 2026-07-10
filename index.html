@@ -17,7 +17,7 @@
         .splash-logo { font-size: 32px; font-weight: 900; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.1); }
         .splash-logo .red-part { color: #ff3355; text-shadow: 0 0 12px rgba(255, 0, 60, 0.6); }
         .splash-loader { width: 180px; height: 6px; background: rgba(255, 255, 255, 0.15); border-radius: 10px; overflow: hidden; position: relative; border: 1px solid rgba(255, 255, 255, 0.05); }
-        .splash-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: #ff3355; border-radius: 10px; box-shadow: 0 0 10px rgba(255, 0, 60, 0.8); }
+        .splash-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: #ff3355; border-radius: 10px; box-shadow: 0 0 10px rgba(255, 0, 60, 0.8); transition: width 2.2s cubic-bezier(0.25, 1, 0.5, 1); }
 
         .app { position:relative; z-index:2; width:95%; max-width:460px; height:calc(100vh - 100px); border-radius:36px; background:linear-gradient(135deg, rgba(60, 0, 0, 0.4), rgba(20, 0, 0, 0.6)); backdrop-filter:blur(10px); border:1px solid rgba(255, 80, 80, 0.3); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(255, 0, 0, 0.05); display:flex; flex-direction:column; overflow:hidden; margin-bottom: 80px; }
         .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 4px auto; flex-shrink: 0; }
@@ -25,14 +25,12 @@
         .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 16px; padding: 3px; background: rgba(255, 255, 255, 0.05); }
         .top-image { width:100%; height:85px; object-fit:cover; border-radius:14px; border: 1px solid rgba(255, 255, 255, 0.1); }
         
-        /* Компактный блок с заголовком и текстом */
         .title-box { margin:0 12px; padding:6px 8px; border-radius:16px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
-        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 4px 8px; backdrop-filter: blur(5px); margin-top: 4px; background: rgba(255, 255, 255, 0.02); display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+        .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 4px 8px; backdrop-filter: blur(5px); margin-top: 4px; background: rgba(255, 255, 255, 0.02); display: flex; align-items: center; justify-content: center; text-align: center; }
         .title { font-size:14px; font-weight:900; letter-spacing:1px; text-align: center;}
         .neon-panel { color:#ff3355; text-shadow:0 0 10px rgba(255, 0, 60, 0.6); }
-        .desc { font-size:9.5px; line-height:1.3; color:rgba(255,255,255,.75); flex: 1; }
+        .desc { font-size:9.5px; line-height:1.3; color:rgba(255,255,255,.75); width: 100%; text-align: center; }
         .red-text { color:#ff3355; text-shadow:0 0 8px rgba(255, 0, 60, 0.6); font-weight: 700; }
-        .banner-icon { width: 36px; height: 36px; flex-shrink: 0; }
 
         .tabs { margin:4px 12px; display:flex; gap:6px; padding:3px; border-radius:14px; background:rgba(255,255,255,.04); border:1px solid rgba(255,80,80,.15); backdrop-filter:blur(20px); flex-shrink: 0; }
         .tab { flex:1; text-align:center; padding:6px; border-radius:10px; font-size:10px; font-weight:700; color:rgba(255,255,255,.6); cursor:pointer; transition:.25s; }
@@ -66,7 +64,7 @@
         .nav-item svg { width: 16px; height: 16px; stroke-width: 2; }
     </style>
 </head>
-<body>
+    <body>
     <div class="splash-screen" id="splash">
         <div class="splash-logo">Re<span class="red-part">tro</span></div>
         <div class="splash-loader">
@@ -88,27 +86,12 @@
                 <div class="divider"></div>
                 <div class="inner-frame">
                     <div class="desc">
-                        Рады видеть тебя <span class="red-text">!</span><br>
-                        Изучай <span class="red-text">материалы</span><span class="red-text">,</span> смотри <span class="red-text">мануалы</span><span class="red-text">,</span><br>
-                        бери <span class="red-text">наставника</span> и <span class="red-text">депай</span> с <span class="red-text">лохов</span><span class="red-text">,</span><br>
-                        всё за <span class="red-text">тобой</span><span class="red-text">.</span><br>
-                        С уважением <span class="red-text">Retro</span> <span class="red-text">;)</span>
+                        <span class="red-text">Новичок ?</span><br>
+                        Не знаешь с чего <span class="red-text">Начать ?</span><br>
+                        <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
+                        и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
+                        Мы создали <span class="red-text">Собственного Бота !</span>
                     </div>
-                    <svg class="banner-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-                      <defs>
-                        <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#2A0000"/>
-                          <stop offset="100%" stop-color="#B30000"/>
-                        </linearGradient>
-                        <filter id="glow"><feGaussianBlur stdDeviation="2"/></filter>
-                      </defs>
-                      <circle cx="128" cy="128" r="92" fill="none" stroke="url(#ring)" stroke-width="10"/>
-                      <circle cx="128" cy="128" r="76" fill="none" stroke="#500000" stroke-width="2"/>
-                      <text x="128" y="142" text-anchor="middle" font-family="Arial" font-size="58" font-weight="900" fill="#B30000" filter="url(#glow)">RC</text>
-                      <circle cx="128" cy="128" r="92" fill="none" stroke="#FF3030" stroke-width="3" stroke-dasharray="60 520">
-                        <animate attributeName="stroke-dashoffset" from="580" to="0" dur="3.5s" repeatCount="indefinite"/>
-                      </circle>
-                    </svg>
                 </div>
             </div>
             <div class="divider"></div>
@@ -290,7 +273,7 @@
             <span>Профиль</span>
         </div>
     </div>
-        <script>
+            <script>
         window.addEventListener('DOMContentLoaded', () => {
             const progress = document.getElementById('splashProgress');
             const splash = document.getElementById('splash');
@@ -369,3 +352,4 @@
     </script>
 </body>
 </html>
+
