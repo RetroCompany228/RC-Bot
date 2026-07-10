@@ -67,13 +67,110 @@
             <div class="title-box">
                 <div class="title">ВОРК - <span class="neon-panel">ПАНЕЛЬ</span></div>
                 <div class="divider"></div>
-                <div class="inner-frame">
-                    <div class="desc">
+                <div class="inner-frame" style="display: flex; align-items: center; justify-content: space-between; gap: 6px;">
+                    <div class="desc" style="flex: 1;">
                         <span class="red-text">Новичок ?</span><br>
                         Не знаешь с чего <span class="red-text">Начать ?</span><br>
                         <span class="red-text">Специально</span> для <span class="red-text">тебя</span>,<br>
                         и для <span class="red-text">Наёмников</span> нашей <span class="red-text">Команды</span> —<br>
                         Мы создали <span class="red-text">Собственного Бота !</span>
+                    </div>
+                    <div style="width: 55px; height: 88px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 800" width="100%" height="100%">
+                          <defs>
+                            <filter id="epic-shadow" x="-30%" y="-30%" width="160%" height="160%">
+                              <feDropShadow dx="0" dy="20" stdDeviation="15" flood-color="#000000" flood-opacity="0.9"/>
+                            </filter>
+                            
+                            <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+                              <feGaussianBlur stdDeviation="3" result="blur"/>
+                              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                            </filter>
+
+                            <linearGradient id="iron-bar" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stop-color="#2c2d30"/>
+                              <stop offset="25%" stop-color="#46494d"/>
+                              <stop offset="50%" stop-color="#18191b"/>
+                              <stop offset="75%" stop-color="#333538"/>
+                              <stop offset="100%" stop-color="#0d0e10"/>
+                            </linearGradient>
+
+                            <linearGradient id="blood-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stop-color="#5a0a0a"/>
+                              <stop offset="20%" stop-color="#b81d1d"/>
+                              <stop offset="50%" stop-color="#f24444"/>
+                              <stop offset="80%" stop-color="#8c1212"/>
+                              <stop offset="100%" stop-color="#300303"/>
+                            </linearGradient>
+
+                            <radialGradient id="banner-fabric" cx="50%" cy="40%" r="65%">
+                              <stop offset="0%" stop-color="#6e0909"/>
+                              <stop offset="35%" stop-color="#360404"/>
+                              <stop offset="70%" stop-color="#140101"/>
+                              <stop offset="100%" stop-color="#030000"/>
+                            </radialGradient>
+
+                            <pattern id="fabric-weave" width="4" height="4" patternUnits="userSpaceOnUse">
+                              <path d="M 0 2 L 4 2 M 2 0 L 2 4" stroke="#000000" stroke-width="0.4" opacity="0.15"/>
+                            </pattern>
+                          </defs>
+
+                          <g filter="url(#epic-shadow)">
+                            <path d="M 70 60 L 430 60 L 425 74 L 75 74 Z" fill="url(#iron-bar)" stroke="#000" stroke-width="2"/>
+                            <path d="M 75 62 L 425 62" stroke="#ffffff" stroke-width="1" opacity="0.2"/>
+                            
+                            <rect x="52" y="52" width="20" height="30" rx="3" fill="url(#blood-gold)" stroke="#1a0202" stroke-width="1.5"/>
+                            <circle cx="62" cy="67" r="3.5" fill="#111"/>
+                            <circle cx="62" cy="67" r="1.5" fill="#ff6b6b" opacity="0.8"/>
+
+                            <path d="M 430 52 L 438 40 L 475 67 L 438 94 L 430 82 L 435 67 Z" fill="url(#blood-gold)" stroke="#1a0202" stroke-width="1.5"/>
+                            <path d="M 435 67 L 470 67" stroke="#ffa3a3" stroke-width="1.5" opacity="0.5"/>
+
+                            <rect x="110" y="68" width="30" height="20" rx="3" fill="url(#iron-bar)" stroke="#000" stroke-width="1"/>
+                            <rect x="190" y="68" width="30" height="20" rx="3" fill="url(#iron-bar)" stroke="#000" stroke-width="1"/>
+                            <rect x="280" y="68" width="30" height="20" rx="3" fill="url(#iron-bar)" stroke="#000" stroke-width="1"/>
+                            <rect x="360" y="68" width="30" height="20" rx="3" fill="url(#iron-bar)" stroke="#000" stroke-width="1"/>
+
+                            <path d="M 98 80 L 402 80 L 404 220 Q 398 235 403 250 L 399 340 Q 405 370 401 400 L 404 530 L 250 670 L 96 530 L 99 440 Q 94 410 100 380 L 96 280 Q 101 250 96 220 Z" fill="#050101" />
+                            <path d="M 100 82 L 400 82 L 401 150 Q 396 165 400 180 L 401 240 L 396 255 L 402 270 L 400 350 Q 395 365 398 380 L 401 525 L 250 660 L 99 525 L 100 450 L 95 430 L 101 415 L 99 320 Q 95 290 100 270 L 97 190 Z" fill="url(#banner-fabric)"/>
+                            <path d="M 100 82 L 400 82 L 401 525 L 250 660 L 99 525 Z" fill="url(#fabric-weave)" />
+
+                            <path d="M 108 92 L 392 92 L 392 515 L 250 640 L 108 515 Z" fill="none" stroke="url(#blood-gold)" stroke-width="5" stroke-linejoin="round" opacity="0.9"/>
+                            <path d="M 114 98 L 386 98 L 386 508 L 250 630 L 114 508 Z" fill="none" stroke="#000000" stroke-width="2" opacity="0.95"/>
+
+                            <path d="M 96 325 L 118 340 L 110 348 L 97 337 Z" fill="#000" stroke="#300303" stroke-width="1"/>
+                            <path d="M 118 340 L 110 348" stroke="#f24444" stroke-width="1" opacity="0.4"/>
+                            <path d="M 401 245 L 380 258 L 385 268 L 402 254 Z" fill="#000" stroke="#300303" stroke-width="1"/>
+
+                            <g transform="translate(0, 340)" filter="url(#soft-glow)">
+                              <text x="250" y="0" 
+                                    text-anchor="middle" 
+                                    font-family="'Cinzel', 'Times New Roman', serif" 
+                                    font-size="42px" 
+                                    font-weight="bold"
+                                    letter-spacing="8px" 
+                                    fill="url(#blood-gold)" 
+                                    style="text-shadow: 0px 5px 15px rgba(0,0,0,1), 0px 10px 30px rgba(0,0,0,15);">#Retro Bot</text>
+                              
+                              <path d="M 140 25 L 235 22 L 250 25 L 265 22 L 360 25" fill="none" stroke="url(#blood-gold)" stroke-width="2" stroke-linecap="round" opacity="0.75" />
+                              <circle cx="250" cy="24" r="3" fill="url(#blood-gold)" />
+                            </g>
+
+                            <g transform="translate(0, 525)">
+                              <path d="M 115 0 L 140 -5 L 133 0 L 140 5 Z" fill="url(#blood-gold)" stroke="#2b0505" stroke-width="1"/>
+                              <line x1="130" y1="0" x2="160" y2="0" stroke="url(#blood-gold)" stroke-width="2.5"/>
+                              <circle cx="120" cy="0" r="2" fill="url(#blood-gold)"/>
+                              
+                              <text x="250" y="6" text-anchor="middle" font-family="serif" font-size="20px" fill="url(#blood-gold)" opacity="0.6">✦ ✦ ✦</text>
+                              
+                              <path d="M 385 0 L 360 -5 L 367 0 L 360 5 Z" fill="url(#blood-gold)" stroke="#2b0505" stroke-width="1"/>
+                              <line x1="370" y1="0" x2="340" y2="0" stroke="url(#blood-gold)" stroke-width="2.5"/>
+                              <circle cx="380" cy="0" r="2" fill="url(#blood-gold)"/>
+                            </g>
+
+                            <path d="M 99 525 L 94 550 M 103 530 L 100 562 M 401 525 L 406 555 M 394 518 L 397 544 M 250 660 L 252 685 M 246 655 L 244 678" fill="none" stroke="#5a0a0a" stroke-width="1.5" opacity="0.85"/>
+                          </g>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -209,52 +306,7 @@
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
                     <img src="https://i.postimg.cc/tgvgrKPF/file-00000000e62471f4abcd57f082e86de9.png" style="width: 60px; height: 60px; border-radius: 12px; object-fit: cover;">
                     <div style="flex: 1;">
-                        <div style="font-weight: 900; font-size: 14px;">Kodi <span style="color: #ff2b3d;">№1</span></div>
-                        <div style="font-weight: 900; font-size: 11px; color: #ff2b3d;">Шантаж</div>
-                    </div>
-                </div>
-                <button class="glass-write-btn" onclick="window.open('https://t.me/bicuze')">Написать</button>
-            </div>
-            <div class="divider" style="width: 100%; margin: 6px auto;"></div>
-            <button class="m-btn" onclick="closeMentor()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
-        </div>
-        <div id="packs-page">
-            <div style="text-align: center; margin-bottom: 10px;">
-                <div style="font-size: 16px; font-weight: 900; letter-spacing: 1px; color: #fff;">РАЗДЕЛ <span style="color:#ff2b3d;">ПАКИ</span></div>
-            </div>
-            <div class="divider" style="width: 100%; margin-bottom: 10px;"></div>
-            <div class="packs-grid">
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/y6gfFT6K/IMG-20260629-184516-833.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPak1')">ПАК 1</button>
-                </div>
-                <div class="pack-item">
-                    <img src="https://i.postimg.cc/x1YtVDvF/IMG-20260629-184614-108.jpg" class="pack-img">
-                    <button class="pack-btn" onclick="window.open('https://t.me/RetroPak2')">ПАК 2</button>
-                </div>
-            </div>
-            <div style="margin-top: auto; padding-top: 10px;">
-                <button class="m-btn" onclick="closePacks()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
-            </div>
-        </div>
-        <div id="balance-page"></div>
-        <div id="profile-page"></div>
-    </div>
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchNav('home', this)">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-            <span>Главная</span>
-        </div>
-        <div class="nav-item" onclick="switchNav('balance', this)">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-            <span>Финансы</span>
-        </div>
-        <div class="nav-item" onclick="switchNav('profile', this)">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            <span>Профиль</span>
-        </div>
-    </div>
-            <script>
+        <script>
         function switchTab(type) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -316,5 +368,5 @@
         animate();
     </script>
 </body>
-</html>
-
+                    </html>
+                        
