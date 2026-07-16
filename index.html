@@ -15,7 +15,7 @@
         .divider { width: 90%; height: 1px; background: rgba(255, 80, 80, 0.2); margin: 5px auto; flex-shrink: 0; }
         .top-wrap { padding:12px 12px 0 12px; flex-shrink: 0; }
         .glass-frame { border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 4px; background: rgba(255, 255, 255, 0.05); }
-        .top-image { width:100%; height:110px; object-fit:cover; border-radius:18px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .top-image { width:100%; height:110px; object-type:cover; border-radius:18px; border: 1px solid rgba(255, 255, 255, 0.1); }
         .title-box { margin:0 12px; padding:12px; border-radius:24px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.05); backdrop-filter:blur(10px); flex-shrink: 0; }
         .inner-frame { border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 8px; backdrop-filter: blur(5px); margin-top: 8px; background: rgba(255, 255, 255, 0.02); }
         .title { font-size:20px; font-weight:900; letter-spacing:2px; text-align: center;}
@@ -32,12 +32,11 @@
         
         .grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows: repeat(5, 1fr); align-content: start; gap:6px; height: 100%; }
         
-        /* Кнопки меню в едином красном стиле с нижним меню */
-        .btn { width: 100%; height: 100%; border-radius:12px; background: rgba(255, 43, 61, 0.15); border: 1px solid rgba(255, 43, 61, 0.3); backdrop-filter: blur(10px); color: #fff; font-size:11px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.1s ease; box-shadow: 0 0 15px rgba(255, 43, 61, 0.2), inset 0 0 10px rgba(255, 43, 61, 0.1); text-shadow:0 0 3px rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; }
-        .btn:active { transform:scale(0.95); background: rgba(255, 43, 61, 0.25); box-shadow: none; }
+        /* Стеклянные айфоновские кнопки (эффект воды с легким переливом сверху вниз) */
+        .btn { width: 100%; height: 100%; border-radius:12px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.02)); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); color: #fff; font-size:11px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.15s ease; box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.45), 0 4px 15px rgba(0, 0, 0, 0.2); text-shadow:0 1px 2px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; }
+        .btn:active { transform:scale(0.95); background: linear-gradient(to bottom, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06)); box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); }
         .btn svg { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; }
-        
-        .card { background:rgba(255,255,255,.05); padding: 8px 12px; border-radius:18px; border:1px solid rgba(255,80,80,.2); font-size:10px; margin: 4px 0; }
+                .card { background:rgba(255,255,255,.05); padding: 8px 12px; border-radius:18px; border:1px solid rgba(255,80,80,.2); font-size:10px; margin: 4px 0; }
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
         .footer { text-align:center; padding: 8px; font-size:10px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
         #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page, #balance-page, #profile-page { padding: 12px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
@@ -59,7 +58,7 @@
         .nav-item svg { width: 18px; height: 18px; stroke-width: 2; }
     </style>
 </head>
-    <body>
+<body>
     <canvas id="particles"></canvas>
     <div class="app">
         <div id="main-view" style="display:flex; flex-direction:column; height:100%;">
@@ -102,7 +101,7 @@
                         <button class="btn">FAQ <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>
                     </div>
                 </div>
-                <div id="page-info" class="page">
+                                <div id="page-info" class="page">
                     <div class="card">
                         <b>ИНФОРМАЦИЯ</b><br><br>
                         @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
@@ -261,7 +260,7 @@
             <span>Профиль</span>
         </div>
     </div>
-        <script>
+    <script>
         function switchTab(type) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
