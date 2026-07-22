@@ -32,14 +32,13 @@
         
         .grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows: repeat(5, 1fr); align-content: start; gap:6px; height: 100%; }
         
-        /* Кнопки с блюром и красивым 3D эффектом в стиле рамки */
         .btn { width: 100%; height: 100%; border-radius: 24px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #fff; font-size: 11px; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.2), 0 5px 15px rgba(0,0,0,0.3); text-shadow: 0 1px 2px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; }
         .btn:active { transform: translateY(3px) scale(0.97); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255,255,255,0.1); background: rgba(255, 255, 255, 0.08); }
         .btn svg { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; }
                 .card { background:rgba(255,255,255,.05); padding: 8px 12px; border-radius:18px; border:1px solid rgba(255,80,80,.2); font-size:10px; margin: 4px 0; }
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
         .footer { text-align:center; padding: 8px; font-size:10px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
-        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page, #balance-page, #profile-page { padding: 12px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
+        #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page { padding: 12px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
         .bots-grid { display:grid; grid-template-columns:1fr 1fr; gap: 4px; padding: 5px 0; }
         .bot-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 80, 80, 0.2); padding: 6px 4px; border-radius: 8px; text-align: center; font-size: 9px; font-weight: 700; color: #fff; cursor: pointer; text-decoration: underline; }
         .packs-grid { display:grid; grid-template-columns:1fr 1fr; gap: 10px; overflow-y: auto; padding-bottom: 10px; }
@@ -64,6 +63,14 @@
         .red-tro { color: #ff2b3d; text-shadow: 0 0 10px #ff2b3d; }
         .loader-line-container { width: 220px; height: 5px; background: rgba(255, 255, 255, 0.1); border-radius: 3px; overflow: hidden; position: relative; }
         .loader-line { position: absolute; top: 0; left: 0; width: 0%; height: 100%; background: #ff2b3d; box-shadow: 0 0 12px #ff2b3d; transition: width 3s cubic-bezier(0.25, 1, 0.5, 1); }
+
+        /* Кастомное модальное окно с блюром для Финансов и Профиля */
+        .custom-modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 99999; display: none; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.5s ease; }
+        .custom-modal-overlay.visible { opacity: 1; }
+        .custom-modal-box { width: 85%; max-width: 320px; background: linear-gradient(135deg, rgba(60, 0, 0, 0.6), rgba(20, 0, 0, 0.8)); border: 1px solid rgba(255, 80, 80, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 24px; padding: 20px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,0,0,0.1); transform: scale(0.95); animation: modalScaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes modalScaleIn { to { transform: scale(1); } }
+        .modal-btn { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 80, 80, 0.3); border-radius: 14px; color: #fff; padding: 10px 20px; font-size: 12px; font-weight: 900; cursor: pointer; width: 100%; transition: transform 0.15s ease, background 0.2s ease; box-shadow: 0 4px 15px rgba(255,0,0,0.2); margin-top: 15px; }
+        .modal-btn:active { background: rgba(255, 255, 255, 0.2); }
     </style>
 </head>
 <body>
@@ -73,6 +80,13 @@
             <div class="loader-line-container">
                 <div class="loader-line" id="loaderLine"></div>
             </div>
+        </div>
+    </div>
+    <div id="custom-modal" class="custom-modal-overlay">
+        <div class="custom-modal-box">
+            <div id="modal-title" style="font-size: 15px; font-weight: 900; margin-bottom: 10px; color: #fff; text-transform: uppercase;"></div>
+            <div id="modal-desc" style="font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.6; margin-bottom: 10px; font-weight: 600;"></div>
+            <button class="modal-btn" onclick="closeCustomModal()">Понятно</button>
         </div>
     </div>
     <canvas id="particles"></canvas>
@@ -117,7 +131,7 @@
                         <button class="btn">FAQ <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></button>
                     </div>
                 </div>
-                                <div id="page-info" class="page">
+                    <div id="page-info" class="page">
                     <div class="card">
                         <b>ИНФОРМАЦИЯ</b><br><br>
                         @RetroWork_Bot — Это не просто бот, а объединение всех лучших материалов в одно!<br>
@@ -259,17 +273,15 @@
                 <button class="m-btn" onclick="closePacks()" style="width: 100%; background: rgba(255, 80, 80, 0.1); border-color: rgba(255, 80, 80, 0.3); padding: 8px;">← Назад</button>
             </div>
         </div>
-        <div id="balance-page"></div>
-        <div id="profile-page"></div>
     </div>
     <div class="bottom-nav">
-        <div class="nav-item active" onclick="switchNav('home', this)">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-            <span>Главная</span>
-        </div>
         <div class="nav-item" onclick="switchNav('balance', this)">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
             <span>Финансы</span>
+        </div>
+        <div class="nav-item active" onclick="switchNav('home', this)">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Главная</span>
         </div>
         <div class="nav-item" onclick="switchNav('profile', this)">
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
@@ -277,7 +289,6 @@
         </div>
     </div>
     <script>
-        // Логика загрузчика: 1 секунда ожидания на отрисовку, затем плавная равномерная заливка сплошным красным
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const line = document.getElementById('loaderLine');
@@ -295,6 +306,39 @@
             }, 4500);
         });
 
+        function showModal(type) {
+            const modal = document.getElementById('custom-modal');
+            const titleEl = document.getElementById('modal-title');
+            const descEl = document.getElementById('modal-desc');
+            
+            if (type === 'balance') {
+                titleEl.innerHTML = 'Раздел - финансы <span style="color:#ff2b3d;">🔒</span>';
+                descEl.innerHTML = 'В разработке...<br>Скоро станет доступным !';
+            } else if (type === 'profile') {
+                titleEl.innerHTML = 'Раздел - профиль <span style="color:#ff2b3d;">🔒</span>';
+                descEl.innerHTML = 'В разработке...<br>Скоро станет доступным !';
+            }
+            
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('visible');
+            }, 10);
+        }
+
+        function closeCustomModal() {
+            const btn = document.querySelector('.modal-btn');
+            const modal = document.getElementById('custom-modal');
+            
+            btn.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+                modal.classList.remove('visible');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 500);
+            }, 150);
+        }
+
         function switchTab(type) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -308,14 +352,15 @@
         }
         
         function switchNav(type, el) {
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('main-view').style.display = 'none';
-            document.getElementById('balance-page').style.display = 'none';
-            document.getElementById('profile-page').style.display = 'none';
-            if(type === 'home') document.getElementById('main-view').style.display = 'flex';
-            else if(type === 'balance') document.getElementById('balance-page').style.display = 'flex';
-            else if(type === 'profile') document.getElementById('profile-page').style.display = 'flex';
+            if(type === 'home') {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                el.classList.add('active');
+                document.getElementById('main-view').style.display = 'flex';
+            } else if(type === 'balance') {
+                showModal('balance');
+            } else if(type === 'profile') {
+                showModal('profile');
+            }
         }
 
         function openManual() { document.getElementById('main-view').style.display = 'none'; document.getElementById('manual-page').style.display = 'flex'; }
