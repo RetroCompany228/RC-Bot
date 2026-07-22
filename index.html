@@ -32,11 +32,11 @@
         
         .grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows: repeat(5, 1fr); align-content: start; gap:6px; height: 100%; }
         
-        /* Айфоновские стеклянные кнопки с красивым полупрозрачным тоном и мягким переливом сверху */
-        .btn { width: 100%; height: 100%; border-radius:14px; background: linear-gradient(to bottom, rgba(55, 20, 25, 0.5), rgba(20, 8, 10, 0.7)); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); color: #fff; font-size:11px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.15s ease; box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25), 0 6px 20px rgba(0, 0, 0, 0.4); text-shadow:0 1px 2px rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; }
-        .btn:active { transform:scale(0.95); background: linear-gradient(to bottom, rgba(75, 25, 30, 0.6), rgba(30, 10, 12, 0.8)); box-shadow: inset 0 1px 2px rgba(0,0,0,0.4); }
+        /* Просто полупрозрачные кнопки с блюром */
+        .btn { width: 100%; height: 100%; border-radius:14px; background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); color: #fff; font-size:11px; font-weight:900; letter-spacing:0.5px; cursor:pointer; transition:all 0.15s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); text-shadow:0 1px 2px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 8px; }
+        .btn:active { transform:scale(0.95); background: rgba(255, 255, 255, 0.12); }
         .btn svg { width: 16px; height: 16px; stroke-width: 2; flex-shrink: 0; }
-                .card { background:rgba(255,255,255,.05); padding: 8px 12px; border-radius:18px; border:1px solid rgba(255,80,80,.2); font-size:10px; margin: 4px 0; }
+                           .card { background:rgba(255,255,255,.05); padding: 8px 12px; border-radius:18px; border:1px solid rgba(255,80,80,.2); font-size:10px; margin: 4px 0; }
         .link { color:#ff2b3d; text-decoration:underline; cursor:pointer; }
         .footer { text-align:center; padding: 8px; font-size:10px; color:rgba(255,255,255,.4); cursor:pointer; flex-shrink: 0; }
         #manual-page, #mentor-page, #packs-page, #bots-page, #voice-page, #cards-page, #balance-page, #profile-page { padding: 12px; height: 100%; display: none; flex-direction: column; overflow: hidden; }
@@ -322,5 +322,5 @@
         animate();
     </script>
 </body>
-                    </html>
-                                                                                                                                                                          
+    </html>
+                
